@@ -15,7 +15,7 @@
   - [Table of Contents](#table-of-contents)
   - [Project Description](#project-description)
   - [Overview](#overview)
-  - [Development Progression Outline](#Development Progression Outline)
+  - [Development Progression Outline](#development-progression-outline)
   - [Contributions](#contributions)
   - [Complexity] (#complexity)
 
