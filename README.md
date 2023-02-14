@@ -111,7 +111,7 @@ Student Number: 1004986599. Responsible for general backend-end development, inc
 
 ### Matthew Melchior
 
-Responsible for general front-end development, including spending visualization, displaying transactions, etc.
+Student Number: 1005085541. Responsible for general front-end development, including spending visualization, displaying transactions, etc.
 
 ### Shawn
 
