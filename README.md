@@ -113,6 +113,6 @@ Student Number: 1004986599. Responsible for general backend-end development, inc
 
 Student Number: 1005085541. Responsible for general front-end development, including spending visualization, displaying transactions, etc.
 
-### Shawn
+### Sean Lau Kuang Qi
 
-My responsibilites were blah blah
+Student Number: 1005463464. Responsible for full-stack development of register, email service setup, and authentication/authorization using Auth0 API. 
