@@ -16,7 +16,7 @@
   - [Contributions](#contributions)
     - [Chongmin Bai](#chongmin-bai)
     - [Matthew Melchior](#matthew-melchior)
-    - [Shawn](#Shawn)
+    - [Sean Lau Kuang Qi](#sean-lau-kuang-qi)
 
 ## Project Description
 
