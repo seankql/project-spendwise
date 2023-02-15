@@ -115,4 +115,4 @@ Student Number: 1005085541. Responsible for general front-end development, inclu
 
 ### Sean Lau Kuang Qi
 
-Student Number: 1005463464. Responsible for full-stack development of register, email service setup, and authentication/authorization using Auth0 API. 
+Student Number: 1005463464. Responsible for full-stack development of register, email service setup, and authentication/authorization using Auth0 API.
