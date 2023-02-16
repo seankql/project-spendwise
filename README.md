@@ -70,7 +70,7 @@
 
 - **Front-End:** The Beta version of Project SpendWise will seek intergrate server-side generated elements into the Frontend. By the Beta Version, users will be able to both view data originating from the backend (i.e., transaction data) as well as inputting user generated data from the front-end (i.e., profile data). Data visualization tools will also be implemented to some extent by the Beta version, allowing users to have their transaction data visualized in a limited manner.
 
-- **Back-End:** The Beta version of Project SpendWise will contain the implementaion of linking your finical accounts via [Plaid API](https://plaid.com/) and daily transaction entry via [Celery](https://github.com/celery/celery).
+- **Back-End:** The Beta version of Project SpendWise will contain the implementation of linking your finical accounts via [Plaid API](https://plaid.com/) and daily transaction entry via [Celery](https://github.com/celery/celery).
 
 #### Final Version
 
@@ -84,7 +84,7 @@
 
 - Automatic entries from the bank. (Plaid API) (2 Points)
   - https://plaid.com/
-- (Send Grid) (2 point)
+- (Send Grid) (2 points)
   - Email upon register & account recovery
   - https://sendgrid.com/
 - Data Visualization API (Unovis) (1 point)
@@ -94,12 +94,12 @@
 - Celery worker for Async job (3 points)
   - Daily Scheduled worker that will fetch user account transactions
   - https://github.com/celery/celery
-- Sentry Error logging (1 points)
+- Sentry Error logging (1 point)
   - https://sentry.io/welcome/
 
 ### Challenge Factor
 
-- OpenAI for categorization and tips box (1 points)
+- OpenAI for categorization and tips box (1 point)
   - No personal identifiable information
   - https://openai.com/api/
 
