@@ -13,11 +13,10 @@ routes/: This directory contains route files that define the endpoints for the A
 
 static/: This directory contains static files such as stylesheets and client-side JavaScript files and html files for backend testing.
 
-
 Backend Setup Steps
 
 1. cd backend
 2. npm install
 3. Start/Create PostgreSQL locally by creating a database that matches what is in the config.js
-3. npm run createTables to create all the tables that we need
-4. npm run dropTables to clear our database
+4. npm run createTables to create all the tables that we need
+5. npm run dropTables to clear our database
