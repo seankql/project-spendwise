@@ -17,6 +17,12 @@ Backend Setup Steps
 
 1. cd backend
 2. npm install
-3. Start/Create PostgreSQL locally by creating a database that matches what is in the config.js
-4. npm run createTables to create all the tables that we need
-5. npm run dropTables to clear our database
+3. Start/Create PostgreSQL locally by creating a database.
+4. Rename .env_example to .env and change its values based on the database you just created
+5. npm run createTables to create all the tables that we need
+6. npm run dropTables to clear our database
+
+to run prettier:
+'''
+npx prettier --write .
+'''
