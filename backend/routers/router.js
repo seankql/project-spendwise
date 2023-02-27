@@ -8,4 +8,3 @@ export const router = Router();
 router.use("/transactions", transactionsController);
 router.use("/accounts", accountsController);
 router.use("/users", usersController);
-
