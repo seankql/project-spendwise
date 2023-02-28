@@ -1,7 +1,7 @@
 import '../Styles/Components.css' 
 
-export default function List({ onClick, title, }) {
+export default function List({ onClick, title, style='btn'}) {
   return (
-      <button className='button' onClick={onClick}>{title}</button>
+      <button className={style} onClick={onClick}>{title}</button>
   );
 }
