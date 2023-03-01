@@ -7,17 +7,17 @@
 
 ## Local Env Setup
 
-1. navigate to `/backend` folder
+1. navigate to the `/backend` folder
    ```
    cd backend
    ```
-2. Intall all dependencies
+2. Install all dependencies
    ```
    npm install
    ```
 3. Setup `.env` file by renaming `.env_example` to `.env`. Feel free to update this file to your specification
 
-4. Start/Create PostgreSQL locally by creating a database. Make sure the Database name and password matches what is written in `.env`
+4. Start/Create PostgreSQL locally by creating a database. Make sure the Database name and password match what is written in `.env`
 
 5. Setup Database Tables
    ```
@@ -34,6 +34,35 @@
    npm run dropTables
    ```
 
+## Database Design
+
+1. User Table
+   - This table would contain information about the user such as
+     - userId
+     - username
+     - hashedPassword
+     - email
+2. Account Table
+   - This table would contain information about the financial accounts that each user has.
+   - Contains fields such as
+     - accountId
+     - userId
+     - accountNumber
+   - Each account should be associated with a user.
+     - One user can have multiple account
+     - One account must have one user
+3. Transaction Table
+   - This table would contain information about each transaction that a user makes including
+     - date
+     - description
+     - amount
+     - accountId
+     - category
+   - Each transaction must be associated with one account & one category.
+4. Category Table
+   - This table would contain information about all the categories that a user can assign to their transaction
+     - category
+
 ## Deployment
 
-To be continuted
+To be continued
