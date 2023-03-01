@@ -38,30 +38,29 @@
 
 1. User Table
    - This table would contain information about the user such as
-     - userId
+     - userId (primary key)
      - username
      - hashedPassword
      - email
 2. Account Table
    - This table would contain information about the financial accounts that each user has.
    - Contains fields such as
-     - accountId
-     - userId
+     - accountId (primary key)
+     - userId (foregin key)
      - accountNumber
    - Each account should be associated with a user.
      - One user can have multiple account
      - One account must have one user
 3. Transaction Table
    - This table would contain information about each transaction that a user makes including
+     - transactionId (primary key)
      - date
      - description
      - amount
-     - accountId
+     - accountId (foregin key)
      - category
    - Each transaction must be associated with one account & one category.
-4. Category Table
-   - This table would contain information about all the categories that a user can assign to their transaction
-     - category
+
 
 ## Deployment
 
