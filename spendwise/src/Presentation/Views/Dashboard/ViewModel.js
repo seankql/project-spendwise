@@ -16,14 +16,14 @@ export default function DashboardViewModel() {
     setUsername(result);
   }
 
-  function navigateToHomepage() {
-    navigate("/");
+  function navigateToPage(page = "/") {
+    navigate(page);
   }
-
+  
   return {
     error,
     username,
     getUsername,
-    navigateToHomepage,
+    navigateToPage,
   };
 }

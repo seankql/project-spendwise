@@ -8,7 +8,7 @@ import "../../Styles/Main.css";
 import "../../Styles/Homepage.css";
 
 export default function Homepage() {
-  const { navigateToDashboard } = useViewModel();
+  const { navigateToPage } = useViewModel();
 
   return (
     <div>
@@ -65,14 +65,14 @@ export default function Homepage() {
             title={"Sign In"}
             classes="btn btn-sml banner-auth-component-container"
             onClick={() => {
-              navigateToDashboard();
+              navigateToPage("/dashboard");
             }}
           />
           <Button
             title={"Sign Up"}
             classes="btn btn-sml banner-auth-component-container"
             onClick={() => {
-              navigateToDashboard();
+              navigateToPage("/dashboard");
             }}
           />
         </div>
