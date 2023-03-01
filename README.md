@@ -62,15 +62,15 @@
 
 #### Alpha Version
 
-- **Front-End:** The alpha version of Project SpendWise will include a minimally interactive skeleton of the web application. Users of the website will at this point be able to navigate from the homepage through to all the pages that will be available by the final version. The general layout and basic design elements of each page should be apparent by this point.
+- **Front-End:** The alpha version of Project SpendWise will include a minimally interactive skeleton of the web application. Users of the website will at this point be able to navigate from the homepage through to all the pages that will be available by the final version. The general layout and basic design elements of each page should be apparent by this point. Users will be able to sign up and login.
 
-- **Back-End:** The alpha version of Project SpendWise will include all the backend logic of the manual CRUD transactions and Sentry setup. No [Plaid API](https://plaid.com/) and [Celery](https://github.com/celery/celery) at this point. The general layout and basic design of the backend should be apparent by this point.
+- **Back-End:** The alpha version of Project SpendWise will include all the backend logic of the manual CRUD transactions and Sentry setup. No [Plaid API](https://plaid.com/) and [Celery](https://github.com/celery/celery) at this point. The general layout and basic design of the backend should be apparent by this point. Backend logic for sign up and login. Auth0 API should be setup.
 
 #### Beta Version
 
-- **Front-End:** The Beta version of Project SpendWise will seek intergrate server-side generated elements into the Frontend. By the Beta Version, users will be able to both view data originating from the backend (i.e., transaction data) as well as inputting user generated data from the front-end (i.e., profile data). Data visualization tools will also be implemented to some extent by the Beta version, allowing users to have their transaction data visualized in a limited manner.
+- **Front-End:** The Beta version of Project SpendWise will seek intergrate server-side generated elements into the Frontend. By the Beta Version, users will be able to both view data originating from the backend (i.e., transaction data) as well as inputting user generated data from the front-end (i.e., profile data). Data visualization tools will also be implemented to some extent by the Beta version, allowing users to have their transaction data visualized in a limited manner. All authentication and authorization should be done.
 
-- **Back-End:** The Beta version of Project SpendWise will contain the implementation of linking your finical accounts via [Plaid API](https://plaid.com/) and daily transaction entry via [Celery](https://github.com/celery/celery).
+- **Back-End:** The Beta version of Project SpendWise will contain the implementation of linking your finical accounts via [Plaid API](https://plaid.com/) and daily transaction entry via [Celery](https://github.com/celery/celery). Email service using SendGrid should be done.
 
 #### Final Version
 
