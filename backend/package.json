@@ -9,7 +9,8 @@
     "dev": "nodemon app.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "createTables": "node ./database/createTables.js",
-    "dropTables": "node ./database/dropTables.js"
+    "dropTables": "node ./database/dropSchema.js",
+    "pt": "npx prettier --write ."
   },
   "author": "Chongmin Bai",
   "license": "ISC",

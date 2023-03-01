@@ -1,28 +1,39 @@
-each users might have different accounts
-and each account has many transactions
+# Spendwise - Backend Setup
 
-app.js: This is the main file that initializes the Express app, sets up middleware, and defines routes.
+## Prerequisites
 
-config/: This directory contains configuration files for the app, such as database settings, Plaid API credentials, and session options.
+- [Node.js]
+- [PostgreSQL]
 
-controllers/: This directory contains controller functions that handle requests and responses for each route.
+## Local Env Setup
 
-models/: This directory contains database models for users, accounts, and transactions.
+1. navigate to `/backend` folder
+   ```
+   cd backend
+   ```
+2. Intall all dependencies
+   ```
+   npm install
+   ```
+3. Setup `.env` file by renaming `.env_example` to `.env`. Feel free to update this file to your specification
 
-routes/: This directory contains route files that define the endpoints for the API.
+4. Start/Create PostgreSQL locally by creating a database. Make sure the Database name and password matches what is written in `.env`
 
-static/: This directory contains static files such as stylesheets and client-side JavaScript files and html files for backend testing.
+5. Setup Database Tables
+   ```
+   npm run createTables
+   ```
+6. Start the development backend
+   ```
+   npm run dev
+   ```
+7. The development backend will be running at http://localhost:3000
 
-Backend Setup Steps
+8. To Drop All Tables
+   ```
+   npm run dropTables
+   ```
 
-1. cd backend
-2. npm install
-3. Start/Create PostgreSQL locally by creating a database.
-4. Rename .env_example to .env and change its values based on the database you just created
-5. npm run createTables to create all the tables that we need
-6. npm run dropTables to clear our database
+## Deployment
 
-to run prettier:
-'''
-npx prettier --write .
-'''
+To be continuted
