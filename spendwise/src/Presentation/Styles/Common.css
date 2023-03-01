@@ -15,8 +15,18 @@
   box-shadow: 1px 1px 24px 0 rgb(6 26 54 / 12%);
 }
 
+.banner-wrapper {
+  display: flex;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .banner-container {
   display: flex;
+}
+
+.banner-img-container {
+  height: 54px;
 }
 
 .banner-auth-component-container {
@@ -25,21 +35,16 @@
 }
 
 .banner-link-component-container {
-  margin-left: 16px;
-  margin-left: 16px;
-}
-
-.banner-img-container {
-  height: 54px;
+  margin-left: 8;
+  margin-right: 8px;
 }
 
 .auth-container {
-  margin: auto 0 auto auto;
   padding: 24px;
 }
 
 .links-container {
   display: flex;
   padding: 24px;
-  margin: auto;
 }
+

@@ -13,68 +13,70 @@ export default function Homepage() {
   return (
     <div>
       <div className="banner">
-        <img className="banner-img-container" src={logo} alt="logo" />
-        <div className="links-container">
-          <div className="btn-alt btn-sml banner-link-component-container">
-            <Link
-              activeClass="active"
-              to="home"
-              spy={true}
-              smooth={true}
-              offset={-128}
-            >
-              Home
-            </Link>
+        <div className="banner-wrapper">
+          <img className="banner-img-container" src={logo} alt="logo" />
+          <div className="links-container">
+            <div className="btn-alt btn-sml banner-link-component-container">
+              <Link
+                activeClass="active"
+                to="home"
+                spy={true}
+                smooth={true}
+                offset={-128}
+              >
+                Home
+              </Link>
+            </div>
+            <div className="btn-alt btn-sml banner-link-component-container">
+              <Link
+                activeClass="active"
+                to="about"
+                spy={true}
+                smooth={true}
+                offset={-128}
+              >
+                About Us
+              </Link>
+            </div>
+            <div className="btn-alt btn-sml banner-link-component-container">
+              <Link
+                activeClass="active"
+                to="features"
+                spy={true}
+                smooth={true}
+                offset={-128}
+              >
+                Features
+              </Link>
+            </div>
+            <div className="btn-alt btn-sml banner-link-component-container">
+              <Link
+                activeClass="active"
+                to="contact"
+                spy={true}
+                smooth={true}
+                offset={-128}
+              >
+                Contact
+              </Link>
+            </div>
           </div>
-          <div className="btn-alt btn-sml banner-link-component-container">
-            <Link
-              activeClass="active"
-              to="about"
-              spy={true}
-              smooth={true}
-              offset={-128}
-            >
-              About Us
-            </Link>
+          <div className="auth-container">
+            <Button
+              title={"Sign In"}
+              classes="btn btn-sml banner-auth-component-container"
+              onClick={() => {
+                navigateToPage("/dashboard");
+              }}
+            />
+            <Button
+              title={"Sign Up"}
+              classes="btn btn-sml banner-auth-component-container"
+              onClick={() => {
+                navigateToPage("/dashboard");
+              }}
+            />
           </div>
-          <div className="btn-alt btn-sml banner-link-component-container">
-            <Link
-              activeClass="active"
-              to="features"
-              spy={true}
-              smooth={true}
-              offset={-128}
-            >
-              Features
-            </Link>
-          </div>
-          <div className="btn-alt btn-sml banner-link-component-container">
-            <Link
-              activeClass="active"
-              to="contact"
-              spy={true}
-              smooth={true}
-              offset={-128}
-            >
-              Contact
-            </Link>
-          </div>
-        </div>
-        <div className="auth-container">
-          <Button
-            title={"Sign In"}
-            classes="btn btn-sml banner-auth-component-container"
-            onClick={() => {
-              navigateToPage("/dashboard");
-            }}
-          />
-          <Button
-            title={"Sign Up"}
-            classes="btn btn-sml banner-auth-component-container"
-            onClick={() => {
-              navigateToPage("/dashboard");
-            }}
-          />
         </div>
       </div>
       <div id="home" className="image-banner-wrapper">

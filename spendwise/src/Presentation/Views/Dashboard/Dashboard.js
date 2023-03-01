@@ -13,8 +13,8 @@ export default function Dashboard() {
   }, [getUsername]);
 
   return (
-    <div>
-      <div className="banner">
+    <div className="banner">
+      <div className="banner-wrapper">
         <img className="banner-img-container" src={logo} alt="logo" />
         <div className="links-container">
           <Button
