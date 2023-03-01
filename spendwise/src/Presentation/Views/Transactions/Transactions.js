@@ -35,10 +35,10 @@ export default function Transactions() {
               }}
             />
             <Button
-              title={"Profile"}
+              title={"Account"}
               classes="btn btn-sml banner-link-component-container"
               onClick={() => {
-                navigateToPage("/profile");
+                navigateToPage("/account");
               }}
             />
           </div>

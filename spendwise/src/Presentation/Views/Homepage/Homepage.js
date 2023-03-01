@@ -86,7 +86,7 @@ export default function Homepage() {
             {" "}
             Track your spending a wiser way{" "}
           </div>
-          <p className="image-banner-text">
+          <p>
             {" "}
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus
             tempor molestie lorem laoreet vehicula. Integer pellentesque mattis
@@ -97,23 +97,25 @@ export default function Homepage() {
           </p>
         </div>
       </div>
-      <div id="about" style={{ height: 500 }}>
-        <h1>This is About section</h1>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Id,
-        repellendus. Totam nihil similique a repellat minus dolor amet quasi.
-        Corporis nulla quaerat iste, sed quasi ab dolorem maxime minima animi.
-      </div>
-      <div id="features" style={{ height: 500 }}>
-        <h1>This is Features section</h1>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Id,
-        repellendus. Totam nihil similique a repellat minus dolor amet quasi.
-        Corporis nulla quaerat iste, sed quasi ab dolorem maxime minima animi.
-      </div>
-      <div id="contact" style={{ height: 1000 }}>
-        <h1>This is Contacts section</h1>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Id,
-        repellendus. Totam nihil similique a repellat minus dolor amet quasi.
-        Corporis nulla quaerat iste, sed quasi ab dolorem maxime minima animi.
+      <div className="page-content-container">
+        <div id="about" style={{ height: 500 }}>
+          <h1>This is About section</h1>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Id,
+          repellendus. Totam nihil similique a repellat minus dolor amet quasi.
+          Corporis nulla quaerat iste, sed quasi ab dolorem maxime minima animi.
+        </div>
+        <div id="features" style={{ height: 500 }}>
+          <h1>This is Features section</h1>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Id,
+          repellendus. Totam nihil similique a repellat minus dolor amet quasi.
+          Corporis nulla quaerat iste, sed quasi ab dolorem maxime minima animi.
+        </div>
+        <div id="contact" style={{ height: 1000 }}>
+          <h1>This is Contacts section</h1>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Id,
+          repellendus. Totam nihil similique a repellat minus dolor amet quasi.
+          Corporis nulla quaerat iste, sed quasi ab dolorem maxime minima animi.
+        </div>
       </div>
     </div>
   );

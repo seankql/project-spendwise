@@ -34,10 +34,10 @@ export default function Visualization() {
             }}
           />
           <Button
-            title={"Profile"}
+            title={"Account"}
             classes="btn btn-sml banner-link-component-container"
             onClick={() => {
-              navigateToPage("/profile");
+              navigateToPage("/account");
             }}
           />
         </div>

@@ -11,9 +11,9 @@
 
 .image-banner-text-container {
   position: absolute;
-  left: 20%;
+  left: 450px;
   top: 30%;
-  width: 30%;
+  max-width: 512px;
 }
 
 .image-banner-header {
@@ -22,9 +22,6 @@
   font-weight: bold;
   font-variant: small-caps;
   line-height: 100%;
-}
-
-.image-banner-text {
 }
 
 .image-banner {

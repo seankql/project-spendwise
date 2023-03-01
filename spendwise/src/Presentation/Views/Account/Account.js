@@ -4,7 +4,7 @@ import logo from "../../../Media/logo-no-background.png";
 import "../../Styles/Common.css";
 import "../../Styles/Main.css";
 
-export default function Profile() {
+export default function Account() {
   const { navigateToPage } = useViewModel();
 
   return (
@@ -34,10 +34,10 @@ export default function Profile() {
             }}
           />
           <Button
-            title={"Profile"}
+            title={"Account"}
             classes="btn btn-sml banner-link-component-container"
             onClick={() => {
-              navigateToPage("/profile");
+              navigateToPage("/account");
             }}
           />
         </div>
