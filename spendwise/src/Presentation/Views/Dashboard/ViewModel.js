@@ -1,9 +1,8 @@
-import { useState } from "react"
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useController from "./Controller";
 
 export default function DashboardViewModel() {
-
   const [error, setError] = useState("");
   const [username, setUsername] = useState("");
 
@@ -25,6 +24,6 @@ export default function DashboardViewModel() {
     error,
     username,
     getUsername,
-    navigateToHomepage
-  }
+    navigateToHomepage,
+  };
 }

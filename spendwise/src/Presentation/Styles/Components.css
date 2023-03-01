@@ -1,23 +1,23 @@
 .btn {
   padding: 20px;
   border-radius: 8px;
-  background-color: #8BC53F;
+  background-color: #8bc53f;
   color: #fff;
   font-size: 20px;
   line-height: 100%;
   font-weight: 500;
-  border: 1px #8BC53F solid;
+  border: 1px #8bc53f solid;
 }
 
 .btn:hover {
   padding: 20px;
   border-radius: 8px;
-  background-color: #5D9943;
+  background-color: #5d9943;
   color: #fff;
   font-size: 20px;
   line-height: 100%;
   font-weight: 500;
-  border: 1px #5D9943 solid;
+  border: 1px #5d9943 solid;
 }
 
 .btn-alt {
@@ -27,12 +27,12 @@
   color: black;
   font-size: 20px;
   line-height: 100%;
-  font-weight: 300;
+  font-weight: 600;
   border: 1px #fff solid;
 }
 
 .btn-alt:hover {
-  color: #8BC53F;
+  color: #8bc53f;
 }
 
 .btn-sml {

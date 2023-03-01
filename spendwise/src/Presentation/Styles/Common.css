@@ -1,44 +1,45 @@
 .banner {
-    position: sticky;
-    display: flex;
-    flex-direction: row;
-    left: 0%;
-    top: 0%;
-    right: 0%;
-    bottom: auto;
-    z-index: 12;
-    padding-top: 0px;
-    padding-bottom: 0px;
-    padding-left: 36px;
-    padding-right: 36px;
-    background-color: #fff;
-    box-shadow: 1px 1px 24px 0 rgb(6 26 54 / 12%);
-  }
+  position: sticky;
+  display: flex;
+  flex-direction: row;
+  left: 0%;
+  top: 0%;
+  right: 0%;
+  bottom: auto;
+  z-index: 12;
+  padding-top: 0px;
+  padding-bottom: 0px;
+  padding-left: 36px;
+  padding-right: 36px;
+  background-color: #fff;
+  box-shadow: 1px 1px 24px 0 rgb(6 26 54 / 12%);
+}
 
-  .banner-container {
-    display: flex;
-  }
+.banner-container {
+  display: flex;
+}
 
-  .banner-auth-component-container {
-    margin-left: 8px;
-    margin-left: 8px;
-  }
-  
-  .banner-link-component-container {
-    margin-left: 16px;
-    margin-left: 16px;
-  }
+.banner-auth-component-container {
+  margin-left: 8px;
+  margin-left: 8px;
+}
 
-  .banner-img-container {
-    height: 54px;
-  }
+.banner-link-component-container {
+  margin-left: 16px;
+  margin-left: 16px;
+}
 
-  .auth-container {
-    margin: auto 0 auto auto;
-    padding: 24px;
-  }
+.banner-img-container {
+  height: 54px;
+}
 
-  .links-container {
-    padding: 24px;
-    margin: auto;
-  }
+.auth-container {
+  margin: auto 0 auto auto;
+  padding: 24px;
+}
+
+.links-container {
+  display: flex;
+  padding: 24px;
+  margin: auto;
+}

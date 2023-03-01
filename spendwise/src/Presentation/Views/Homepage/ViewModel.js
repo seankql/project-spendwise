@@ -8,6 +8,6 @@ export default function HomepageViewModel() {
   }
 
   return {
-    navigateToDashboard
-  }
+    navigateToDashboard,
+  };
 }
