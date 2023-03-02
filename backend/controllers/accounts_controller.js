@@ -18,7 +18,7 @@ accountsController.post("/", async (req, res) => {
       return res.status(400).send("Error creating account");
     }
   } catch (err) {
-    return res.status(500).send("Internal Server error" + err);
+    return res.status(500).send("Internal Server error");
   }
 });
 
@@ -43,7 +43,7 @@ accountsController.put("/:accountId", async (req, res) => {
         .send("Error updating account for account id: " + accountId);
     }
   } catch (err) {
-    return res.status(500).send("Internal Server error" + err);
+    return res.status(500).send("Internal Server error");
   }
 });
 
@@ -61,7 +61,7 @@ accountsController.delete("/:accountId", async (req, res) => {
         .send("Error deleting account for account id: " + accountId);
     }
   } catch (err) {
-    return res.status(500).send("Internal Server error: " + err);
+    return res.status(500).send("Internal Server error");
   }
 });
 
