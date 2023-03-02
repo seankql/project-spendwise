@@ -1,43 +1,43 @@
 -- create a schema
-CREATE SCHEMA IF NOT EXISTS spendwise;
+CREATE SCHEMA IF NOT EXISTS public;
 
-CREATE TABLE IF NOT EXISTS spendwise.User (
+CREATE TABLE IF NOT EXISTS Users (
   userId SERIAL PRIMARY KEY,
   username VARCHAR(255) NOT NULL,
   hashedPassword VARCHAR(255) NOT NULL,
   email VARCHAR(255) NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS spendwise.Account (
+CREATE TABLE IF NOT EXISTS Accounts (
   accountId SERIAL PRIMARY KEY,
-  userId INTEGER NOT NULL REFERENCES spendwise.User(userId),
+  userId INTEGER NOT NULL REFERENCES Users(userId),
   accountNumber VARCHAR(255) NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS spendwise.Transaction (
+CREATE TABLE IF NOT EXISTS Transactions (
   transactionId SERIAL PRIMARY KEY,
   transactionDate DATE NOT NULL,
   descriptions VARCHAR(255) NOT NULL,
   amount DECIMAL(10, 2) NOT NULL,
-  accountId INTEGER NOT NULL REFERENCES spendwise.Account(accountId),
+  accountId INTEGER NOT NULL REFERENCES Accounts(accountId),
   category VARCHAR(255) NOT NULL
 );
 
 -- Insert some sample data for local testing
-INSERT INTO spendwise.User (username, hashedPassword, email)
+INSERT INTO Users (username, hashedPassword, email)
 VALUES
 ('user1', 'password1', 'user1@example.com'),
 ('user2', 'password2', 'user2@example.com'),
 ('user3', 'password3', 'user3@example.com');
 
-INSERT INTO spendwise.Account (userId, accountNumber)
+INSERT INTO Accounts (userId, accountNumber)
 VALUES
 (1, '333333333'),
 (1, '444444444'),
 (2, '111111111'),
 (3, '222222222');
 
-INSERT INTO spendwise.Transaction (transactionDate, descriptions, amount, accountId, category)
+INSERT INTO Transactions (transactionDate, descriptions, amount, accountId, category)
 VALUES
 ('2023-01-01', 'Groceries', 50.00, 1, 'Food'),
 ('2023-01-02', 'Gas', 30.00, 1, 'Transportation'),
