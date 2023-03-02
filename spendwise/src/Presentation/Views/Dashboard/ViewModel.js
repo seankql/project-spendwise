@@ -5,8 +5,9 @@ import useController from "./Controller";
 export default function DashboardViewModel() {
   const [error, setError] = useState("");
   const [username, setUsername] = useState("");
+  const [accounts, setAccounts] = useState("");
 
-  const { getUsernameUseCase } = useController();
+  const { getUsernameUseCase, getAccountsUseCase } = useController();
   const navigate = useNavigate();
 
   // Would be an async function that calls controller
@@ -14,6 +15,12 @@ export default function DashboardViewModel() {
     const { result, error } = getUsernameUseCase();
     setError(error);
     setUsername(result);
+  }
+
+  function getAccounts() {
+    const { result, error } = getAccountsUseCase();
+    setError(error);
+    setAccounts(result);
   }
 
   function navigateToPage(page = "/") {
@@ -24,6 +31,8 @@ export default function DashboardViewModel() {
     error,
     username,
     getUsername,
+    accounts,
+    getAccounts,
     navigateToPage,
   };
 }

@@ -51,6 +51,11 @@
   flex-direction: row;
 }
 
+.page-col-container {
+  display: flex;
+  flex-direction: column;
+}
+
 .row-right-element {
   margin-right: 0;
   margin-left: auto;

@@ -12,35 +12,20 @@ import "../../Styles/Common.css";
 import "../../Styles/Dashboard.css";
 import "../../Styles/Main.css";
 
+// TODO: Add subbanner under the main banner with scrollable buttons that
+// take users to different sections of the dashboard.
+
 export default function Dashboard() {
-  const { navigateToPage, username, getUsername } = useViewModel();
+  const { navigateToPage, username, getUsername, accounts, getAccounts } =
+    useViewModel();
 
   // Perform some sort of action
   const onChange = (item, name) => {};
 
-  // Mock data
-  const accounts = [
-    {
-      label: "All accounts",
-      value: "all",
-    },
-    {
-      label: "TD - 1008531024",
-      value: "TD - 1008531024",
-    },
-    {
-      label: "RBC - 1001867295",
-      value: "RBC - 1001867295",
-    },
-    {
-      label: "CIBC - 1009671296",
-      value: "CIBC - 1009671296",
-    },
-  ];
-
   useEffect(() => {
     getUsername();
-  }, [getUsername]);
+    getAccounts();
+  }, []);
 
   return (
     <div>

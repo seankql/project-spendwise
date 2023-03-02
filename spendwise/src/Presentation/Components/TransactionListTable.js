@@ -18,8 +18,8 @@ export default function List({ data }) {
           </tr>
         </thead>
         <tbody>
-          <tr class>
-            <td class>Feb 28 2023</td>
+          <tr>
+            <td>Feb 28 2023</td>
             <td>Starbucks - Coffee</td>
             <td>Fast Food</td>
             <td className="transaction-list-last-col">$5.79</td>
