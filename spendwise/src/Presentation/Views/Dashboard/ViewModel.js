@@ -19,7 +19,7 @@ export default function DashboardViewModel() {
   function navigateToPage(page = "/") {
     navigate(page);
   }
-  
+
   return {
     error,
     username,

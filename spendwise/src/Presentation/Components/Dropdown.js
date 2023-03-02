@@ -1,16 +1,17 @@
-import { Dropdown } from 'reactjs-dropdown-component';
-import styled from 'styled-components';
+import { Dropdown } from "reactjs-dropdown-component";
+import styled from "styled-components";
 import "../Styles/Components.css";
 
+// Override default styling of dropdown
 const StyledParent = styled.div`
-   & .dd-wrapper {
+  & .dd-wrapper {
     position: relative;
     width: 250px;
     font-size: 20px;
     user-select: none;
-   }
+  }
 
-   & .dd-header {
+  & .dd-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -21,9 +22,9 @@ const StyledParent = styled.div`
     line-height: 38px;
     cursor: default;
     cursor: pointer;
-   }
+  }
 
-   & .dd-header-title {
+  & .dd-header-title {
     margin: 10px;
     font-weight: 300;
     font-size: 20px;
@@ -71,12 +72,7 @@ const StyledParent = styled.div`
 export default function List({ onChange, title, name, list }) {
   return (
     <StyledParent>
-      <Dropdown
-        name={name}
-        title={title}
-        list={list}
-        onChange={onChange}
-      />
+      <Dropdown name={name} title={title} list={list} onChange={onChange} />
     </StyledParent>
   );
 }
