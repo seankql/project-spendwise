@@ -1,4 +1,5 @@
 import Router from "express";
+import Sentry from "@sentry/node";
 import { AccountsModel } from "../models/accountsModel.js";
 
 // Base route: /api/accounts
@@ -18,6 +19,7 @@ accountsController.post("/", async (req, res) => {
       return res.status(400).send("Error creating account");
     }
   } catch (err) {
+    Sentry.captureException(err);
     return res.status(500).send("Internal Server error");
   }
 });
@@ -43,6 +45,7 @@ accountsController.put("/:accountId", async (req, res) => {
         .send("Error updating account for account id: " + accountId);
     }
   } catch (err) {
+    Sentry.captureException(err);
     return res.status(500).send("Internal Server error");
   }
 });
@@ -61,6 +64,7 @@ accountsController.delete("/:accountId", async (req, res) => {
         .send("Error deleting account for account id: " + accountId);
     }
   } catch (err) {
+    Sentry.captureException(err);
     return res.status(500).send("Internal Server error");
   }
 });
@@ -81,6 +85,7 @@ accountsController.get("/user/:userId", async (req, res) => {
         .send("Error fetching accounts for user id: " + userId);
     }
   } catch (err) {
+    Sentry.captureException(err);
     return res.status(500).send("Internal Server error");
   }
 });
