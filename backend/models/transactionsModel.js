@@ -1,16 +1,8 @@
 import BaseModel from "./baseModel";
 
 class TransactionModel extends BaseModel {
-  constructor(
-    transactionId,
-    transactionDate,
-    descriptions,
-    amount,
-    accountId,
-    category
-  ) {
+  constructor(transactionDate, descriptions, amount, accountId, category) {
     super("Transactions", "transactionId");
-    this.transactionId = transactionId;
     this.transactionDate = transactionDate;
     this.descriptions = descriptions;
     this.amount = amount;
@@ -18,27 +10,25 @@ class TransactionModel extends BaseModel {
     this.category = category;
   }
   async create() {
-    const data = await super.create({
-      userId: this.userId,
+    return await super.create({
+      transactionDate: this.transactionDate,
+      descriptions: this.descriptions,
       amount: this.amount,
-      date: this.date,
-      description: this.description,
+      accountId: this.accountId,
       category: this.category,
-      type: this.type,
     });
-    return data.length > 0 ? new TransactionModel(data) : null;
   }
   async findByPK(pk) {
-    const data = await super.findByPK(pk);
-    return data.length > 0 ? new TransactionModel(data) : null;
+    return await super.findByPK(pk);
   }
   async findAll(condition) {
-    const data = await super.findAll(condition);
-    return data.length > 0 ? new TransactionModel(data) : null;
+    return await super.findAll(condition);
   }
   async deleteByPK(pk) {
-    const data = await super.deleteByPK(pk);
-    return data.length > 0 ? new TransactionModel(data) : null;
+    return await super.deleteByPK(pk);
+  }
+  async updateByPK(pk, data) {
+    return await super.updateByPK(pk, data);
   }
 }
 export { TransactionModel };

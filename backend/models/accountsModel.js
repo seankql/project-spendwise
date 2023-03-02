@@ -1,32 +1,28 @@
-import BaseModel from "./baseModel";
+import BaseModel from "./baseModel.js";
 
 class AccountsModel extends BaseModel {
-  constructor(accountId, userId, accountNumber) {
+  constructor(userId, accountName) {
     super("Accounts", "accountId");
-    this.accountId = accountId;
     this.userId = userId;
-    this.accountNumber = accountNumber;
+    this.accountName = accountName;
   }
   async create() {
-    const data = await super.create({
+    return await super.create({
       userId: this.userId,
       accountName: this.accountName,
-      accountType: this.accountType,
-      balance: this.balance,
     });
-    return data.length > 0 ? new AccountsModel(data) : null;
   }
   async findByPK(pk) {
-    const data = await super.findByPK(pk);
-    return data.length > 0 ? new AccountsModel(data) : null;
+    return await super.findByPK(pk);
   }
   async findAll(condition) {
-    const data = await super.findAll(condition);
-    return data.length > 0 ? new AccountsModel(data) : null;
+    return await super.findAll(condition);
   }
   async deleteByPK(pk) {
-    const data = await super.deleteByPK(pk);
-    return data.length > 0 ? new AccountsModel(data) : null;
+    return await super.deleteByPK(pk);
+  }
+  async updateByPK(pk, data) {
+    return await super.updateByPK(pk, data);
   }
 }
 export { AccountsModel };

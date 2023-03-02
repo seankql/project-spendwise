@@ -22,6 +22,14 @@ class BaseModel {
     return result.rows[0];
   }
 
+  /**
+   * example of optional parameters:
+   * where: { key: value }
+   * orderBy: "key ASC"
+   * offset: 0
+   * limit: 0
+   * include: { table: "table", foreignKey: "key"}
+   */
   async findAll({
     where = {},
     orderBy = "",
@@ -35,9 +43,7 @@ class BaseModel {
     const placeholders = keys.map((_, i) => `$${i + 1}`).join(" AND ");
 
     let query = {
-      text: `SELECT ${this.table}.*, ${include.select || ""} FROM ${
-        this.table
-      }`,
+      text: `SELECT ${this.table}.* FROM ${this.table}`,
     };
     if (include.table && include.foreignKey) {
       query.text += ` INNER JOIN ${include.table} ON ${this.table}.${include.foreignKey} = ${include.table}.id`;
@@ -60,7 +66,7 @@ class BaseModel {
 
     const result = await client.query(query);
     client.release();
-    return result.rows[0];
+    return result.rows;
   }
 
   async deleteByPK(pk) {
@@ -86,12 +92,21 @@ class BaseModel {
     client.release();
     return result.rows[0];
   }
-  objectCopy() {
-    const newObj = {};
-    for (const [key, value] of Object.entries(this)) {
-      newObj[key] = value;
-    }
-    return newObj;
+
+  async updateByPK(pk, data) {
+    const client = await pool.connect();
+    const keys = Object.keys(data);
+    const values = Object.values(data);
+    const placeholders = keys.map((_, i) => `$${i + 1}`).join(", ");
+    const query = {
+      text: `UPDATE ${this.table} SET (${keys}) = (${placeholders}) WHERE ${
+        this.primaryKey
+      } = $${values.length + 1} RETURNING *;`,
+      values: [...values, pk],
+    };
+    const result = await client.query(query);
+    client.release();
+    return result.rows[0];
   }
 }
 

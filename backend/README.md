@@ -27,7 +27,7 @@
    ```
    npm run dev
    ```
-7. The development backend will be running at http://localhost:3000
+7. The development backend will be running at http://localhost:3001
 
 8. To Drop All Tables
    ```
@@ -47,7 +47,7 @@
    - Contains fields such as
      - accountId (primary key)
      - userId (foregin key)
-     - accountNumber
+     - accountName
    - Each account should be associated with a user.
      - One user can have multiple account
      - One account must have one user

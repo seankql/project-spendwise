@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS Users (
 CREATE TABLE IF NOT EXISTS Accounts (
   accountId SERIAL PRIMARY KEY,
   userId INTEGER NOT NULL REFERENCES Users(userId),
-  accountNumber VARCHAR(255) NOT NULL
+  accountName VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS Transactions (
@@ -30,12 +30,12 @@ VALUES
 ('user2', 'password2', 'user2@example.com'),
 ('user3', 'password3', 'user3@example.com');
 
-INSERT INTO Accounts (userId, accountNumber)
+INSERT INTO Accounts (userId, accountName)
 VALUES
-(1, '333333333'),
-(1, '444444444'),
-(2, '111111111'),
-(3, '222222222');
+(1, 'Account 1 A'),
+(1, 'Account 1 B'),
+(2, 'Account 2 A'),
+(3, 'Account 3 A');
 
 INSERT INTO Transactions (transactionDate, descriptions, amount, accountId, category)
 VALUES
