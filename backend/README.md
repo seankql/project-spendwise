@@ -61,7 +61,6 @@
      - category
    - Each transaction must be associated with one account & one category.
 
-
 ## Deployment
 
 To be continued
