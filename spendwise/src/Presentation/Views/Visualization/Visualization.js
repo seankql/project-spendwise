@@ -2,12 +2,7 @@ import React, { useEffect } from "react";
 import useViewModel from "./ViewModel";
 import Button from "../../Components/Button";
 import logo from "../../../Media/logo-no-background.png";
-import downArrow from "../../../Media/arrowDown.svg";
-import TransactionViewToggle from "../../Components/TransactionViewToggle";
-import TransactionListTable from "../../Components/TransactionListTable";
-import ListScroller from "../../Components/ListScroller";
 import SearchFilterSideBar from "../../Components/SearchFilterSideBar";
-import FormCard from "../../Components/FormCard";
 import Dropdown from "../../Components/Dropdown";
 import "../../Styles/Common.css";
 import "../../Styles/Main.css";
@@ -19,10 +14,6 @@ export default function Visualization() {
 
   // Perform some sort of action
   const onChange = (item, name) => {};
-
-  const addTransactionDropDown = () => {
-    alert("dd btn check");
-  };
 
   useEffect(() => {
     getUsername();

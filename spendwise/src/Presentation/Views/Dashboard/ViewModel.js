@@ -4,8 +4,8 @@ import useController from "./Controller";
 
 export default function DashboardViewModel() {
   const [error, setError] = useState("");
-  const [username, setUsername] = useState("");
-  const [accounts, setAccounts] = useState("");
+  const [username, setUsername] = useState(null);
+  const [accounts, setAccounts] = useState(null);
 
   const { getUsernameUseCase, getAccountsUseCase } = useController();
   const navigate = useNavigate();

@@ -1,3 +1,4 @@
+import React, { useEffect } from "react";
 import useViewModel from "./ViewModel";
 import Button from "../../Components/Button";
 import logo from "../../../Media/logo-no-background.png";
@@ -9,13 +10,19 @@ import "../../Styles/Account.css";
 import "../../Styles/Main.css";
 
 export default function Account() {
-  const { navigateToPage } = useViewModel();
+  const { navigateToPage, basicInfo, getBasicInfo, accounts, getAccounts } =
+    useViewModel();
 
   // TODO: add functionality to Create New Account
   // TODO: Show different "Bank Information" form depending on whether or not
   // User has linked it to a bank account or not. If not, users should be prompted
   // to link their account to a bank account, otherwise, just show the current
   // information and have an option to unlink
+
+  useEffect(() => {
+    getBasicInfo();
+    getAccounts();
+  }, []);
 
   return (
     <div>
@@ -70,7 +77,7 @@ export default function Account() {
             Profile & Alerts
           </div>
           <div className="section-wrapper page-row-container section-divider">
-            <InfoCard title={"Basic Information"} classes={"basic-info-card"} />
+            <InfoCard data={basicInfo} title={"Basic Information"} classes={"basic-info-card"} />
             <div className="page-col-container row-right-element">
               <AlertCard title={"Alerts"} classes={"alert-card "} />
               <div className="section-wrapper">
@@ -95,11 +102,12 @@ export default function Account() {
         <div className="section-wrapper section-header-text"> Accounts </div>
         <div className="section-wrapper page-row-container">
           <InfoCard
+            data={!accounts ? null : accounts[0]}
             title={"Account information"}
             classes={"create-form-card"}
           />
           <div className="page-col-container row-right-element">
-            <InfoCard title={"Bank Information"} classes={"create-form-card"} />
+            <InfoCard data={!accounts ? null : accounts[2]} title={"Bank Information"} classes={"create-form-card"} />
           </div>
         </div>
         <div className="section-wrapper section-divider page-row-container">
@@ -124,11 +132,12 @@ export default function Account() {
         </div>
         <div className="section-wrapper page-row-container">
           <InfoCard
+            data={!accounts ? null : accounts[1]}
             title={"Account information"}
             classes={"create-form-card"}
           />
           <div className="page-col-container row-right-element">
-            <InfoCard title={"Bank Information"} classes={"create-form-card"} />
+            <InfoCard data={!accounts ? null : accounts[3]} title={"Bank Information"} classes={"create-form-card"} />
           </div>
         </div>
         <div className="section-wrapper section-divider page-row-container">

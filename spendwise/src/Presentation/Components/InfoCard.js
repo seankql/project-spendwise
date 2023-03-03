@@ -5,6 +5,21 @@ import "../Styles/Account.css";
 // TODO: data should be some sort of list with key value mappings. Rows
 // should then be generated based on the given data
 export default function List({ title, data, classes = "" }) {
+
+  const createNewRowElement = (id, key, value) => {
+    return (
+      <div key={id} className="page-row-container">
+        <div className="card-sml-padding-wrapper component-subheader-text">
+          {key}
+        </div>
+        <div className="card-sml-padding-wrapper component-subheader-text row-right-element">
+          {value}
+        </div>
+      </div>);
+  }
+
+  const rowItems = data?.map((item) => createNewRowElement(item.key, item.key, item.value));
+
   return (
     <div className={"card-wrapper " + classes}>
       <div className="page-row-container">
@@ -13,44 +28,7 @@ export default function List({ title, data, classes = "" }) {
         </div>
       </div>
       <div className="card-wrapper-2">
-        <div className="page-row-container">
-          <div className="card-sml-padding-wrapper component-subheader-text">
-            First Name
-          </div>
-          <div className="card-sml-padding-wrapper component-subheader-text row-right-element">
-            Bob
-          </div>
-        </div>
-        <div className="card-wrapper-2">
-          <div className="page-row-container">
-            <div className="card-sml-padding-wrapper component-subheader-text">
-              Last Name
-            </div>
-            <div className="card-sml-padding-wrapper component-subheader-text row-right-element">
-              Bobber
-            </div>
-          </div>
-        </div>
-        <div className="card-wrapper-2">
-          <div className="page-row-container">
-            <div className="card-sml-padding-wrapper component-subheader-text">
-              Email
-            </div>
-            <div className="card-sml-padding-wrapper component-subheader-text row-right-element">
-              BobbyBob@gmail.com
-            </div>
-          </div>
-        </div>
-        <div className="card-wrapper-2">
-          <div className="page-row-container">
-            <div className="card-sml-padding-wrapper component-subheader-text">
-              Member Since
-            </div>
-            <div className="card-sml-padding-wrapper component-subheader-text row-right-element">
-              April 16, 2019
-            </div>
-          </div>
-        </div>
+        {rowItems}
       </div>
     </div>
   );
