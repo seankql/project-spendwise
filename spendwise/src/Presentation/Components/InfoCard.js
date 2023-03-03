@@ -16,7 +16,7 @@ export default function List({ title, data, classes = "" }) {
       </div>);
   }
 
-  const rowItems = data?.map((item) => createNewRowElement(item.key, item.key, item.value));
+  const rowItems = data?.map((item) => createNewRowElement(item.id, item.key, item.value));
 
   return (
     <div className={"card-wrapper " + classes}>

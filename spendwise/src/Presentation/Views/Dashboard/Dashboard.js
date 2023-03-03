@@ -22,6 +22,13 @@ export default function Dashboard() {
   // Perform some sort of action
   const onChange = (item, name) => {};
 
+  const mockTransactions = [
+    { id: 1, date: "Feb 28 2023", name: "Starbucks - Coffee", category: "Fast Food", amount: "$5.79"},
+    { id: 2, date: "Feb 25 2023", name: "Starbucks - Coffee", category: "Fast Food", amount: "$5.79"},
+    { id: 3, date: "Feb 23 2023", name: "Panam - Parking", category: "Parking and Transport", amount: "$8.50"},
+    { id: 4, date: "Feb 23 2023", name: "Starbucks - Coffee", category: "Fast Food", amount: "$5.79"},
+  ];
+
   useEffect(() => {
     getUsername();
     getAccounts();
@@ -121,7 +128,7 @@ export default function Dashboard() {
           />
         </div>
         <div className="section-divider">
-          <TransactionListTable />
+          <TransactionListTable data={mockTransactions} />
           <div className="transaction-list-footer">
             See transactions page for all transactions
           </div>
