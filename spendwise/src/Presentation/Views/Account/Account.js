@@ -10,8 +10,11 @@ import "../../Styles/Account.css";
 import "../../Styles/Main.css";
 
 export default function Account() {
-  const { navigateToPage, basicInfo, getBasicInfo, accounts, getAccounts } =
-    useViewModel();
+  const { navigateToPage, getArrow,
+    basicInfo, getBasicInfo,
+    accounts, getAccounts,
+    transactionVisiblity, toggleTransactionVisiblity,
+  } = useViewModel();
 
   // TODO: add functionality to Create New Account
   // TODO: Show different "Bank Information" form depending on whether or not
@@ -20,12 +23,12 @@ export default function Account() {
   // information and have an option to unlink
 
   const accountCreateKeys = [
-    { id: 1, key: "Name"}
+    { id: 1, key: "Name" }
   ];
 
   const BankLinkKeys = [
-    { id: 1, key: "Bank Info"},
-    { id: 2, key: "or something"}
+    { id: 1, key: "Bank Info" },
+    { id: 2, key: "or something" }
   ];
 
   useEffect(() => {
@@ -89,25 +92,8 @@ export default function Account() {
             <InfoCard data={basicInfo} title={"Basic Information"} classes={"basic-info-card"} />
             <div className="page-col-container row-right-element">
               <AlertCard title={"Alerts"} classes={"alert-card "} />
-              <div className="section-wrapper">
-                <Button
-                  title={"Create New Account"}
-                  classes={"btn alert-card"}
-                />
-              </div>
             </div>
           </div>
-        </div>
-        <div className="section-wrapper section-header-text">
-          Create New Account
-        </div>
-        <div className="section-wrapper page-row-container section-divider">
-          <FormCard data={accountCreateKeys} title={"Basic Information"} classes={"create-form-card"} />
-          <FormCard
-            data={BankLinkKeys}
-            title={"Link To Bank Account"}
-            classes={"row-right-element create-form-card"}
-          />
         </div>
         <div className="section-wrapper section-header-text"> Accounts </div>
         <div className="section-wrapper page-row-container">
@@ -167,6 +153,26 @@ export default function Account() {
             <Button
               title={"Unlink Account"}
               classes={"btn btn-sml account-btns-right"}
+            />
+          </div>
+        </div>
+        <div className="section-divider">
+          <div className="section-wrapper page-row-container section-header-text">
+            Create New Account
+            <button className="drop-down-btn" onClick={() => toggleTransactionVisiblity()}>
+              <img
+                className="row-right-element"
+                src={getArrow()}
+                alt="downArrow"
+              ></img>
+            </button>
+          </div>
+          <div className={"section-wrapper page-row-container " + transactionVisiblity}>
+            <FormCard data={accountCreateKeys} title={"Basic Information"} classes={"create-form-card"} />
+            <FormCard
+              data={BankLinkKeys}
+              title={"Link To Bank Account"}
+              classes={"row-right-element create-form-card"}
             />
           </div>
         </div>

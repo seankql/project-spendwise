@@ -27,7 +27,6 @@ export default function TransactionsViewModel() {
   }
 
   function toggleTransactionVisiblity() {
-    console.log(transactionVisiblity);
     if (transactionVisiblity === "hidden") {
       setTransactionVisiblity("");
     }
