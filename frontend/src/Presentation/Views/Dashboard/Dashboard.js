@@ -20,13 +20,13 @@ export default function Dashboard() {
     useViewModel();
 
   // Perform some sort of action
-  const onChange = (item, name) => {};
+  const onChange = (item, name) => { };
 
   const mockTransactions = [
-    { id: 1, date: "Feb 28 2023", name: "Starbucks - Coffee", category: "Fast Food", amount: "$5.79"},
-    { id: 2, date: "Feb 25 2023", name: "Starbucks - Coffee", category: "Fast Food", amount: "$5.79"},
-    { id: 3, date: "Feb 23 2023", name: "Panam - Parking", category: "Parking and Transport", amount: "$8.50"},
-    { id: 4, date: "Feb 23 2023", name: "Starbucks - Coffee", category: "Fast Food", amount: "$5.79"},
+    { id: 1, date: "Feb 28 2023", name: "Starbucks - Coffee", category: "Fast Food", amount: "$5.79" },
+    { id: 2, date: "Feb 25 2023", name: "Starbucks - Coffee", category: "Fast Food", amount: "$5.79" },
+    { id: 3, date: "Feb 23 2023", name: "Panam - Parking", category: "Parking and Transport", amount: "$8.50" },
+    { id: 4, date: "Feb 23 2023", name: "Starbucks - Coffee", category: "Fast Food", amount: "$5.79" },
   ];
 
   useEffect(() => {
@@ -99,6 +99,24 @@ export default function Dashboard() {
             <SummaryCard title="This Month's Spending" data="$896.21" />
           </div>
         </div>
+        <div className="section-divider">
+          <div className="section-wrapper page-row-container">
+            <div className="section-header-text">Recent Transactions</div>
+            <Button
+              title={"See all transactions"}
+              classes="btn btn-sml banner-link-component-container row-right-element"
+              onClick={() => {
+                navigateToPage("/transactions");
+              }}
+            />
+          </div>
+          <div className="section-divider">
+            <TransactionListTable data={mockTransactions} />
+            <div className="transaction-list-footer">
+              See transactions page for all transactions
+            </div>
+          </div>
+        </div>
         <div className="section-wrapper page-row-container">
           <div className="section-header-text">Highlights</div>
         </div>
@@ -117,22 +135,6 @@ export default function Dashboard() {
           Category Chart
         </div>
         <img className="section-divider" src={pieChart} alt="logo" />
-        <div className="section-wrapper page-row-container">
-          <div className="section-subheader-text">Recent Transactions</div>
-          <Button
-            title={"See all transactions"}
-            classes="btn btn-sml banner-link-component-container row-right-element"
-            onClick={() => {
-              navigateToPage("/transactions");
-            }}
-          />
-        </div>
-        <div className="section-divider">
-          <TransactionListTable data={mockTransactions} />
-          <div className="transaction-list-footer">
-            See transactions page for all transactions
-          </div>
-        </div>
       </div>
     </div>
   );
