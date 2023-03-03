@@ -116,6 +116,58 @@ $ curl -X GET
 
 ## Reports API
 
+### Generate Reports based on userId
+
+- URL: `GET /api/reports?userId=${}&startDate=${}&endDate=${}`
+  - content-type: `application/json`
+  - Description: Generate Reports based on userId .
+  - Query parameters:
+    - userId (string, required): ID of the user to get the accounts for.
+    - startDate (date, required): min startDate of the transactions. in XXXX-MM-DD format
+    - endDate (date, required): max endDate of the transactions. in XXXX-MM-DD format
+  - response: 200
+    - content-type: `application/json`
+    - body: object
+      - transactions: (array) an array of all transactions belonging to the user across all his accounts in the specified time limits.
+      - income: Total amount of income in this period of time.
+      - expense: Total amount of expense in this period of time.
+  - response: 400
+    - body: Bad Request
+  - response: 500
+    - body: Internal Server Error
+
+```
+$ curl -X GET
+       -H "Content-Type: `application/json`"
+       http://localhost:3001/api/reports?userId=1&startDate=2023-01-02&endDate=2023-03-17'
+```
+
+### Generate Reports based on accountId
+
+- URL: `GET /api/reports/accounts?accountId=${}&startDate=${}&endDate=${}`
+  - content-type: `application/json`
+  - Description: Generate Reports based on accountId .
+  - Query parameters:
+    - accountId (string, required): ID of the account to get the transactions for.
+    - startDate (date, required): min startDate of the transactions. in XXXX-MM-DD format
+    - endDate (date, required): max endDate of the transactions. in XXXX-MM-DD format
+  - response: 200
+    - content-type: `application/json`
+    - body: object
+      - transactions: (array) an array of all transactions belonging to the account in the specified time limits.
+      - income: Total amount of income in this period of time.
+      - expense: Total amount of expense in this period of time.
+  - response: 400
+    - body: Bad Request
+  - response: 500
+    - body: Internal Server Error
+
+```
+$ curl -X GET
+       -H "Content-Type: `application/json`"
+       http://localhost:3001/api/reports/accounts?accountId=1&startDate=2023-01-02&endDate=2023-03-17'
+```
+
 ## Transactions API
 
 ### Get the most recent Transactions
