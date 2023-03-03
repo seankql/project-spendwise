@@ -67,6 +67,11 @@ const StyledParent = styled.div`
     cursor: default !important;
     cursor: pointer !important;
   }
+
+    & .dd-list-item:hover {
+      background-color: #8bc53f !important;
+      color: white !important;
+    }
 `;
 
 export default function List({ onChange, title, name, list }) {
