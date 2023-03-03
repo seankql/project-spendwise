@@ -38,9 +38,6 @@ export default function List({ data }) {
           </tr>
         </tbody>
       </table>
-      <div className="transaction-list-footer">
-        See transactions page for all transactions
-      </div>
     </div>
   );
 }

@@ -23,6 +23,15 @@
   margin-top: 24px;
 }
 
+.subsection-wrapper {
+  margin-top: 12px;
+}
+
+.categories-wrapper {
+  padding: 8px;
+  border-radius: 8px;
+}
+
 .section-divider {
   border-bottom: 1px #e0e0e0 solid;
   padding-bottom: 10px;

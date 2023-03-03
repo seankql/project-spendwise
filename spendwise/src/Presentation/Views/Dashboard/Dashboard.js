@@ -122,6 +122,9 @@ export default function Dashboard() {
         </div>
         <div className="section-divider">
           <TransactionListTable />
+          <div className="transaction-list-footer">
+            See transactions page for all transactions
+          </div>
         </div>
       </div>
     </div>

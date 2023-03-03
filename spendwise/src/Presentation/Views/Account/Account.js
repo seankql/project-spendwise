@@ -67,8 +67,7 @@ export default function Account() {
         <div className="page-header-text">
           Account & Settings
           <div className="section-wrapper section-header-text">
-            {" "}
-            Profile & Alerts{" "}
+            Profile & Alerts
           </div>
           <div className="section-wrapper page-row-container section-divider">
             <InfoCard title={"Basic Information"} classes={"basic-info-card"} />
@@ -84,21 +83,14 @@ export default function Account() {
           </div>
         </div>
         <div className="section-wrapper section-header-text">
-          {" "}
-          Create New Account{" "}
+          Create New Account
         </div>
-        <div className="section-wrapper page-row-container">
+        <div className="section-wrapper page-row-container section-divider">
           <FormCard title={"Basic Information"} classes={"create-form-card"} />
           <FormCard
             title={"Link To Bank Account"}
             classes={"row-right-element create-form-card"}
           />
-        </div>
-        <div className="section-wrapper page-row-container section-divider">
-          <div className="row-right-element">
-            <Button title={"Cancel"} classes={"btn btn-sml confirm-btns"} />
-            <Button title={"Confirm"} classes={"btn btn-sml confirm-btns"} />
-          </div>
         </div>
         <div className="section-wrapper section-header-text"> Accounts </div>
         <div className="section-wrapper page-row-container">

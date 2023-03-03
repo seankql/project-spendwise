@@ -45,6 +45,27 @@
   font-size: 14px;
 }
 
+.btn-form {
+  margin: auto;
+  width: 25%;
+  padding: 14px;
+  font-size: 14px;
+}
+
+.btn-form:hover {
+  margin: auto;
+  width: 25%;
+  padding: 14px;
+  font-size: 14px;
+}
+
+.btn-form-wrapper {
+  border-top: 1px solid #e0e0e0;
+  display: flex;
+  flex-direction: row;
+  padding: 8px;
+}
+
 .card-wrapper {
   display: flex;
   flex-direction: column;
@@ -117,4 +138,78 @@
   margin: auto;
   padding: 12px;
   width: fit-content;
+}
+
+.toggle-container {
+  display: flex;
+  flex-direction: row;
+  border: #000 2px solid;
+  height: 32px;
+  width: 96px;
+}
+
+.toggle-btn-right {
+  height: 32px;
+  width: 48px;
+  margin: auto;
+  border: none;
+}
+
+.toggle-btn-right:hover {
+  background-color: #8bc53f;
+}
+
+.toggle-btn-left {
+  height: 32px;
+  width: 48px;
+  margin: auto;
+  border: none;
+  border-right: 2px solid black;
+  background-color: #5d9943;
+}
+
+.toggle-btn-left:hover {
+  background-color: #8bc53f;
+}
+
+.toggle-img {
+  margin: 0;
+  background-color: none;
+  border: none;
+}
+
+.scroll-btn-right {
+  margin: auto;
+  margin-left: 0px;
+  max-height: 32px;
+  max-width: 32px;
+}
+
+.scroll-btn-left {
+  margin: auto;
+  margin-right: 0px;
+  max-height: 32px;
+  max-width: 32px;
+}
+
+.scroll-right-img {
+  margin: 0;
+  padding: 0;
+  transform: scaleX(-1);
+}
+
+.scroll-left-img {
+  margin: 0;
+  padding: 0;
+}
+
+.list-scroll-container {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  height: 20px;
+}
+
+.list-scroll-element {
+  margin-left: 20px;
+  margin-right: 20px;
 }

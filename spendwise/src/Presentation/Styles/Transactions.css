@@ -1,0 +1,21 @@
+.search-filter-col {
+  width: calc(1024px * 0.3);
+  border: 1px solid #e0e0e0;
+  padding: 8px;
+}
+
+.transactions-col {
+  width: calc(1024px * 0.7);
+  padding-left: 20px;
+  border: 1px solid #e0e0e0;
+  border-left: none;
+  padding: 8px;
+}
+
+.drop-down-btn {
+  display: flex;
+  margin-right: 0;
+  margin-left: auto;
+  background: none;
+  border: none;
+}
