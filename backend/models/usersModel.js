@@ -1,4 +1,4 @@
-import BaseModel from "./baseModel";
+import BaseModel from "./baseModel.js";
 
 class UsersModel extends BaseModel {
   constructor(username, hashedPassword, email) {
