@@ -2,8 +2,6 @@ import "../Styles/Components.css";
 import "../Styles/Common.css";
 import "../Styles/Account.css";
 
-// TODO: data should be some sort of list with key value mappings. Rows
-// should then be generated based on the given data
 export default function List({ title, data, classes = "" }) {
 
   const createNewRowElement = (id, key, value) => {

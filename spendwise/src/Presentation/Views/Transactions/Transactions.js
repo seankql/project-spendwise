@@ -17,6 +17,13 @@ export default function Transactions() {
   const { navigateToPage, username, getUsername, accounts, getAccounts } =
     useViewModel();
 
+  const transactionKeys = [
+    { id: 1, key: "Name"},
+    { id: 2, key: "Amount"},
+    { id: 3, key: "Category"},
+    { id: 4, key: "Description"}
+  ];
+
   // Perform some sort of action
   const onChange = (item, name) => {};
 
@@ -98,6 +105,7 @@ export default function Transactions() {
           </button>
         </div>
         <FormCard
+          data={transactionKeys}
           title={"Add Transaction"}
           classes={"create-form-card section-wrapper"}
         />

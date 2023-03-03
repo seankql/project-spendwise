@@ -19,6 +19,15 @@ export default function Account() {
   // to link their account to a bank account, otherwise, just show the current
   // information and have an option to unlink
 
+  const accountCreateKeys = [
+    { id: 1, key: "Name"}
+  ];
+
+  const BankLinkKeys = [
+    { id: 1, key: "Bank Info"},
+    { id: 2, key: "or something"}
+  ];
+
   useEffect(() => {
     getBasicInfo();
     getAccounts();
@@ -93,8 +102,9 @@ export default function Account() {
           Create New Account
         </div>
         <div className="section-wrapper page-row-container section-divider">
-          <FormCard title={"Basic Information"} classes={"create-form-card"} />
+          <FormCard data={accountCreateKeys} title={"Basic Information"} classes={"create-form-card"} />
           <FormCard
+            data={BankLinkKeys}
             title={"Link To Bank Account"}
             classes={"row-right-element create-form-card"}
           />
