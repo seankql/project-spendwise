@@ -118,4 +118,129 @@ $ curl -X GET
 
 ## Transactions API
 
+### Get the most recent Transactions
+
+- URL: `GET /api/transactions?userId={userId}&page={page}&pageSize={pageSize}`
+  - content-type: `application/json`
+  - Description: Get the most recent transactions for one user across all his/her accounts.
+  - Query parameters:
+    - userId (string, required): User ID to retrieve transactions for.
+    - page (number, required): Page number of transactions to retrieve.
+    - pageSize (number, required): Max number of transactions to retrieve per page.
+  - response: 200
+    - content-type: `application/json`
+    - body: object
+      - transactions: (array) an array of all transactions belonging to the user.
+  - response: 400
+    - body: Bad Request
+    - Description: Possible Missing Required Fields.
+  - response: 500
+    - body: Internal Server Error
+    - Description: Internal Server Error.
+
+```
+$ curl -X GET
+       -H "Content-Type: `application/json`"
+       http://localhost:3001/api/transactions?userId=1&page=0&pageSize=10'
+```
+
+### Create A new Transaction
+
+- URL: `POST /api/transactions`
+  - content-type: `application/json`
+  - Description: Create A new Transaction
+  - Request parameters:
+    - transactionDate (string, required): Date of the transaction in YYYY-MM-DD format.
+    - descriptions (string, required): Description of the transaction.
+    - amount (number, required): Amount of the transaction.
+    - accountId (string, required): ID of the account the transaction belongs to.
+    - category (string, required): Category of the transaction.
+  - response: 201
+    - content-type: `application/json`
+    - body: object
+      - transactionid (number): The Id of the created Transaction
+      - transactionDate (string): Date of the new transaction in YYYY-MM-DD format.
+      - descriptions (string): Description of the new transaction.
+      - amount (number): Amount of the new transaction.
+      - accountId (string): ID of the account the new transaction belongs to.
+      - category (string): Category of the new transaction.
+  - response: 400
+    - body: Bad Request
+    - Description: Possible Missing Required Fields.
+  - response: 500
+    - body: Internal Server Error
+    - Description: Internal Server Error.
+
+```
+$ curl -X POST
+       -H "Content-Type: `application/json`"
+       -d '{"transactionDate": "2023-03-16", "descriptions": "Test Test", "amount": 10000,"accountId": "1", "category": "Income"}'
+       http://localhost:3001/api/transactions'
+```
+
+### Update A Transaction
+
+- URL: `PUT /api/transactions/:transactionId`
+  - content-type: `application/json`
+  - Description: Update A new Transaction
+  - Path parameters:
+    - transactionId: (string, required): Id of the transaction you want to update
+  - Request parameters:
+    - transactionDate (string, required): Date of the transaction in YYYY-MM-DD format.
+    - descriptions (string, required): Description of the transaction.
+    - amount (number, required): Amount of the transaction.
+    - accountId (string, required): ID of the account the transaction belongs to.
+    - category (string, required): Category of the transaction.
+  - response: 200
+    - content-type: `application/json`
+    - body: object
+      - transactionid (number): The Id of the updated Transaction
+      - transactionDate (string): Date of the updated transaction in YYYY-MM-DD format.
+      - descriptions (string): Description of the updated transaction.
+      - amount (number): Amount of the updated transaction.
+      - accountId (string): ID of the account the updated transaction belongs to.
+      - category (string): Category of the updated transaction.
+  - response: 400
+    - body: Bad Request
+    - Description: Possible Missing Required Fields.
+  - response: 500
+    - body: Internal Server Error
+    - Description: Internal Server Error.
+
+```
+$ curl -X PUT
+       -H "Content-Type: `application/json`"
+       -d '{"transactionDate": "2023-03-16", "descriptions": "Test Test", "amount": 10000,"accountId": "1", "category": "Income"}'
+       http://localhost:3001/api/transactions/1'
+```
+
+### Delete A Transaction
+
+- URL: `DELETE /api/transactions/:transactionId`
+  - content-type: `application/json`
+  - Description: Delete A new Transaction
+  - Path parameters:
+    - transactionId: (string, required): Id of the transaction you want to delete
+  - response: 200
+    - content-type: `application/json`
+    - body: object
+      - transactionid (number): The Id of the delete Transaction
+      - transactionDate (string): Date of the delete transaction in YYYY-MM-DD format.
+      - descriptions (string): Description of the delete transaction.
+      - amount (number): Amount of the delete transaction.
+      - accountId (string): ID of the account the delete transaction belongs to.
+      - category (string): Category of the delete transaction.
+  - response: 400
+    - body: Bad Request
+    - Description: Possible Missing Required Fields.
+  - response: 500
+    - body: Internal Server Error
+    - Description: Internal Server Error.
+
+```
+$ curl -X DELETE
+       -H "Content-Type: `application/json`"
+       http://localhost:3001/api/transactions/1'
+```
+
 ## Users API

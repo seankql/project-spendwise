@@ -1,5 +1,5 @@
-import BaseModel from "./baseModel";
-
+import BaseModel from "./baseModel.js";
+import { pool } from "../database/database.js";
 class TransactionModel extends BaseModel {
   constructor(transactionDate, descriptions, amount, accountId, category) {
     super("Transactions", "transactionId");
@@ -29,6 +29,15 @@ class TransactionModel extends BaseModel {
   }
   async updateByPK(pk, data) {
     return await super.updateByPK(pk, data);
+  }
+  static async getMostRecentTransactionsByUserId(userId, page, pageSize) {
+    const client = await pool.connect();
+    const result = await client.query(
+      "SELECT t.* FROM transactions t JOIN accounts a ON a.accountId = t.accountId JOIN users u ON u.userId = a.userId WHERE u.userId = $1 ORDER BY t.transactionDate DESC LIMIT $2 OFFSET $3",
+      [userId, pageSize, page]
+    );
+    client.release();
+    return result.rows;
   }
 }
 export { TransactionModel };
