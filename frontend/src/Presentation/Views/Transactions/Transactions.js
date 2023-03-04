@@ -6,7 +6,6 @@ import TransactionListTable from "../../Components/TransactionListTable";
 import TransactionForm from "../../Components/TransactionForm"
 import ListScroller from "../../Components/ListScroller";
 import SearchFilterSideBar from "../../Components/SearchFilterSideBar";
-import FormCard from "../../Components/FormCard";
 import "../../Styles/Common.css";
 import "../../Styles/Main.css";
 import "../../Styles/Transactions.css";
