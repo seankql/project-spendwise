@@ -4,8 +4,7 @@ import "../Styles/Common.css";
 import "../Styles/Account.css";
 import Button from "./Button";
 
-export default function List({ classes="" }) {
-
+export default function List({ classes = "" }) {
   const [name, setName] = useState("");
   const [category, setCategory] = useState("");
   const [amount, setAmount] = useState("");
@@ -13,19 +12,22 @@ export default function List({ classes="" }) {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(name)
+    console.log(name);
     clearForm();
-  }
+  };
 
   const clearForm = () => {
     setName("");
     setCategory("");
     setAmount("");
     setDescription("");
-  }
+  };
 
   return (
-    <form onSubmit={handleSubmit} className={"card-wrapper create-form-card " + classes}>
+    <form
+      onSubmit={handleSubmit}
+      className={"card-wrapper create-form-card " + classes}
+    >
       <div className="page-row-container">
         <div className="card-padding-wrapper component-header-text">
           Create Transaction
@@ -33,7 +35,8 @@ export default function List({ classes="" }) {
       </div>
       <div className="card-wrapper-2 page-col-container">
         <div className="page-row-container">
-          <label className="card-sml-padding-wrapper component-subheader-text">Name
+          <label className="card-sml-padding-wrapper component-subheader-text">
+            Name
           </label>
           <input
             className="row-right-element account-create-input"
@@ -44,12 +47,14 @@ export default function List({ classes="" }) {
           />
         </div>
         <div className="page-row-container">
-          <label className="card-sml-padding-wrapper component-subheader-text">Categories
+          <label className="card-sml-padding-wrapper component-subheader-text">
+            Categories
           </label>
           <select
             className="row-right-element account-create-input"
-            value={category} 
-            onChange={(e) => setCategory(e.target.value)}>
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
+          >
             <option value={"Grocery"}> Grocery </option>
             <option value={"Furniture"}> Furniture </option>
             <option value={"Restaurants"}> Restaurants </option>
@@ -57,7 +62,8 @@ export default function List({ classes="" }) {
           </select>
         </div>
         <div className="page-row-container">
-          <label className="card-sml-padding-wrapper component-subheader-text">Amount
+          <label className="card-sml-padding-wrapper component-subheader-text">
+            Amount
           </label>
           <input
             className="row-right-element account-create-input"
@@ -68,7 +74,8 @@ export default function List({ classes="" }) {
           />
         </div>
         <div className="page-row-container">
-          <label className="card-sml-padding-wrapper component-subheader-text">Description
+          <label className="card-sml-padding-wrapper component-subheader-text">
+            Description
           </label>
           <textarea
             className="row-right-element account-create-input"
@@ -80,9 +87,17 @@ export default function List({ classes="" }) {
         </div>
       </div>
       <div className="page-row-container btn-form-wrapper">
-        <Button title={"Cancel"} classes={"btn btn-form"} onClick={() => clearForm()} />
-        <Button type="submit" title={"Confirm"} classes={"btn btn-form confirm-btns"} />
+        <Button
+          title={"Cancel"}
+          classes={"btn btn-form"}
+          onClick={() => clearForm()}
+        />
+        <Button
+          type="submit"
+          title={"Confirm"}
+          classes={"btn btn-form confirm-btns"}
+        />
       </div>
-    </form >
+    </form>
   );
 }

@@ -3,7 +3,7 @@ export default function TransactionsController() {
   function getUsernameUseCase() {
     return { result: "bob", error: null };
   }
-  
+
   function getAccountsUseCase() {
     return {
       result: [

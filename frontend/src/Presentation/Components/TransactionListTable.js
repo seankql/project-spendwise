@@ -3,8 +3,7 @@ import "../Styles/Common.css";
 
 // TODO: Style the table rows so they actually look good
 // Add some behaviour if data is null
-export default function List({ data=null }) {
-
+export default function List({ data = null }) {
   const createNewRowElement = (id, date, name, category, amount) => {
     return (
       <tr key={id} onClick={() => console.log(id)}>
@@ -12,12 +11,19 @@ export default function List({ data=null }) {
         <td>{name}</td>
         <td>{category}</td>
         <td className="transaction-list-last-col">{amount}</td>
-      </tr>);
-  }
+      </tr>
+    );
+  };
 
   const getRows = data?.map((transaction) =>
-    createNewRowElement(transaction.id, transaction.date, transaction.name,
-      transaction.category, transaction.amount));
+    createNewRowElement(
+      transaction.id,
+      transaction.date,
+      transaction.name,
+      transaction.category,
+      transaction.amount
+    )
+  );
 
   return (
     <div>
@@ -32,9 +38,7 @@ export default function List({ data=null }) {
             </th>
           </tr>
         </thead>
-        <tbody>
-          {getRows}
-        </tbody>
+        <tbody>{getRows}</tbody>
       </table>
     </div>
   );

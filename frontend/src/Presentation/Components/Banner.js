@@ -1,11 +1,10 @@
 import "../Styles/Components.css";
 import "../Styles/Common.css";
 import Button from "./Button";
-import logo from "../../Media/logo-no-background.png"
+import logo from "../../Media/logo-no-background.png";
 import { useNavigate } from "react-router-dom";
 
 export default function List() {
-
   const navigate = useNavigate();
 
   return (

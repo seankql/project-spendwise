@@ -29,8 +29,7 @@ export default function TransactionsViewModel() {
   function toggleTransactionVisiblity() {
     if (transactionVisiblity === "hidden") {
       setTransactionVisiblity("");
-    }
-    else {
+    } else {
       setTransactionVisiblity("hidden");
     }
   }
@@ -38,8 +37,7 @@ export default function TransactionsViewModel() {
   function getArrow() {
     if (transactionVisiblity === "hidden") {
       return downArrow;
-    }
-    else {
+    } else {
       return upArrow;
     }
   }

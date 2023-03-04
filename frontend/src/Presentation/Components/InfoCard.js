@@ -3,7 +3,6 @@ import "../Styles/Common.css";
 import "../Styles/Account.css";
 
 export default function List({ title, data, classes = "" }) {
-
   const createNewRowElement = (id, key, value) => {
     return (
       <div key={id} className="page-row-container">
@@ -13,10 +12,13 @@ export default function List({ title, data, classes = "" }) {
         <div className="card-sml-padding-wrapper component-subheader-text row-right-element">
           {value}
         </div>
-      </div>);
-  }
+      </div>
+    );
+  };
 
-  const rowItems = data?.map((item) => createNewRowElement(item.id, item.key, item.value));
+  const rowItems = data?.map((item) =>
+    createNewRowElement(item.id, item.key, item.value)
+  );
 
   return (
     <div className={"card-wrapper " + classes}>
@@ -25,9 +27,7 @@ export default function List({ title, data, classes = "" }) {
           {title}
         </div>
       </div>
-      <div className="card-wrapper-2">
-        {rowItems}
-      </div>
+      <div className="card-wrapper-2">{rowItems}</div>
     </div>
   );
 }

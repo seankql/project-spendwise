@@ -4,19 +4,18 @@ import "../Styles/Common.css";
 import "../Styles/Account.css";
 import Button from "./Button";
 
-export default function List({ }) {
-
+export default function List({}) {
   const [name, setName] = useState("");
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(name)
+    console.log(name);
     setName("");
-  }
+  };
 
   const clearForm = (event) => {
     setName("");
-  }
+  };
 
   return (
     <form onSubmit={handleSubmit} className={"card-wrapper create-form-card"}>
@@ -26,7 +25,8 @@ export default function List({ }) {
         </div>
       </div>
       <div className="card-wrapper-2 page-row-container">
-        <label className="card-sml-padding-wrapper component-subheader-text">Account Name:
+        <label className="card-sml-padding-wrapper component-subheader-text">
+          Account Name:
         </label>
         <input
           className="row-right-element account-create-input"
@@ -37,8 +37,16 @@ export default function List({ }) {
         />
       </div>
       <div className="page-row-container btn-form-wrapper">
-        <Button title={"Cancel"} classes={"btn btn-form"} onClick={() => clearForm()} />
-        <Button type="submit" title={"Confirm"} classes={"btn btn-form confirm-btns"} />
+        <Button
+          title={"Cancel"}
+          classes={"btn btn-form"}
+          onClick={() => clearForm()}
+        />
+        <Button
+          type="submit"
+          title={"Confirm"}
+          classes={"btn btn-form confirm-btns"}
+        />
       </div>
     </form>
   );

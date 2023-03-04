@@ -10,10 +10,14 @@ import "../../Styles/Account.css";
 import "../../Styles/Main.css";
 
 export default function Account() {
-  const { getArrow,
-    basicInfo, getBasicInfo,
-    accounts, getAccounts,
-    transactionVisiblity, toggleTransactionVisiblity,
+  const {
+    getArrow,
+    basicInfo,
+    getBasicInfo,
+    accounts,
+    getAccounts,
+    transactionVisiblity,
+    toggleTransactionVisiblity,
   } = useViewModel();
 
   // TODO: add functionality to Create New Account
@@ -22,13 +26,11 @@ export default function Account() {
   // to link their account to a bank account, otherwise, just show the current
   // information and have an option to unlink
 
-  const accountCreateKeys = [
-    { id: 1, key: "Name" }
-  ];
+  const accountCreateKeys = [{ id: 1, key: "Name" }];
 
   const BankLinkKeys = [
     { id: 1, key: "Bank Info" },
-    { id: 2, key: "or something" }
+    { id: 2, key: "or something" },
   ];
 
   useEffect(() => {
@@ -38,7 +40,7 @@ export default function Account() {
 
   return (
     <div>
-      <Banner/>
+      <Banner />
       <div className="page-content-container">
         <div className="page-header-text">
           Account & Settings
@@ -46,7 +48,11 @@ export default function Account() {
             Profile & Alerts
           </div>
           <div className="section-wrapper page-row-container section-divider">
-            <InfoCard data={basicInfo} title={"Basic Information"} classes={"basic-info-card"} />
+            <InfoCard
+              data={basicInfo}
+              title={"Basic Information"}
+              classes={"basic-info-card"}
+            />
             <div className="page-col-container row-right-element">
               <AlertCard title={"Alerts"} classes={"alert-card "} />
             </div>
@@ -60,7 +66,11 @@ export default function Account() {
             classes={"create-form-card"}
           />
           <div className="page-col-container row-right-element">
-            <InfoCard data={!accounts ? null : accounts[2]} title={"Bank Information"} classes={"create-form-card"} />
+            <InfoCard
+              data={!accounts ? null : accounts[2]}
+              title={"Bank Information"}
+              classes={"create-form-card"}
+            />
           </div>
         </div>
         <div className="section-wrapper section-divider page-row-container">
@@ -90,7 +100,11 @@ export default function Account() {
             classes={"create-form-card"}
           />
           <div className="page-col-container row-right-element">
-            <InfoCard data={!accounts ? null : accounts[3]} title={"Bank Information"} classes={"create-form-card"} />
+            <InfoCard
+              data={!accounts ? null : accounts[3]}
+              title={"Bank Information"}
+              classes={"create-form-card"}
+            />
           </div>
         </div>
         <div className="section-wrapper section-divider page-row-container">
@@ -116,7 +130,10 @@ export default function Account() {
         <div className="section-divider">
           <div className="section-wrapper page-row-container section-header-text">
             Create New Account
-            <button className="drop-down-btn" onClick={() => toggleTransactionVisiblity()}>
+            <button
+              className="drop-down-btn"
+              onClick={() => toggleTransactionVisiblity()}
+            >
               <img
                 className="row-right-element"
                 src={getArrow()}
@@ -124,7 +141,11 @@ export default function Account() {
               ></img>
             </button>
           </div>
-          <div className={"section-wrapper page-row-container " + transactionVisiblity}>
+          <div
+            className={
+              "section-wrapper page-row-container " + transactionVisiblity
+            }
+          >
             <AccountForm />
           </div>
         </div>
