@@ -1,0 +1,29 @@
+{
+  "name": "spendwise-backend",
+  "description": "Backend for Spendwise",
+  "version": "1.0.0",
+  "main": "app.js",
+  "type": "module",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "createTables": "node ./database/createTables.js",
+    "dropTables": "node ./database/dropSchema.js",
+    "pt": "npx prettier --write ."
+  },
+  "author": "Chongmin Bai",
+  "license": "ISC",
+  "dependencies": {
+    "@sentry/node": "^7.40.0",
+    "body-parser": "^1.20.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "pg": "^8.9.0",
+    "plaid": "^12.5.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.20"
+  }
+}
