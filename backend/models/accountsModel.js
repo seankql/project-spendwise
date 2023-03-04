@@ -5,11 +5,13 @@ class AccountsModel extends BaseModel {
     super("Accounts", "accountId");
     this.userId = userId;
     this.accountName = accountName;
+    this.dateCreated = new Date();
   }
   async create() {
     return await super.create({
       userId: this.userId,
       accountName: this.accountName,
+      dateCreated: this.dateCreated,
     });
   }
   async findByPK(pk) {
