@@ -2,17 +2,16 @@ import React, { useEffect } from "react";
 import useViewModel from "./ViewModel";
 import Banner from "../../Components/Banner";
 import SearchFilterSideBar from "../../Components/SearchFilterSideBar";
-import Dropdown from "../../Components/Dropdown";
 import "../../Styles/Common.css";
 import "../../Styles/Main.css";
 import "../../Styles/Visualization.css";
 
 export default function Visualization() {
-  const { navigateToPage, username, getUsername, accounts, getAccounts } =
+  const { username, getUsername, accounts, getAccounts } =
     useViewModel();
 
   // Perform some sort of action
-  const onChange = (item, name) => {};
+  const onChange = (item, name) => { };
 
   useEffect(() => {
     getUsername();
@@ -21,17 +20,17 @@ export default function Visualization() {
 
   return (
     <div>
-      <Banner/>
+      <Banner />
       <div className="page-content-container">
         <div className="page-header-text page-row-container">
           Visualization
           <div className="row-right-element">
-            <Dropdown
-              name="account-select"
-              title="select account"
-              list={accounts}
-              onChange={onChange}
-            />
+            <select>
+              <option value={"All Accounts"}> All Accounts </option>
+              <option value={"RBC"}> RBC </option>
+              <option value={"TD"}> TD </option>
+              <option value={"CIBC"}> CIBC </option>
+            </select>
           </div>
         </div>
         <div className="section-wrapper page-row-container">

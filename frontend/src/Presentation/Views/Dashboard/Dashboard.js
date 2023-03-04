@@ -1,10 +1,10 @@
 import React, { useEffect } from "react";
 import useViewModel from "./ViewModel";
 import Button from "../../Components/Button";
-import Dropdown from "../../Components/Dropdown";
 import SummaryCard from "../../Components/SummaryCard";
 import TransactionListTable from "../../Components/TransactionListTable";
 import Banner from "../../Components/Banner";
+import AccountSelect from "../../Components/AccountSelect";
 import pieChart from "../../../Media/dashboard-pie-chart.png";
 import greenChart from "../../../Media/green-bar-graph.png";
 import redChart from "../../../Media/red-bar-graph.png";
@@ -32,22 +32,18 @@ export default function Dashboard() {
   useEffect(() => {
     getUsername();
     getAccounts();
+    console.log(accounts);
   }, []);
 
   return (
     <div>
-      <Banner/>
+      <Banner />
       <div className="page-content-container">
         <div className="page-header-text">{username}'s Dashboard</div>
         <div className="section-wrapper page-row-container">
           <div className="section-header-text">Summary</div>
           <div className="row-right-element">
-            <Dropdown
-              name="account-select"
-              title="select account"
-              list={accounts}
-              onChange={onChange}
-            />
+            <AccountSelect data={accounts}/>
           </div>
         </div>
         <div className="section-wrapper page-row-container section-divider">
@@ -67,11 +63,9 @@ export default function Dashboard() {
               }}
             />
           </div>
-          <div className="section-divider">
-            <TransactionListTable data={mockTransactions} />
-            <div className="transaction-list-footer">
-              See transactions page for all transactions
-            </div>
+          <TransactionListTable data={mockTransactions} />
+          <div className="transaction-list-footer">
+            See transactions page for all transactions
           </div>
         </div>
         <div className="section-wrapper page-row-container">

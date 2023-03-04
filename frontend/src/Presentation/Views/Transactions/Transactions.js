@@ -3,26 +3,19 @@ import useViewModel from "./ViewModel";
 import Banner from "../../Components/Banner";
 import TransactionViewToggle from "../../Components/TransactionViewToggle";
 import TransactionListTable from "../../Components/TransactionListTable";
+import TransactionForm from "../../Components/TransactionForm"
 import ListScroller from "../../Components/ListScroller";
 import SearchFilterSideBar from "../../Components/SearchFilterSideBar";
 import FormCard from "../../Components/FormCard";
-import Dropdown from "../../Components/Dropdown";
 import "../../Styles/Common.css";
 import "../../Styles/Main.css";
 import "../../Styles/Transactions.css";
 
 export default function Transactions() {
-  const { navigateToPage, getArrow,
+  const { getArrow,
     transactionVisiblity, toggleTransactionVisiblity,
     accounts, getAccounts
   } = useViewModel();
-
-  const transactionKeys = [
-    { id: 1, key: "Name" },
-    { id: 2, key: "Amount" },
-    { id: 3, key: "Category" },
-    { id: 4, key: "Description" }
-  ];
 
   const mockTransactions = [
     { id: 1, date: "Feb 28 2023", name: "Starbucks - Coffee", category: "Fast Food", amount: "$5.79" },
@@ -45,12 +38,12 @@ export default function Transactions() {
         <div className="page-header-text page-row-container">
           Transactions
           <div className="row-right-element">
-            <Dropdown
-              name="account-select"
-              title="select account"
-              list={accounts}
-              onChange={onChange}
-            />
+          <select>
+              <option value={"All Accounts"}> All Accounts </option>
+              <option value={"RBC"}> RBC </option>
+              <option value={"TD"}> TD </option>
+              <option value={"CIBC"}> CIBC </option>
+            </select>
           </div>
         </div>
         <div className="section-divider">
@@ -64,11 +57,7 @@ export default function Transactions() {
               ></img>
             </button>
           </div>
-          <FormCard
-            data={transactionKeys}
-            title={"Add Transaction"}
-            classes={"create-form-card " + transactionVisiblity}
-          />
+          <TransactionForm classes={transactionVisiblity}/>
         </div>
         <div className="section-wrapper page-row-container">
           <SearchFilterSideBar />

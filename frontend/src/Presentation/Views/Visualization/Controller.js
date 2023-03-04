@@ -8,19 +8,15 @@ export default function TransactionsController() {
     return {
       result: [
         {
-          label: "All accounts",
-          value: "all",
-        },
-        {
-          label: "TD - 5008531024",
+          id: "2",
           value: "TD - 5008531024",
         },
         {
-          label: "RBC - 1001867295",
+          id: "3",
           value: "RBC - 1001867295",
         },
         {
-          label: "CIBC - 1009671296",
+          id: "4",
           value: "CIBC - 1009671296",
         },
       ],

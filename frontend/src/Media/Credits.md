@@ -12,4 +12,3 @@ https://medium.com/how-to-react/scroll-to-an-element-on-click-in-react-js-8424e4
 
 https://blog.logrocket.com/customize-reusable-react-dropdown-menu-component/#:~:text=A%20dropdown%20menu%20consists%20of,list%20wrapping%2C%20and%20list%20items.
 
-https://github.com/dbilgili/Custom-ReactJS-Dropdown-Components

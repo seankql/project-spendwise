@@ -8,7 +8,7 @@ export default function List({ title, data, classes = "" }) {
   const createNewRowElement = (id, key) => {
     return (
       <div key={id} className="page-row-container">
-        <div className="card-sml-padding-wrapper component-subheader-text">
+        <div id={key} className="card-sml-padding-wrapper component-subheader-text">
           {key}
         </div>
         <input
@@ -20,20 +20,30 @@ export default function List({ title, data, classes = "" }) {
 
   const rowItems = data?.map((item) => createNewRowElement(item.id, item.key));
 
+  const handleSubmitForm = e => {
+    let rows =  Array.from(e.target.children[1].children);
+    rows.forEach(row => {
+      console.log(row.children[0].id);
+      console.log(row.children[1].value);
+      row.children[1].value = "";
+    })
+    e.preventDefault();
+  };
+
   return (
-    <div className={"card-wrapper " + classes}>
+    <form onSubmit={handleSubmitForm} className={"card-wrapper " + classes}>
       <div className="page-row-container">
         <div className="card-padding-wrapper component-header-text">
           {title}
         </div>
       </div>
-      <div className="card-wrapper-2">
+      <div id="rowItems" className="card-wrapper-2">
         {rowItems}
       </div>
       <div className="page-row-container btn-form-wrapper">
-        <Button title={"Cancel"} classes={"btn btn-form"} />
-        <Button title={"Confirm"} classes={"btn btn-form confirm-btns"} />
+        <Button type="submit" title={"Cancel"} classes={"btn btn-form"} />
+        <Button type="clear" title={"Confirm"} classes={"btn btn-form confirm-btns"} />
       </div>
-    </div>
+    </form>
   );
 }

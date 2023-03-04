@@ -4,13 +4,13 @@ import Button from "../../Components/Button";
 import Banner from "../../Components/Banner";
 import InfoCard from "../../Components/InfoCard";
 import AlertCard from "../../Components/AlertCard";
-import FormCard from "../../Components/FormCard";
+import AccountForm from "../../Components/AccountForm";
 import "../../Styles/Common.css";
 import "../../Styles/Account.css";
 import "../../Styles/Main.css";
 
 export default function Account() {
-  const { navigateToPage, getArrow,
+  const { getArrow,
     basicInfo, getBasicInfo,
     accounts, getAccounts,
     transactionVisiblity, toggleTransactionVisiblity,
@@ -125,12 +125,7 @@ export default function Account() {
             </button>
           </div>
           <div className={"section-wrapper page-row-container " + transactionVisiblity}>
-            <FormCard data={accountCreateKeys} title={"Basic Information"} classes={"create-form-card"} />
-            <FormCard
-              data={BankLinkKeys}
-              title={"Link To Bank Account"}
-              classes={"row-right-element create-form-card"}
-            />
+            <AccountForm />
           </div>
         </div>
       </div>
