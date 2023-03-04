@@ -12,10 +12,11 @@ transactionsController.get("/", async (req, res) => {
         .status(400)
         .send("Missing required fields. Must contain [userId, page, pageSize]");
     }
+    const page = parseInt(req.query.page) * parseInt(req.query.pageSize);
     const resultTransactions =
       await TransactionModel.getMostRecentTransactionsByUserId(
         req.query.userId,
-        req.query.page,
+        page,
         req.query.pageSize
       );
     if (resultTransactions) {

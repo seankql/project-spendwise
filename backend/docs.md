@@ -168,11 +168,10 @@ $ curl -X GET
        http://localhost:3001/api/reports/accounts?accountId=1&startDate=2023-01-02&endDate=2023-03-17'
 ```
 
-## Generate Reports based on Category
+### Generate Reports based on Category
 
 - URL: `GET /api/reports/categories?userId=${}&startDate=${}&endDate=${}`
-
-  - Content-Type: application/json
+  - Content-Type: `application/json`
   - Description: Generate Reports based on Category for a user within a specified time range.
   - Query parameters:
     - userId (string, required): ID of the user to generate the report for.
@@ -196,6 +195,48 @@ $ curl -X GET
        http://localhost:3001/api/reports/categories?userId=1&startDate=2023-01-02&endDate=2023-03-17'
 ```
 
+### Generate Reports based on Filters
+
+- URL: `GET /api/reports/filters/:userId/transactions?limit=${}&offset=${}&accountId=${}&transactionName=${}&startDate=${}&endDate=${}&minAmount=${}&maxAmount=${}&categories=${}`
+
+  - Content-Type: `application/json`
+  - Description: Get transactions for a user with optional filters and pagination.
+  - URL parameters:
+    - userId (string, required): ID of the user to get transactions for.
+  - Query parameters:
+    - limit (integer, required): Number of transactions to return per page.
+    - offset (integer, required): Page number of the transactions to return. Don't have to mutiple by the limit.
+    - accountId (string, optional): ID of the account to filter transactions by. If no accountId then it will fetch all accounts for that user.
+    - transactionName (string, optional): Name of the transaction to filter by.
+    - startDate (date, optional): min date of the transactions to filter by. in XXXX-MM-DD format.
+    - endDate (date, optional): max date of the transactions to filter by. in XXXX-MM-DD format.
+    - minAmount (float, optional): min amount of the transactions to filter by.
+    - maxAmount (float, optional): max amount of the transactions to filter by.
+    - categories (string, optional): a comma-separated list of categories to filter transactions by.
+  - Response: 200
+
+    - Content-Type: application/json
+    - Body:
+      - rows: (array) an array of all transactions belonging to the user.
+        - transactionid (number): The Id of the Transaction
+        - transactionDate (string): Date of the transaction in YYYY-MM-DD format.
+        - descriptions (string): Description of the transaction.
+        - amount (number): Amount of the transaction.
+        - accountId (string): ID of the account the transaction belongs to.
+        - category (string): Category of the transaction.
+      - totalCount: (number) total Number of transactions regardless of the offset & limit.
+
+  - Response: 400
+    - Body: Missing required fields. Must contain [userId, limit, offset].
+  - Response: 500
+    - Body: Internal Server Error.
+
+```
+$ curl -X GET
+       -H "Content-Type: application/json"
+       http://localhost:3001/api/reports/filters/1/transactions?limit=10&offset=0&transactionName=Groceries&startDate=2023-01-01&endDate=2023-03-01&minAmount=10&maxAmount=100&categories=Food,Utilities,Transportation'
+```
+
 ## Transactions API
 
 ### Get the most recent Transactions
@@ -205,12 +246,19 @@ $ curl -X GET
   - Description: Get the most recent transactions for one user across all his/her accounts.
   - Query parameters:
     - userId (string, required): User ID to retrieve transactions for.
-    - page (number, required): Page number of transactions to retrieve.
+    - page (number, required): Page number of transactions to retrieve. (no need to mutiply by the pageSize)
     - pageSize (number, required): Max number of transactions to retrieve per page.
   - response: 200
     - content-type: `application/json`
     - body: object
-      - transactions: (array) an array of all transactions belonging to the user.
+      - rows: (array) an array of all transactions belonging to the user.
+        - transactionid (number): The Id of the Transaction
+        - transactionDate (string): Date of the transaction in YYYY-MM-DD format.
+        - descriptions (string): Description of the transaction.
+        - amount (number): Amount of the transaction.
+        - accountId (string): ID of the account the transaction belongs to.
+        - category (string): Category of the transaction.
+      - totalCount: (number) total Number of transactions regardless of the page & pagesize.
   - response: 400
     - body: Bad Request
     - Description: Possible Missing Required Fields.
