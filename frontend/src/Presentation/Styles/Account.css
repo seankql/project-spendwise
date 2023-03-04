@@ -1,0 +1,38 @@
+.basic-info-card {
+  width: calc(1024px * 0.6);
+}
+
+.account-info-card {
+  width: calc(1024px * 0.5);
+}
+
+.bank-info-card {
+  width: calc(1024px * 0.3);
+}
+
+.create-form-card {
+  width: calc(1024px * 0.45);
+}
+
+.alert-card {
+  width: calc(1024px * 0.3);
+}
+
+.account-btns-left {
+  margin-right: 20px;
+}
+
+.account-btns-right {
+  margin-left: 20px;
+}
+
+.account-create-input {
+  padding: 2px;
+  border: hidden;
+  width: 50%;
+  color: black;
+  font-size: 14px;
+  font-weight: bold;
+  line-height: 100%;
+  border: 1px solid #e0e0e0;
+}

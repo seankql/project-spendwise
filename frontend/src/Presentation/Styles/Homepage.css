@@ -1,0 +1,30 @@
+.homepage-content-container {
+  border: #5d9943 2px solid;
+  padding-left: 36px;
+  padding-right: 36px;
+}
+
+.image-banner-wrapper {
+  width: 100%;
+  position: relative;
+}
+
+.image-banner-text-container {
+  position: absolute;
+  left: 450px;
+  top: 30%;
+  max-width: 512px;
+}
+
+.image-banner-header {
+  color: #5d9943;
+  font-size: 40px;
+  font-weight: bold;
+  font-variant: small-caps;
+  line-height: 100%;
+}
+
+.image-banner {
+  width: 100%;
+  mask-image: linear-gradient(to left, rgba(0, 0, 0, 1) 30%, transparent 80%);
+}
