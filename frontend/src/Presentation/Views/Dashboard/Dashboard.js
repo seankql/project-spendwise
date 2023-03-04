@@ -16,47 +16,19 @@ import "../../Styles/Main.css";
 // take users to different sections of the dashboard.
 
 export default function Dashboard() {
-  const { navigateToPage, username, getUsername, accounts, getAccounts } =
-    useViewModel();
+  const { navigateToPage,
+    username, getUsername,
+    accounts, getAccounts,
+    transactions, getTransactions,
+  } = useViewModel();
 
   // Perform some sort of action
-  const onChange = (item, name) => {};
-
-  const mockTransactions = [
-    {
-      id: 1,
-      date: "Feb 28 2023",
-      name: "Starbucks - Coffee",
-      category: "Fast Food",
-      amount: "$5.79",
-    },
-    {
-      id: 2,
-      date: "Feb 25 2023",
-      name: "Starbucks - Coffee",
-      category: "Fast Food",
-      amount: "$5.79",
-    },
-    {
-      id: 3,
-      date: "Feb 23 2023",
-      name: "Panam - Parking",
-      category: "Parking and Transport",
-      amount: "$8.50",
-    },
-    {
-      id: 4,
-      date: "Feb 23 2023",
-      name: "Starbucks - Coffee",
-      category: "Fast Food",
-      amount: "$5.79",
-    },
-  ];
+  const onChange = (item, name) => { };
 
   useEffect(() => {
     getUsername();
     getAccounts();
-    console.log(accounts);
+    getTransactions(1, 0, 10);
   }, []);
 
   return (
@@ -87,7 +59,7 @@ export default function Dashboard() {
               }}
             />
           </div>
-          <TransactionListTable data={mockTransactions} />
+          <TransactionListTable data={transactions} />
           <div className="transaction-list-footer">
             See transactions page for all transactions
           </div>

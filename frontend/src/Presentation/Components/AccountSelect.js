@@ -5,7 +5,6 @@ import "../Styles/Common.css";
 // should be able to scroll or perhaps clear through alerts.
 export default function List({ data }) {
   const createNewOption = (id, value) => {
-    console.log(id, value);
     return (
       <option key={id} value={value}>
         {" "}

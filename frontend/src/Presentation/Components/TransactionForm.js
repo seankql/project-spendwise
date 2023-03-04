@@ -12,7 +12,6 @@ export default function List({ classes = "" }) {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(name);
     clearForm();
   };
 

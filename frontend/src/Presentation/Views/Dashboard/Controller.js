@@ -1,4 +1,5 @@
 export default function DashboardController() {
+
   // Would be an async function that calls controller
   function getUsernameUseCase() {
     return { result: "bob", error: null };
@@ -24,7 +25,18 @@ export default function DashboardController() {
     };
   }
 
+  async function getTransactionsUseCase(userId, page, pageSize) {
+    return fetch("http://localhost:3001/api/transactions?" + new URLSearchParams({
+      userId: userId,
+      page: page,
+      pageSize: pageSize,
+    }), {
+      method: "GET",
+    }).then((res) => res.json());
+  }
+
   return {
+    getTransactionsUseCase,
     getUsernameUseCase,
     getAccountsUseCase,
   };
