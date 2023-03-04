@@ -72,7 +72,7 @@ $ curl -X PUT
   - Request parameters:
     - accountId (number, required): ID of the account to be deleted.
   - response: 200
-    - content-type: application/json
+    - content-type: `application/json`
     - Body: object
       - accountid: (number) the id of the account that was deleted
       - userid: (string) the id of the user that the account belonged to
@@ -178,7 +178,7 @@ $ curl -X GET
     - startDate (date, required): min startDate of the transactions in the report. in XXXX-MM-DD format
     - endDate (date, required): max endDate of the transactions in the report. in XXXX-MM-DD format
   - Response: 200
-    - Content-Type: application/json
+    - Content-Type: `application/json`
     - Body: object
       - {category_name} (object): an object containing the total amount, count, and transactions of the transactions belonging to the specified category within the specified time range. The category_name is the name of the category, and there is one such object for each category.
         - amount (float): total amount spent in the category within the specified time range.
@@ -215,7 +215,7 @@ $ curl -X GET
     - categories (string, optional): a comma-separated list of categories to filter transactions by.
   - Response: 200
 
-    - Content-Type: application/json
+    - Content-Type: `application/json`
     - Body:
       - rows: (array) an array of all transactions belonging to the user.
         - transactionid (number): The Id of the Transaction
