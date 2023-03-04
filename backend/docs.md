@@ -168,6 +168,34 @@ $ curl -X GET
        http://localhost:3001/api/reports/accounts?accountId=1&startDate=2023-01-02&endDate=2023-03-17'
 ```
 
+## Generate Reports based on Category
+
+- URL: `GET /api/reports/categories?userId=${}&startDate=${}&endDate=${}`
+
+  - Content-Type: application/json
+  - Description: Generate Reports based on Category for a user within a specified time range.
+  - Query parameters:
+    - userId (string, required): ID of the user to generate the report for.
+    - startDate (date, required): min startDate of the transactions in the report. in XXXX-MM-DD format
+    - endDate (date, required): max endDate of the transactions in the report. in XXXX-MM-DD format
+  - Response: 200
+    - Content-Type: application/json
+    - Body: object
+      - {category_name} (object): an object containing the total amount, count, and transactions of the transactions belonging to the specified category within the specified time range. The category_name is the name of the category, and there is one such object for each category.
+        - amount (float): total amount spent in the category within the specified time range.
+        - count (integer): total number of transactions in the category within the specified time range.
+        - transactions (array): an array of all transactions belonging to the category within the specified time range.
+  - Response: 400
+    - Body: Bad Request.
+  - Response: 500
+    - Body: Internal Server Error.
+
+```
+$ curl -X GET
+       -H "Content-Type: application/json"
+       http://localhost:3001/api/reports/categories?userId=1&startDate=2023-01-02&endDate=2023-03-17'
+```
+
 ## Transactions API
 
 ### Get the most recent Transactions
