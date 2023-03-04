@@ -4,20 +4,21 @@ import "../Styles/Common.css";
 import "../Styles/Account.css";
 import Button from "./Button";
 
-export default function List({ classes = "" }) {
+export default function List({ classes = "", submit }) {
   const [name, setName] = useState("");
-  const [category, setCategory] = useState("");
+  const [category, setCategory] = useState("Grocery");
   const [amount, setAmount] = useState("");
   const [description, setDescription] = useState("");
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    submit(name, category, amount);
     clearForm();
   };
 
   const clearForm = () => {
     setName("");
-    setCategory("");
+    setCategory("Grocery");
     setAmount("");
     setDescription("");
   };

@@ -20,6 +20,7 @@ export default function Transactions() {
     getAccounts,
     transactions,
     getTransactions,
+    createTransaction,
   } = useViewModel();
 
   // Perform some sort of action
@@ -54,7 +55,7 @@ export default function Transactions() {
               ></img>
             </button>
           </div>
-          <TransactionForm classes={transactionVisiblity} />
+          <TransactionForm classes={transactionVisiblity} submit={createTransaction} />
         </div>
         <div className="section-wrapper page-row-container">
           <SearchFilterSideBar />

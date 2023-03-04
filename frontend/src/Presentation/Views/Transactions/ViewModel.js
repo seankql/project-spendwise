@@ -11,8 +11,16 @@ export default function TransactionsViewModel() {
   const [transactions, setTransactions] = useState(null);
   const [transactionVisiblity, setTransactionVisiblity] = useState("hidden");
 
-  const { getUsernameUseCase, getAccountsUseCase, getTransactionsUseCase } = useController();
+  const { getUsernameUseCase, getAccountsUseCase, getTransactionsUseCase, postTransactionUseCase } = useController();
   const navigate = useNavigate();
+
+  function getCurrentDate() {
+    const dateObj = new Date();
+    const year = dateObj.getFullYear();
+    const month = (dateObj.getMonth() + 1).toString().padStart(2, '0');
+    const day = dateObj.getDate().toString().padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  }
 
   // Would be an async function that calls controller
   function getUsername() {
@@ -47,6 +55,12 @@ export default function TransactionsViewModel() {
     setTransactions(result);
   }
 
+  async function createTransaction(name, category, amount) {
+    await postTransactionUseCase(name, category, amount, 1, getCurrentDate());
+    const result = await getTransactionsUseCase(1, 0, 16);
+    setTransactions(result);
+  }
+
   function navigateToPage(page = "/") {
     navigate(page);
   }
@@ -62,6 +76,7 @@ export default function TransactionsViewModel() {
     transactions,
     getTransactions,
     navigateToPage,
+    createTransaction,
     getArrow,
   };
 }
