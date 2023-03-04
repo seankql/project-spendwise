@@ -4,8 +4,8 @@ import useController from "./Controller";
 
 export default function VisualizationViewModel() {
   const [error, setError] = useState("");
-  const [username, setUsername] = useState("");
-  const [accounts, setAccounts] = useState("");
+  const [username, setUsername] = useState(null);
+  const [accounts, setAccounts] = useState(null);
 
   const { getUsernameUseCase, getAccountsUseCase } = useController();
   const navigate = useNavigate();
@@ -17,9 +17,8 @@ export default function VisualizationViewModel() {
     setUsername(result);
   }
 
-  function getAccounts() {
-    const { result, error } = getAccountsUseCase();
-    setError(error);
+  async function getAccounts(userId) {
+    const result = await getAccountsUseCase(userId);
     setAccounts(result);
   }
 

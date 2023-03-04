@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import useViewModel from "./ViewModel";
 import Banner from "../../Components/Banner";
 import SearchFilterSideBar from "../../Components/SearchFilterSideBar";
+import AccountSelect from "../../Components/AccountSelect";
 import "../../Styles/Common.css";
 import "../../Styles/Main.css";
 import "../../Styles/Visualization.css";
@@ -10,11 +11,11 @@ export default function Visualization() {
   const { username, getUsername, accounts, getAccounts } = useViewModel();
 
   // Perform some sort of action
-  const onChange = (item, name) => {};
+  const onChange = (item, name) => { };
 
   useEffect(() => {
     getUsername();
-    getAccounts();
+    getAccounts(1);
   }, []);
 
   return (
@@ -24,12 +25,7 @@ export default function Visualization() {
         <div className="page-header-text page-row-container">
           Visualization
           <div className="row-right-element">
-            <select>
-              <option value={"All Accounts"}> All Accounts </option>
-              <option value={"RBC"}> RBC </option>
-              <option value={"TD"}> TD </option>
-              <option value={"CIBC"}> CIBC </option>
-            </select>
+            <AccountSelect data={accounts} />
           </div>
         </div>
         <div className="section-wrapper page-row-container">

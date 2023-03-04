@@ -20,9 +20,8 @@ export default function AccountViewModel() {
     setBasicInfo(result);
   }
 
-  function getAccounts() {
-    const { result, error } = getAccountsUseCase();
-    setError(error);
+  async function getAccounts(userId) {
+    const result = await getAccountsUseCase(userId);
     setAccounts(result);
   }
 

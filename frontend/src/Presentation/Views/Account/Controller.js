@@ -33,11 +33,10 @@ export default function AccountController() {
     return { result: formData1, error: null };
   }
 
-  function getAccountsUseCase() {
-    return {
-      result: [accountData1, accountData2, bankData1, bankData2],
-      error: null,
-    };
+  async function getAccountsUseCase(userId) {
+    return fetch("http://localhost:3001/api/accounts/user/" + userId, {
+      method: "GET",
+    }).then((res) => res.json());
   }
 
   return {

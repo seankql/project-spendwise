@@ -6,6 +6,7 @@ import TransactionListTable from "../../Components/TransactionListTable";
 import TransactionForm from "../../Components/TransactionForm";
 import ListScroller from "../../Components/ListScroller";
 import SearchFilterSideBar from "../../Components/SearchFilterSideBar";
+import AccountSelect from "../../Components/AccountSelect";
 import "../../Styles/Common.css";
 import "../../Styles/Main.css";
 import "../../Styles/Transactions.css";
@@ -16,16 +17,16 @@ export default function Transactions() {
     transactionVisiblity,
     toggleTransactionVisiblity,
     accounts,
+    getAccounts,
     transactions,
     getTransactions,
-    getAccounts,
   } = useViewModel();
 
   // Perform some sort of action
-  const onChange = (item, name) => {};
+  const onChange = (item, name) => { };
 
   useEffect(() => {
-    getAccounts();
+    getAccounts(1);
     getTransactions(1, 0, 16);
   }, []);
 
@@ -36,12 +37,7 @@ export default function Transactions() {
         <div className="page-header-text page-row-container">
           Transactions
           <div className="row-right-element">
-            <select>
-              <option value={"All Accounts"}> All Accounts </option>
-              <option value={"RBC"}> RBC </option>
-              <option value={"TD"}> TD </option>
-              <option value={"CIBC"}> CIBC </option>
-            </select>
+            <AccountSelect data={accounts} />
           </div>
         </div>
         <div className="section-divider">

@@ -5,24 +5,10 @@ export default function DashboardController() {
     return { result: "bob", error: null };
   }
 
-  function getAccountsUseCase() {
-    return {
-      result: [
-        {
-          id: "2",
-          value: "TD - 5008531024",
-        },
-        {
-          id: "3",
-          value: "RBC - 1001867295",
-        },
-        {
-          id: "4",
-          value: "CIBC - 1009671296",
-        },
-      ],
-      error: null,
-    };
+  async function getAccountsUseCase(userId) {
+    return fetch("http://localhost:3001/api/accounts/user/" + userId, {
+      method: "GET",
+    }).then((res) => res.json());
   }
 
   async function getTransactionsUseCase(userId, page, pageSize) {

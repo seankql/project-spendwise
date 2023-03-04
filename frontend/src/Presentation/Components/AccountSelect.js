@@ -13,7 +13,7 @@ export default function List({ data }) {
     );
   };
 
-  const options = data?.map((item) => createNewOption(item.id, item.value));
+  const options = data?.map((item) => createNewOption(item.accountid, item.accountname));
 
   return (
     <select>

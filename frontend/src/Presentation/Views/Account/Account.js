@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
 import useViewModel from "./ViewModel";
-import Button from "../../Components/Button";
 import Banner from "../../Components/Banner";
 import InfoCard from "../../Components/InfoCard";
 import AlertCard from "../../Components/AlertCard";
+import AccountCardGenerator from "../../Components/AccountCardGenerator";
 import AccountForm from "../../Components/AccountForm";
 import "../../Styles/Common.css";
 import "../../Styles/Account.css";
@@ -35,7 +35,7 @@ export default function Account() {
 
   useEffect(() => {
     getBasicInfo();
-    getAccounts();
+    getAccounts(1);
   }, []);
 
   return (
@@ -59,74 +59,7 @@ export default function Account() {
           </div>
         </div>
         <div className="section-wrapper section-header-text"> Accounts </div>
-        <div className="section-wrapper page-row-container">
-          <InfoCard
-            data={!accounts ? null : accounts[0]}
-            title={"Account information"}
-            classes={"create-form-card"}
-          />
-          <div className="page-col-container row-right-element">
-            <InfoCard
-              data={!accounts ? null : accounts[2]}
-              title={"Bank Information"}
-              classes={"create-form-card"}
-            />
-          </div>
-        </div>
-        <div className="section-wrapper section-divider page-row-container">
-          <Button
-            title={"Edit Account"}
-            classes={"btn btn-sml account-btns-left"}
-          />
-          <Button
-            title={"Delete Account"}
-            classes={"btn btn-sml account-btns-left"}
-          />
-          <div className="row-right-element">
-            <Button
-              title={"Link Account"}
-              classes={"btn btn-sml account-btns-right"}
-            />
-            <Button
-              title={"Unlink Account"}
-              classes={"btn btn-sml account-btns-right"}
-            />
-          </div>
-        </div>
-        <div className="section-wrapper page-row-container">
-          <InfoCard
-            data={!accounts ? null : accounts[1]}
-            title={"Account information"}
-            classes={"create-form-card"}
-          />
-          <div className="page-col-container row-right-element">
-            <InfoCard
-              data={!accounts ? null : accounts[3]}
-              title={"Bank Information"}
-              classes={"create-form-card"}
-            />
-          </div>
-        </div>
-        <div className="section-wrapper section-divider page-row-container">
-          <Button
-            title={"Edit Account"}
-            classes={"btn btn-sml account-btns-left"}
-          />
-          <Button
-            title={"Delete Account"}
-            classes={"btn btn-sml account-btns-left"}
-          />
-          <div className="row-right-element">
-            <Button
-              title={"Link Account"}
-              classes={"btn btn-sml account-btns-right"}
-            />
-            <Button
-              title={"Unlink Account"}
-              classes={"btn btn-sml account-btns-right"}
-            />
-          </div>
-        </div>
+        <AccountCardGenerator data={accounts} />
         <div className="section-divider">
           <div className="section-wrapper page-row-container section-header-text">
             Create New Account
@@ -146,7 +79,7 @@ export default function Account() {
               "section-wrapper page-row-container " + transactionVisiblity
             }
           >
-            <AccountForm />
+            <AccountForm/>
           </div>
         </div>
       </div>

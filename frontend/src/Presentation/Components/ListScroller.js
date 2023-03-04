@@ -7,7 +7,7 @@ export default function List({ data, onClick }) {
       <button className="scroll-btn-left" onClick={onClick}>
         <img src={arrow} className="scroll-left-img" alt="arrow" />
       </button>
-      <div className="text-center list-scroll-element"> 1 2 ... 17 </div>
+      <div className="text-center list-scroll-element"> 1 </div>
       <button className="scroll-btn-right" onClick={onClick}>
         <img src={arrow} className="scroll-right-img" alt="arrow" />
       </button>

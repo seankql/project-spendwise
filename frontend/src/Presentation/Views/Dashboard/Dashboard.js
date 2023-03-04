@@ -27,7 +27,7 @@ export default function Dashboard() {
 
   useEffect(() => {
     getUsername();
-    getAccounts();
+    getAccounts(1);
     getTransactions(1, 0, 10);
   }, []);
 
