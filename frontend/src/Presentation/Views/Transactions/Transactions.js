@@ -16,45 +16,17 @@ export default function Transactions() {
     transactionVisiblity,
     toggleTransactionVisiblity,
     accounts,
+    transactions,
+    getTransactions,
     getAccounts,
   } = useViewModel();
-
-  const mockTransactions = [
-    {
-      id: 1,
-      date: "Feb 28 2023",
-      name: "Starbucks - Coffee",
-      category: "Fast Food",
-      amount: "$5.79",
-    },
-    {
-      id: 2,
-      date: "Feb 25 2023",
-      name: "Starbucks - Coffee",
-      category: "Fast Food",
-      amount: "$5.79",
-    },
-    {
-      id: 3,
-      date: "Feb 23 2023",
-      name: "Panam - Parking",
-      category: "Parking and Transport",
-      amount: "$8.50",
-    },
-    {
-      id: 4,
-      date: "Feb 23 2023",
-      name: "Starbucks - Coffee",
-      category: "Fast Food",
-      amount: "$5.79",
-    },
-  ];
 
   // Perform some sort of action
   const onChange = (item, name) => {};
 
   useEffect(() => {
     getAccounts();
+    getTransactions(1, 0, 16);
   }, []);
 
   return (
@@ -97,7 +69,7 @@ export default function Transactions() {
                 <TransactionViewToggle />
               </div>
             </div>
-            <TransactionListTable data={mockTransactions} />
+            <TransactionListTable data={transactions} />
             <ListScroller />
           </div>
         </div>

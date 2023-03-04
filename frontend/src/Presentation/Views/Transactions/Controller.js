@@ -24,7 +24,18 @@ export default function TransactionsController() {
     };
   }
 
+  async function getTransactionsUseCase(userId, page, pageSize) {
+    return fetch("http://localhost:3001/api/transactions?" + new URLSearchParams({
+      userId: userId,
+      page: page,
+      pageSize: pageSize,
+    }), {
+      method: "GET",
+    }).then((res) => res.json());
+  }
+
   return {
+    getTransactionsUseCase,
     getUsernameUseCase,
     getAccountsUseCase,
   };
