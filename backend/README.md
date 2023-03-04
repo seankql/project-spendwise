@@ -1,10 +1,5 @@
 # Spendwise - Backend Setup
 
-## Prerequisites
-
-- [Node.js]
-- [PostgreSQL]
-
 ## Local Env Setup
 
 1. navigate to the `/backend` folder
