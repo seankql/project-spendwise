@@ -16,14 +16,18 @@ import "../../Styles/Main.css";
 // take users to different sections of the dashboard.
 
 export default function Dashboard() {
-  const { navigateToPage,
-    username, getUsername,
-    accounts, getAccounts,
-    transactions, getTransactions,
+  const {
+    navigateToPage,
+    username,
+    getUsername,
+    accounts,
+    getAccounts,
+    transactions,
+    getTransactions,
   } = useViewModel();
 
   // Perform some sort of action
-  const onChange = (item, name) => { };
+  const onChange = (item, name) => {};
 
   useEffect(() => {
     getUsername();

@@ -11,16 +11,26 @@ export default function TransactionsController() {
   }
 
   async function getTransactionsUseCase(userId, page, pageSize) {
-    return fetch("http://localhost:3001/api/transactions?" + new URLSearchParams({
-      userId: userId,
-      page: page,
-      pageSize: pageSize,
-    }), {
-      method: "GET",
-    }).then((res) => res.json());
+    return fetch(
+      "http://localhost:3001/api/transactions?" +
+        new URLSearchParams({
+          userId: userId,
+          page: page,
+          pageSize: pageSize,
+        }),
+      {
+        method: "GET",
+      }
+    ).then((res) => res.json());
   }
 
-  async function postTransactionUseCase(name, category, amount, accountId, date) {
+  async function postTransactionUseCase(
+    name,
+    category,
+    amount,
+    accountId,
+    date
+  ) {
     return fetch("http://localhost:3001/api/transactions", {
       method: "POST",
       headers: {
@@ -32,7 +42,6 @@ export default function TransactionsController() {
         category: category,
         amount: amount,
         transactionDate: date,
-
       }),
     }).then((res) => res.json());
   }

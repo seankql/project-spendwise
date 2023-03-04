@@ -18,6 +18,7 @@ export default function Account() {
     getAccounts,
     transactionVisiblity,
     toggleTransactionVisiblity,
+    createAccount,
   } = useViewModel();
 
   // TODO: add functionality to Create New Account
@@ -79,7 +80,7 @@ export default function Account() {
               "section-wrapper page-row-container " + transactionVisiblity
             }
           >
-            <AccountForm/>
+            <AccountForm submit={createAccount} />
           </div>
         </div>
       </div>

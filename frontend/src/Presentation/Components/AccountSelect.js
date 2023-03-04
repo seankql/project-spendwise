@@ -13,7 +13,9 @@ export default function List({ data }) {
     );
   };
 
-  const options = data?.map((item) => createNewOption(item.accountid, item.accountname));
+  const options = data?.map((item) =>
+    createNewOption(item.accountid, item.accountname)
+  );
 
   return (
     <select>

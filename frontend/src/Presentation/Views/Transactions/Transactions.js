@@ -24,7 +24,7 @@ export default function Transactions() {
   } = useViewModel();
 
   // Perform some sort of action
-  const onChange = (item, name) => { };
+  const onChange = (item, name) => {};
 
   useEffect(() => {
     getAccounts(1);
@@ -55,7 +55,10 @@ export default function Transactions() {
               ></img>
             </button>
           </div>
-          <TransactionForm classes={transactionVisiblity} submit={createTransaction} />
+          <TransactionForm
+            classes={transactionVisiblity}
+            submit={createTransaction}
+          />
         </div>
         <div className="section-wrapper page-row-container">
           <SearchFilterSideBar />

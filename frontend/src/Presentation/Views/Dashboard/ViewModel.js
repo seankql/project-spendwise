@@ -8,7 +8,8 @@ export default function DashboardViewModel() {
   const [accounts, setAccounts] = useState(null);
   const [transactions, setTransactions] = useState(null);
 
-  const { getUsernameUseCase, getAccountsUseCase, getTransactionsUseCase } = useController();
+  const { getUsernameUseCase, getAccountsUseCase, getTransactionsUseCase } =
+    useController();
   const navigate = useNavigate();
 
   // Would be an async function that calls controller

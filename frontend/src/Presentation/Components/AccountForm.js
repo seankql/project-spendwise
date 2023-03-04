@@ -4,11 +4,12 @@ import "../Styles/Common.css";
 import "../Styles/Account.css";
 import Button from "./Button";
 
-export default function List() {
+export default function List({ submit }) {
   const [name, setName] = useState("");
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    submit(name);
     setName("");
   };
 

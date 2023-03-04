@@ -3,7 +3,6 @@ import "../Styles/Common.css";
 import "../Styles/Account.css";
 
 export default function List({ title, data = null, classes = "" }) {
-
   return (
     <div className={"card-wrapper " + classes}>
       <div className="page-row-container">

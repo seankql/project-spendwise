@@ -11,7 +11,7 @@ export default function Visualization() {
   const { username, getUsername, accounts, getAccounts } = useViewModel();
 
   // Perform some sort of action
-  const onChange = (item, name) => { };
+  const onChange = (item, name) => {};
 
   useEffect(() => {
     getUsername();

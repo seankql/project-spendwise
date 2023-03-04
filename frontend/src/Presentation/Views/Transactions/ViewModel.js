@@ -11,14 +11,19 @@ export default function TransactionsViewModel() {
   const [transactions, setTransactions] = useState(null);
   const [transactionVisiblity, setTransactionVisiblity] = useState("hidden");
 
-  const { getUsernameUseCase, getAccountsUseCase, getTransactionsUseCase, postTransactionUseCase } = useController();
+  const {
+    getUsernameUseCase,
+    getAccountsUseCase,
+    getTransactionsUseCase,
+    postTransactionUseCase,
+  } = useController();
   const navigate = useNavigate();
 
   function getCurrentDate() {
     const dateObj = new Date();
     const year = dateObj.getFullYear();
-    const month = (dateObj.getMonth() + 1).toString().padStart(2, '0');
-    const day = dateObj.getDate().toString().padStart(2, '0');
+    const month = (dateObj.getMonth() + 1).toString().padStart(2, "0");
+    const day = dateObj.getDate().toString().padStart(2, "0");
     return `${year}-${month}-${day}`;
   }
 

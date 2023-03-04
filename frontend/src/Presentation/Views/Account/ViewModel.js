@@ -10,8 +10,17 @@ export default function AccountViewModel() {
   const [accounts, setAccounts] = useState(null);
   const [transactionVisiblity, setTransactionVisiblity] = useState("hidden");
 
-  const { getBasicInfoUseCase, getAccountsUseCase } = useController();
+  const { getBasicInfoUseCase, getAccountsUseCase, postAccountUseCase } =
+    useController();
   const navigate = useNavigate();
+
+  function getCurrentDate() {
+    const dateObj = new Date();
+    const year = dateObj.getFullYear();
+    const month = (dateObj.getMonth() + 1).toString().padStart(2, "0");
+    const day = dateObj.getDate().toString().padStart(2, "0");
+    return `${year}-${month}-${day}`;
+  }
 
   // Would be an async function that calls controller
   function getBasicInfo() {
@@ -41,6 +50,12 @@ export default function AccountViewModel() {
     }
   }
 
+  async function createAccount(name) {
+    await postAccountUseCase(name, 1);
+    const result = await getAccounts(1);
+    setAccounts(result);
+  }
+
   function navigateToPage(page = "/") {
     navigate(page);
   }
@@ -54,5 +69,6 @@ export default function AccountViewModel() {
     getAccounts,
     navigateToPage,
     getArrow,
+    createAccount,
   };
 }

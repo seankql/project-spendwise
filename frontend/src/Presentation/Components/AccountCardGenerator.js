@@ -1,11 +1,10 @@
 import "../Styles/Components.css";
 import "../Styles/Common.css";
 import "../Styles/Account.css";
-import AccountCard from  "./AccountCard.js";
+import AccountCard from "./AccountCard.js";
 import Button from "./Button.js";
 
 export default function List({ data = null }) {
-
   const createNewRowElement = (accountData) => {
     return (
       <div key={accountData.accountid}>
@@ -47,9 +46,7 @@ export default function List({ data = null }) {
     );
   };
 
-  const rowItems = data?.map((account) =>
-    createNewRowElement(account)
-  );
+  const rowItems = data?.map((account) => createNewRowElement(account));
 
-  return (rowItems);
+  return rowItems;
 }
