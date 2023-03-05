@@ -1,10 +1,5 @@
 # Spendwise - Backend Setup
 
-## Prerequisites
-
-- [Node.js]
-- [PostgreSQL]
-
 ## Local Env Setup
 
 1. navigate to the `/backend` folder
@@ -48,6 +43,7 @@
      - accountId (primary key)
      - userId (foregin key)
      - accountName
+     - dateCreated
    - Each account should be associated with a user.
      - One user can have multiple account
      - One account must have one user

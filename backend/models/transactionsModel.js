@@ -32,12 +32,25 @@ class TransactionModel extends BaseModel {
   }
   static async getMostRecentTransactionsByUserId(userId, page, pageSize) {
     const client = await pool.connect();
-    const result = await client.query(
-      "SELECT t.* FROM transactions t JOIN accounts a ON a.accountId = t.accountId JOIN users u ON u.userId = a.userId WHERE u.userId = $1 ORDER BY t.transactionDate DESC LIMIT $2 OFFSET $3",
-      [userId, pageSize, page]
-    );
+    const query = `SELECT t.* 
+                  FROM transactions t 
+                  JOIN accounts a ON a.accountId = t.accountId 
+                  JOIN users u ON u.userId = a.userId 
+                  WHERE u.userId = ${userId} 
+                  ORDER BY t.transactionDate DESC 
+                  LIMIT ${pageSize} 
+                  OFFSET ${page}`;
+    const countQuery = `SELECT COUNT(*) 
+                        FROM transactions t 
+                        JOIN accounts a ON a.accountId = t.accountId 
+                        JOIN users u ON u.userId = a.userId 
+                        WHERE u.userId = ${userId}`;
+    const [result, countResult] = await Promise.all([
+      client.query(query),
+      client.query(countQuery),
+    ]);
     client.release();
-    return result.rows;
+    return { rows: result.rows, totalCount: countResult.rows[0].count };
   }
   static async getAllTransactionsByIdsAndDateRange(ids, startDate, endDate) {
     if (ids.accountId || ids.userId) {
@@ -58,6 +71,66 @@ class TransactionModel extends BaseModel {
       client.release();
       return result.rows;
     }
+  }
+
+  static async getTransactionsByAccountIdWithFilters(
+    userId,
+    accountId,
+    descriptionName,
+    startDate,
+    endDate,
+    minAmount,
+    maxAmount,
+    categories,
+    limit,
+    offset
+  ) {
+    const client = await pool.connect();
+    let accountCondition = "";
+    if (accountId) {
+      accountCondition = ` AND a.accountId = $1`;
+    } else {
+      // fetch all accounts under userId
+      accountCondition = ` AND a.userId = ${userId}`;
+    }
+
+    let categoriesString = "";
+    if (categories.length > 0) {
+      categoriesString = categories.map((c) => `'${c}'`).join(",");
+      categoriesString = `AND (t.category IN (${categoriesString}))`;
+    }
+
+    const query = `SELECT t.transactionId, t.transactionDate, t.descriptions, t.amount, t.category 
+                 FROM Transactions t
+                 INNER JOIN Accounts a ON t.accountId = a.accountId
+                 INNER JOIN Users u ON a.userId = u.userId
+                 WHERE 1=1
+                   ${accountCondition}
+                   AND (t.descriptions LIKE '%${descriptionName}%' OR '${descriptionName}' = '')
+                   AND (t.transactionDate BETWEEN '${startDate}' AND '${endDate}')
+                   AND (t.amount BETWEEN ${minAmount} AND ${maxAmount})
+                   ${categoriesString}
+                   AND u.userId = ${userId}
+                  ORDER BY t.transactionDate DESC
+                  LIMIT ${limit} OFFSET ${offset};`;
+
+    const countQuery = `SELECT COUNT(*) FROM Transactions t
+                  INNER JOIN Accounts a ON t.accountId = a.accountId
+                  INNER JOIN Users u ON a.userId = u.userId
+                  WHERE 1=1
+                    ${accountCondition}
+                    AND (t.descriptions LIKE '%${descriptionName}%' OR '${descriptionName}' = '')
+                    AND (t.transactionDate BETWEEN '${startDate}' AND '${endDate}')
+                    AND (t.amount BETWEEN ${minAmount} AND ${maxAmount})
+                    ${categoriesString}
+                    AND u.userId = ${userId};`;
+
+    const [result, countResult] = await Promise.all([
+      client.query(query),
+      client.query(countQuery),
+    ]);
+    client.release();
+    return { rows: result.rows, totalCount: countResult.rows[0].count };
   }
 }
 export { TransactionModel };

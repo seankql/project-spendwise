@@ -57,10 +57,9 @@ class BaseModel {
     if (orderBy) {
       query.text += ` ORDER BY ${orderBy}`;
     }
-    if (offset) {
+    if (offset && limit) {
+      offset = parseInt(offset) * parseInt(limit);
       query.text += ` OFFSET ${offset}`;
-    }
-    if (limit) {
       query.text += ` LIMIT ${limit}`;
     }
 
