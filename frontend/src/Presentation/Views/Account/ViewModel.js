@@ -52,7 +52,7 @@ export default function AccountViewModel() {
 
   async function createAccount(name) {
     await postAccountUseCase(name, 1);
-    const result = await getAccounts(1);
+    const result = await getAccountsUseCase(1);
     setAccounts(result);
   }
 

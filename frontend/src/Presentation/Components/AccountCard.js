@@ -19,6 +19,14 @@ export default function List({ title, data = null, classes = "" }) {
             {data.accountname}
           </div>
         </div>
+        <div className="page-row-container">
+          <div className="card-sml-padding-wrapper component-subheader-text">
+            Date Created
+          </div>
+          <div className="card-sml-padding-wrapper component-subheader-text row-right-element">
+            {data.datecreated?.substring(0, data.datecreated.indexOf("T"))}
+          </div>
+        </div>
       </div>
     </div>
   );

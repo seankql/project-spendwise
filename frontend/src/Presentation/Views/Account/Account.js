@@ -27,13 +27,6 @@ export default function Account() {
   // to link their account to a bank account, otherwise, just show the current
   // information and have an option to unlink
 
-  const accountCreateKeys = [{ id: 1, key: "Name" }];
-
-  const BankLinkKeys = [
-    { id: 1, key: "Bank Info" },
-    { id: 2, key: "or something" },
-  ];
-
   useEffect(() => {
     getBasicInfo();
     getAccounts(1);

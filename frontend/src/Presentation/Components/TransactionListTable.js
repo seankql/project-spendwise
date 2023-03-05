@@ -15,7 +15,7 @@ export default function List({ data = null }) {
     );
   };
 
-  const getRows = data?.map((transaction) =>
+  const getRows = data?.rows.map((transaction) =>
     createNewRowElement(
       transaction.transactionid,
       transaction.transactiondate,
