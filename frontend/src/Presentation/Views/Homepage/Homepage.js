@@ -63,7 +63,7 @@ export default function Homepage() {
             </div>
           </div>
           <div className="auth-container">
-            <SigninSignupButton/>
+            <SigninSignupButton />
           </div>
         </div>
       </div>

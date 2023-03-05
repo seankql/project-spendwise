@@ -3,7 +3,7 @@ import "../Styles/Common.css";
 import Button from "./Button";
 import logo from "../../Media/logo-no-background.png";
 import { useNavigate } from "react-router-dom";
-import SignoutButton from "./SignoutButton"
+import SignoutButton from "./SignoutButton";
 import AuthenticatedUser from "./AuthenticatedUser";
 
 export default function List() {
@@ -43,9 +43,9 @@ export default function List() {
             }}
           />
         </div>
-          <AuthenticatedUser/>
+        <AuthenticatedUser />
         <div className="auth-container">
-          <SignoutButton/>
+          <SignoutButton />
         </div>
       </div>
     </div>
