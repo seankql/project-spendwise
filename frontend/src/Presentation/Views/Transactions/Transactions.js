@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import useViewModel from "./ViewModel";
 import Banner from "../../Components/Banner";
+import ScrollBanner from "../../Components/ScrollBanner";
 import TransactionViewToggle from "../../Components/TransactionViewToggle";
 import TransactionListTable from "../../Components/TransactionListTable";
 import TransactionForm from "../../Components/TransactionForm";
@@ -23,8 +24,7 @@ export default function Transactions() {
     createTransaction,
   } = useViewModel();
 
-  // Perform some sort of action
-  const onChange = (item, name) => {};
+  const sectionList = ["Add Transaction", "View Transactions"];
 
   useEffect(() => {
     getAccounts(1);
@@ -34,6 +34,7 @@ export default function Transactions() {
   return (
     <div>
       <Banner />
+      <ScrollBanner data={sectionList}/>
       <div className="page-content-container">
         <div className="page-header-text page-row-container">
           Transactions
@@ -42,7 +43,7 @@ export default function Transactions() {
           </div>
         </div>
         <div className="section-divider">
-          <div className="section-wrapper page-row-container section-header-text">
+          <div id="Add Transaction" className="section-wrapper page-row-container section-header-text">
             Add transaction
             <button
               className="drop-down-btn"
@@ -60,7 +61,7 @@ export default function Transactions() {
             submit={createTransaction}
           />
         </div>
-        <div className="section-wrapper page-row-container">
+        <div id="View Transactions" className="section-wrapper page-row-container">
           <SearchFilterSideBar />
           <div className="transactions-col">
             <div className="page-row-container">

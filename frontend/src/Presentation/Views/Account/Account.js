@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import useViewModel from "./ViewModel";
 import Banner from "../../Components/Banner";
+import ScrollBanner from "../../Components/ScrollBanner";
 import InfoCard from "../../Components/InfoCard";
 import AlertCard from "../../Components/AlertCard";
 import AccountCardGenerator from "../../Components/AccountCardGenerator";
@@ -21,11 +22,12 @@ export default function Account() {
     createAccount,
   } = useViewModel();
 
-  // TODO: add functionality to Create New Account
   // TODO: Show different "Bank Information" form depending on whether or not
   // User has linked it to a bank account or not. If not, users should be prompted
   // to link their account to a bank account, otherwise, just show the current
   // information and have an option to unlink
+
+  const sectionList = ["Profile & Alerts", "Accounts", "Create New Account"];
 
   useEffect(() => {
     getBasicInfo();
@@ -35,10 +37,11 @@ export default function Account() {
   return (
     <div>
       <Banner />
+      <ScrollBanner data={sectionList}/>
       <div className="page-content-container">
         <div className="page-header-text">
           Account & Settings
-          <div className="section-wrapper section-header-text">
+          <div id="Profile & Alerts" className="section-wrapper section-header-text">
             Profile & Alerts
           </div>
           <div className="section-wrapper page-row-container section-divider">
@@ -52,10 +55,10 @@ export default function Account() {
             </div>
           </div>
         </div>
-        <div className="section-wrapper section-header-text"> Accounts </div>
+        <div id="Accounts" className="section-wrapper section-header-text"> Accounts </div>
         <AccountCardGenerator data={accounts} />
         <div className="section-divider">
-          <div className="section-wrapper page-row-container section-header-text">
+          <div id="Create New Account" className="section-wrapper page-row-container section-header-text">
             Create New Account
             <button
               className="drop-down-btn"
