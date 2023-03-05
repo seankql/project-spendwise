@@ -6,6 +6,7 @@ import { Link } from "react-scroll";
 import "../../Styles/Common.css";
 import "../../Styles/Main.css";
 import "../../Styles/Homepage.css";
+import SigninSignupButton from "../../Components/SigninSignupButton";
 
 export default function Homepage() {
   const { navigateToPage } = useViewModel();
@@ -62,20 +63,7 @@ export default function Homepage() {
             </div>
           </div>
           <div className="auth-container">
-            <Button
-              title={"Sign In"}
-              classes="btn btn-sml banner-auth-component-container"
-              onClick={() => {
-                navigateToPage("/dashboard");
-              }}
-            />
-            <Button
-              title={"Sign Up"}
-              classes="btn btn-sml banner-auth-component-container"
-              onClick={() => {
-                navigateToPage("/dashboard");
-              }}
-            />
+            <SigninSignupButton/>
           </div>
         </div>
       </div>

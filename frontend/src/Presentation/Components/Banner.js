@@ -3,6 +3,8 @@ import "../Styles/Common.css";
 import Button from "./Button";
 import logo from "../../Media/logo-no-background.png";
 import { useNavigate } from "react-router-dom";
+import SignoutButton from "./SignoutButton"
+import AuthenticatedUser from "./AuthenticatedUser";
 
 export default function List() {
   const navigate = useNavigate();
@@ -41,14 +43,9 @@ export default function List() {
             }}
           />
         </div>
+          <AuthenticatedUser/>
         <div className="auth-container">
-          <Button
-            title={"Sign Out"}
-            classes="btn btn-sml banner-auth-component-container"
-            onClick={() => {
-              navigate("/");
-            }}
-          />
+          <SignoutButton/>
         </div>
       </div>
     </div>
