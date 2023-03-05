@@ -20,9 +20,12 @@ export default function Visualization() {
   return (
     <div>
       <Banner />
-      <ScrollBanner data={sectionList}/>
+      <ScrollBanner data={sectionList} />
       <div className="page-content-container">
-        <div id="View Visualizations" className="page-header-text page-row-container">
+        <div
+          id="View Visualizations"
+          className="page-header-text page-row-container"
+        >
           Visualization
           <div className="row-right-element">
             <AccountSelect data={accounts} />

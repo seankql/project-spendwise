@@ -34,7 +34,7 @@ export default function Transactions() {
   return (
     <div>
       <Banner />
-      <ScrollBanner data={sectionList}/>
+      <ScrollBanner data={sectionList} />
       <div className="page-content-container">
         <div className="page-header-text page-row-container">
           Transactions
@@ -43,7 +43,10 @@ export default function Transactions() {
           </div>
         </div>
         <div className="section-divider">
-          <div id="Add Transaction" className="section-wrapper page-row-container section-header-text">
+          <div
+            id="Add Transaction"
+            className="section-wrapper page-row-container section-header-text"
+          >
             Add transaction
             <button
               className="drop-down-btn"
@@ -61,7 +64,10 @@ export default function Transactions() {
             submit={createTransaction}
           />
         </div>
-        <div id="View Transactions" className="section-wrapper page-row-container">
+        <div
+          id="View Transactions"
+          className="section-wrapper page-row-container"
+        >
           <SearchFilterSideBar />
           <div className="transactions-col">
             <div className="page-row-container">

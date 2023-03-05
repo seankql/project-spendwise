@@ -27,7 +27,12 @@ export default function Dashboard() {
     getTransactions,
   } = useViewModel();
 
-  const sectionList = ["Summary", "Recent Transactions", "Income VS Expenditure", "Category Chart"];
+  const sectionList = [
+    "Summary",
+    "Recent Transactions",
+    "Income VS Expenditure",
+    "Category Chart",
+  ];
 
   useEffect(() => {
     getUsername();
@@ -42,7 +47,9 @@ export default function Dashboard() {
       <div className="page-content-container">
         <div className="page-header-text">Dashboard</div>
         <div className="section-wrapper page-row-container">
-          <div id="Summary" className="section-header-text">Summary</div>
+          <div id="Summary" className="section-header-text">
+            Summary
+          </div>
           <div className="row-right-element">
             <AccountSelect data={accounts} />
           </div>
@@ -55,7 +62,9 @@ export default function Dashboard() {
         </div>
         <div className="section-divider">
           <div className="section-wrapper page-row-container">
-            <div id="Recent Transactions" className="section-header-text">Recent Transactions</div>
+            <div id="Recent Transactions" className="section-header-text">
+              Recent Transactions
+            </div>
             <Button
               title={"See all transactions"}
               classes="btn btn-sml banner-link-component-container row-right-element"
@@ -72,8 +81,11 @@ export default function Dashboard() {
         <div className="section-wrapper page-row-container">
           <div className="section-header-text">Highlights</div>
         </div>
-        <div id="Income VS Expenditure" className="section-wrapper section-subheader-text">
-        Income VS Expenditure
+        <div
+          id="Income VS Expenditure"
+          className="section-wrapper section-subheader-text"
+        >
+          Income VS Expenditure
         </div>
         <div className="page-row-container section-divider">
           <img className="sml-graph-img-wrapper" src={greenChart} alt="logo" />
@@ -83,7 +95,10 @@ export default function Dashboard() {
             alt="logo"
           />
         </div>
-        <div id="Category Chart" className="section-wrapper section-subheader-text">
+        <div
+          id="Category Chart"
+          className="section-wrapper section-subheader-text"
+        >
           Category Chart
         </div>
         <img className="section-divider" src={pieChart} alt="logo" />

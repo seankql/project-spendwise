@@ -3,7 +3,6 @@ import "../Styles/Common.css";
 import { Link } from "react-scroll";
 
 export default function List({ data }) {
-
   const createLinkElement = (section) => {
     return (
       <div key={section} className="scroll-banner-element">
@@ -16,18 +15,15 @@ export default function List({ data }) {
         >
           {section}
         </Link>
-      </div>);
-  }
+      </div>
+    );
+  };
 
-  const getLinks = data.map((link) =>
-    createLinkElement(link)
-  );
+  const getLinks = data.map((link) => createLinkElement(link));
 
   return (
     <div className="scroll-banner">
-      <div className="scroll-banner-wrapper">
-        {getLinks}
-      </div>
+      <div className="scroll-banner-wrapper">{getLinks}</div>
     </div>
   );
 }

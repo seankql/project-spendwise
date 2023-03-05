@@ -37,11 +37,14 @@ export default function Account() {
   return (
     <div>
       <Banner />
-      <ScrollBanner data={sectionList}/>
+      <ScrollBanner data={sectionList} />
       <div className="page-content-container">
         <div className="page-header-text">
           Account & Settings
-          <div id="Profile & Alerts" className="section-wrapper section-header-text">
+          <div
+            id="Profile & Alerts"
+            className="section-wrapper section-header-text"
+          >
             Profile & Alerts
           </div>
           <div className="section-wrapper page-row-container section-divider">
@@ -55,10 +58,16 @@ export default function Account() {
             </div>
           </div>
         </div>
-        <div id="Accounts" className="section-wrapper section-header-text"> Accounts </div>
+        <div id="Accounts" className="section-wrapper section-header-text">
+          {" "}
+          Accounts{" "}
+        </div>
         <AccountCardGenerator data={accounts} />
         <div className="section-divider">
-          <div id="Create New Account" className="section-wrapper page-row-container section-header-text">
+          <div
+            id="Create New Account"
+            className="section-wrapper page-row-container section-header-text"
+          >
             Create New Account
             <button
               className="drop-down-btn"
