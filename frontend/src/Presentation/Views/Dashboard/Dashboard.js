@@ -13,9 +13,6 @@ import "../../Styles/Common.css";
 import "../../Styles/Dashboard.css";
 import "../../Styles/Main.css";
 
-// TODO: Add subbanner under the main banner with scrollable buttons that
-// take users to different sections of the dashboard.
-
 export default function Dashboard() {
   const {
     navigateToPage,
@@ -27,11 +24,19 @@ export default function Dashboard() {
     getTransactions,
   } = useViewModel();
 
+  // TODO move to viewmodel
   const sectionList = [
     "Summary",
     "Recent Transactions",
     "Income VS Expenditure",
     "Category Chart",
+  ];
+
+  const mockIncomeData = [{ category: "Income", amount: 2000 }];
+  const mockExpenseData = [
+    { category: "Food", amount: 150 },
+    { category: "Housing", amount: 1000 },
+    { category: "Transportation", amount: 30 },
   ];
 
   useEffect(() => {
@@ -55,9 +60,17 @@ export default function Dashboard() {
           </div>
         </div>
         <div className="section-wrapper page-row-container section-divider">
-          <SummaryCard title="This Month's Income" data="$1,501.62" />
+          <SummaryCard
+            title="This Month's Income"
+            aggregatedData="$1,501.62"
+            data={mockIncomeData}
+          />
           <div className="row-right-element">
-            <SummaryCard title="This Month's Spending" data="$896.21" />
+            <SummaryCard
+              title="This Month's Spending"
+              aggregatedData="$896.21"
+              data={mockExpenseData}
+            />
           </div>
         </div>
         <div className="section-divider">

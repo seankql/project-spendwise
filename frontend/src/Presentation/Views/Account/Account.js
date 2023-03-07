@@ -39,7 +39,7 @@ export default function Account() {
       <Banner />
       <ScrollBanner data={sectionList} />
       <div className="page-content-container">
-        <div className="page-header-text">
+        <div className="page-header-text width-padder">
           Account & Settings
           <div
             id="Profile & Alerts"

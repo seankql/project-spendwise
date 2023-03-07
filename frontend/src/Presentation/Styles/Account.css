@@ -1,21 +1,13 @@
-.basic-info-card {
-  width: calc(1024px * 0.6);
-}
-
-.account-info-card {
-  width: calc(1024px * 0.5);
-}
-
-.bank-info-card {
-  width: calc(1024px * 0.3);
+.width-padder {
+  width: 1024px;
 }
 
 .create-form-card {
-  width: calc(1024px * 0.45);
+  width: 450px;
 }
 
 .alert-card {
-  width: calc(1024px * 0.3);
+  width: 250px;
 }
 
 .account-btns-left {
