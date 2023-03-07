@@ -1,5 +1,3 @@
-import useViewModel from "./ViewModel";
-import Button from "../../Components/Button";
 import logo from "../../../Media/logo-no-background.png";
 import imageBanner from "../../../Media/homepage-banner.png";
 import { Link } from "react-scroll";
@@ -9,10 +7,8 @@ import "../../Styles/Homepage.css";
 import SigninSignupButton from "../../Components/SigninSignupButton";
 
 export default function Homepage() {
-  const { navigateToPage } = useViewModel();
-
   return (
-    <div>
+    <div className="body-wrapper">
       <div className="banner">
         <div className="banner-wrapper">
           <img className="banner-img-container" src={logo} alt="logo" />
@@ -98,13 +94,14 @@ export default function Homepage() {
           repellendus. Totam nihil similique a repellat minus dolor amet quasi.
           Corporis nulla quaerat iste, sed quasi ab dolorem maxime minima animi.
         </div>
-        <div id="contact" style={{ height: 1000 }}>
+        <div id="contact" style={{ height: 500 }}>
           <h1>This is Contacts section</h1>
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Id,
           repellendus. Totam nihil similique a repellat minus dolor amet quasi.
           Corporis nulla quaerat iste, sed quasi ab dolorem maxime minima animi.
         </div>
       </div>
+      <footer />
     </div>
   );
 }

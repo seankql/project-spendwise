@@ -41,7 +41,7 @@ export default function Dashboard() {
   }, []);
 
   return (
-    <div>
+    <div className="body-wrapper">
       <Banner />
       <ScrollBanner data={sectionList} />
       <div className="page-content-container">
@@ -103,6 +103,7 @@ export default function Dashboard() {
         </div>
         <img className="section-divider" src={pieChart} alt="logo" />
       </div>
+      <footer />
     </div>
   );
 }

@@ -18,7 +18,7 @@ export default function Visualization() {
   }, []);
 
   return (
-    <div>
+    <div className="body-wrapper">
       <Banner />
       <ScrollBanner data={sectionList} />
       <div className="page-content-container">
@@ -36,6 +36,7 @@ export default function Visualization() {
           <div className="transactions-col"></div>
         </div>
       </div>
+      <footer />
     </div>
   );
 }

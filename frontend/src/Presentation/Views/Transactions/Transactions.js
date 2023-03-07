@@ -32,7 +32,7 @@ export default function Transactions() {
   }, []);
 
   return (
-    <div>
+    <div className="body-wrapper">
       <Banner />
       <ScrollBanner data={sectionList} />
       <div className="page-content-container">
@@ -81,6 +81,7 @@ export default function Transactions() {
           </div>
         </div>
       </div>
+      <footer />
     </div>
   );
 }

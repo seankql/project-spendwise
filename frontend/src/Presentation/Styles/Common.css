@@ -90,6 +90,20 @@
   align-items: center;
 }
 
+footer {
+  display: flex;
+  background-color: black;
+  min-height: 100px;
+  margin-top: auto;
+  width: 100%;
+}
+
+.body-wrapper {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
 .hidden {
   display: none !important;
 }

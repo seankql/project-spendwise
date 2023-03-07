@@ -35,7 +35,7 @@ export default function Account() {
   }, []);
 
   return (
-    <div>
+    <div className="body-wrapper">
       <Banner />
       <ScrollBanner data={sectionList} />
       <div className="page-content-container">
@@ -89,6 +89,7 @@ export default function Account() {
           </div>
         </div>
       </div>
+      <footer />
     </div>
   );
 }
