@@ -15,15 +15,21 @@ export default function List({ data = null }) {
     );
   };
 
-  const getRows = data?.rows.map((transaction) =>
-    createNewRowElement(
-      transaction.transactionid,
-      transaction.transactiondate,
-      transaction.descriptions,
-      transaction.category,
-      transaction.amount
-    )
-  );
+  const getRows = () => {
+    console.log(data);
+    if (!data || !data.transactions || data.transactions.length === 0) {
+      return;
+    }
+    return data?.transactions?.rows.map((transaction) =>
+      createNewRowElement(
+        transaction.transactionid,
+        transaction.transactiondate,
+        transaction.descriptions,
+        transaction.category,
+        transaction.amount
+      )
+    );
+  }
 
   return (
     <div>
@@ -38,7 +44,7 @@ export default function List({ data = null }) {
             </th>
           </tr>
         </thead>
-        <tbody>{getRows}</tbody>
+        <tbody>{getRows()}</tbody>
       </table>
     </div>
   );
