@@ -17,9 +17,11 @@
 - Response: 201 Created
   - content-type: `application/json`
   - body: object
-    - accountid: (number) the id of the account you just created
-    - userid: (number) the id of the user that the account belongs to
-    - accountname: (string) the name of the account you just created
+    - id: (number) the id of the account you just created
+    - UserId: (number) the id of the user that the account belongs to
+    - accountName: (string) the name of the account you just created
+    - updatedAt: (date) the date and time of creation.
+    - createdAt: (date) the date and time of update.
 - Response: 400
   - body: Bad Request
   - Description: Possible required fields are missing.
@@ -47,9 +49,11 @@ $ curl -X POST
   - Response: 200 OK
     - Content-Type: `application/json`
     - Body: Object
-      - accountid (number): The ID of the updated account.
-      - userid (string): The ID of the user the account belongs to.
-      - accountname (string): The new name for the account.
+      - id (number): The ID of the updated account.
+      - userUserIdid (string): The ID of the user the account belongs to.
+      - accountName (string): The new name for the account.
+      - updatedAt: (date) the date and time of creation.
+      - createdAt: (date) the date and time of update.
   - Response: 400
     - Body: Bad Request
     - Description: One or more required fields are missing from the request body.
@@ -72,11 +76,6 @@ $ curl -X PUT
   - Request parameters:
     - accountId (number, required): ID of the account to be deleted.
   - response: 200
-    - content-type: `application/json`
-    - Body: object
-      - accountid: (number) the id of the account that was deleted
-      - userid: (string) the id of the user that the account belonged to
-      - accountname: (string) the name of the account that was deleted
   - response: 400
     - body: Bad Request
     - Description: Possible incorrect accountId.
@@ -100,7 +99,7 @@ $ curl -X DELETE
   - response: 200
     - content-type: `application/json`
     - body: object
-      - accounts: (array) an array of all accounts belonging to the user
+      - an array of all accounts belonging to the user
   - response: 400
     - body: Bad Request
     - Description: Possible incorrect userId.
