@@ -3,6 +3,7 @@ import bodyParser from "body-parser";
 import { router } from "./routers/router.js";
 import * as Sentry from "@sentry/node";
 import { config } from "./config/config.js";
+import { sequelize } from "./database/database.js";
 
 const PORT = 3001;
 
@@ -21,6 +22,15 @@ app.use((req, res, next) => {
 Sentry.init({
   dsn: config.SENTRY_DSN,
 });
+
+try {
+  await sequelize.authenticate();
+  await sequelize.sync({ alter: { drop: false } });
+  console.log("Connection has been established successfully.");
+} catch (error) {
+  console.error("Unable to connect to the database:", error);
+}
+
 app.use(Sentry.Handlers.requestHandler());
 app.use(Sentry.Handlers.errorHandler());
 

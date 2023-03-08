@@ -370,5 +370,3 @@ $ curl -X DELETE
        -H "Content-Type: `application/json`"
        http://localhost:3001/api/transactions/1'
 ```
-
-## Users API

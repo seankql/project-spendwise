@@ -1,12 +1,6 @@
-import pg from "pg";
+import { Sequelize } from "sequelize";
 import { config } from "../config/config.js";
 
-const { Pool } = pg;
-
-export const pool = new Pool({
-  user: config.dbUser,
-  password: config.dbPass,
-  host: config.dbHost,
-  port: config.dbPort,
-  database: config.dbName,
-});
+export const sequelize = new Sequelize(
+  `postgres://${config.dbName}:${config.dbPass}@${config.dbHost}:${config.dbPort}/${config.dbName}`
+);
