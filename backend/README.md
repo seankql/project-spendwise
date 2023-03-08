@@ -14,44 +14,34 @@
 
 4. Start/Create PostgreSQL locally by creating a database. Make sure the Database name and password match what is written in `.env`
 
-5. Setup Database Tables
-   ```
-   npm run createTables
-   ```
-6. Start the development backend
+5. Start the development backend
    ```
    npm run dev
    ```
-7. The development backend will be running at http://localhost:3001
-
-8. To Drop All Tables
-   ```
-   npm run dropTables
-   ```
+6. The development backend will be running at http://localhost:3001
 
 ## Database Design
 
-1. User Table
+1. Users Table
    - This table would contain information about the user such as
-     - userId (primary key)
+     - id (primary key)
      - username
      - hashedPassword
      - email
-2. Account Table
+2. Accounts Table
    - This table would contain information about the financial accounts that each user has.
    - Contains fields such as
-     - accountId (primary key)
+     - id (primary key)
      - userId (foregin key)
      - accountName
-     - dateCreated
    - Each account should be associated with a user.
      - One user can have multiple account
      - One account must have one user
-3. Transaction Table
+3. Transactions Table
    - This table would contain information about each transaction that a user makes including
-     - transactionId (primary key)
-     - date
-     - description
+     - id (primary key)
+     - transactionDate
+     - descriptions
      - amount
      - accountId (foregin key)
      - category
