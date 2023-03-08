@@ -11,8 +11,10 @@ accountsController.post("/", async (req, res) => {
     if (!req.body.userId || !req.body.accountName) {
       return res.status(400).send("Missing required fields");
     }
-    const newAccount = new AccountsModel(req.body.userId, req.body.accountName);
-    const createdAccount = await newAccount.create();
+    const createdAccount = await AccountsModel.create({
+      UserId: req.body.userId,
+      accountName: req.body.accountName,
+    });
     if (createdAccount) {
       return res.status(201).send(createdAccount);
     } else {
@@ -29,20 +31,27 @@ accountsController.put("/:accountId", async (req, res) => {
   try {
     const { accountId } = req.params;
     const data = {
-      userId: req.body.userId,
+      UserId: req.body.userId,
       accountName: req.body.accountName,
     };
-    if (!data.userId || !data.accountName) {
+    if (!data.UserId || !data.accountName) {
       return res.status(400).send("Missing required fields");
     }
-    const account = new AccountsModel(req.body.userId, req.body.accountName);
-    const updatedAccount = await account.updateByPK(accountId, data);
-    if (updatedAccount) {
-      return res.status(200).send(updatedAccount);
+    const account = await AccountsModel.findByPk(accountId);
+    if (account) {
+      const updatedAccount = await account.update(data);
+      await account.reload();
+      if (updatedAccount) {
+        return res.status(200).send(updatedAccount);
+      } else {
+        return res
+          .status(400)
+          .send("Error updating account for account id: " + accountId);
+      }
     } else {
       return res
         .status(400)
-        .send("Error updating account for account id: " + accountId);
+        .send("Error finding account for account id: " + accountId);
     }
   } catch (err) {
     Sentry.captureException(err);
@@ -54,14 +63,20 @@ accountsController.put("/:accountId", async (req, res) => {
 accountsController.delete("/:accountId", async (req, res) => {
   try {
     const { accountId } = req.params;
-    const account = new AccountsModel();
-    const deletedAccount = await account.deleteByPK(accountId);
-    if (deletedAccount) {
-      return res.status(200).send(deletedAccount);
+    const account = await AccountsModel.findByPk(accountId);
+    if (account) {
+      const deletedAccount = await account.destroy();
+      if (deletedAccount) {
+        return res.status(200).send(deletedAccount);
+      } else {
+        return res
+          .status(400)
+          .send("Error deleting account for account id: " + accountId);
+      }
     } else {
       return res
         .status(400)
-        .send("Error deleting account for account id: " + accountId);
+        .send("Error finding account for account id: " + accountId);
     }
   } catch (err) {
     Sentry.captureException(err);
@@ -73,9 +88,8 @@ accountsController.delete("/:accountId", async (req, res) => {
 accountsController.get("/user/:userId", async (req, res) => {
   try {
     const { userId } = req.params;
-    const account = new AccountsModel();
-    const accounts = await account.findAll({
-      where: { userId: userId },
+    const accounts = await AccountsModel.findAll({
+      where: { UserId: userId },
     });
     if (accounts) {
       return res.status(200).send(accounts);
