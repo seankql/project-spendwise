@@ -16,7 +16,7 @@ export default function List({ title, data = null, classes = "" }) {
             Account Name
           </div>
           <div className="card-sml-padding-wrapper component-subheader-text row-right-element">
-            {data.accountname}
+            {data.accountName}
           </div>
         </div>
         <div className="page-row-container">
@@ -24,7 +24,7 @@ export default function List({ title, data = null, classes = "" }) {
             Date Created
           </div>
           <div className="card-sml-padding-wrapper component-subheader-text row-right-element">
-            {data.datecreated?.substring(0, data.datecreated.indexOf("T"))}
+            {data.createdAt?.substring(0, data.createdAt.indexOf("T"))}
           </div>
         </div>
       </div>

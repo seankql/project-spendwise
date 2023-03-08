@@ -61,7 +61,7 @@ export default function TransactionsViewModel() {
   }
 
   async function createTransaction(name, category, amount) {
-    await postTransactionUseCase(name, category, amount, 1, getCurrentDate());
+    await postTransactionUseCase(name, category, amount, 5, getCurrentDate());
     const result = await getTransactionsUseCase(1, 0, 16);
     setTransactions(result);
   }

@@ -7,7 +7,7 @@ import Button from "./Button.js";
 export default function List({ data = null }) {
   const createNewRowElement = (accountData) => {
     return (
-      <div key={accountData.accountid}>
+      <div key={accountData.id}>
         <div className="section-wrapper page-row-container">
           <AccountCard
             data={accountData}

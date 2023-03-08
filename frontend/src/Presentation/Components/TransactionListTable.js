@@ -7,7 +7,7 @@ export default function List({ data = null }) {
   const createNewRowElement = (id, date, name, category, amount) => {
     return (
       <tr key={id} onClick={() => console.log(id)}>
-        <td>{date?.substring(0, date.indexOf("T"))}</td>
+        <td>{date}</td>
         <td>{name}</td>
         <td>{category}</td>
         <td className="transaction-list-last-col">{amount}</td>
@@ -17,13 +17,13 @@ export default function List({ data = null }) {
 
   const getRows = () => {
     console.log(data);
-    if (!data || !data.transactions || data.transactions.length === 0) {
+    if (!data || !data.transactions || data.totalCount === 0) {
       return;
     }
-    return data?.transactions?.rows.map((transaction) =>
+    return data?.transactions?.map((transaction) =>
       createNewRowElement(
-        transaction.transactionid,
-        transaction.transactiondate,
+        transaction.id,
+        transaction.transactionDate,
         transaction.descriptions,
         transaction.category,
         transaction.amount
