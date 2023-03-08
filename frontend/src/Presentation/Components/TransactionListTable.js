@@ -29,7 +29,7 @@ export default function List({ data = null }) {
         transaction.amount
       )
     );
-  }
+  };
 
   return (
     <div>
