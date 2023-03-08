@@ -2,6 +2,7 @@ import { DataTypes } from "sequelize";
 import { sequelize } from "../database/database.js";
 
 /*  ******* Data types *******
+CREATE TABLE IF NOT EXISTS Transactions (
   id SERIAL PRIMARY KEY,
   username VARCHAR(255) NOT NULL,
   hashedPassword VARCHAR(255) NOT NULL,

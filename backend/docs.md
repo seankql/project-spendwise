@@ -128,8 +128,17 @@ $ curl -X GET
     - content-type: `application/json`
     - body: object
       - transactions: (array) an array of all transactions belonging to the user across all his accounts in the specified time limits.
+        - id (number): The Id of the Transaction
+        - transactionDate (string): Date of the transaction in YYYY-MM-DD format.
+        - descriptions (string): Description of the transaction.
+        - amount (number): Amount of the transaction.
+        - AccountId (string): ID of the account the transaction belongs to.
+        - category (string): Category of the transaction.
+        - updatedAt: (date) the date and time of creation.
+        - createdAt: (date) the date and time of update.
       - income: Total amount of income in this period of time.
       - expense: Total amount of expense in this period of time.
+      - totalCount: total number of transactions.
   - response: 400
     - body: Bad Request
   - response: 500
@@ -154,8 +163,17 @@ $ curl -X GET
     - content-type: `application/json`
     - body: object
       - transactions: (array) an array of all transactions belonging to the account in the specified time limits.
+        - id (number): The Id of the Transaction
+        - transactionDate (string): Date of the transaction in YYYY-MM-DD format.
+        - descriptions (string): Description of the transaction.
+        - amount (number): Amount of the transaction.
+        - AccountId (string): ID of the account the transaction belongs to.
+        - category (string): Category of the transaction.
+        - updatedAt: (date) the date and time of creation.
+        - createdAt: (date) the date and time of update.
       - income: Total amount of income in this period of time.
       - expense: Total amount of expense in this period of time.
+      - totalCount: total number of transactions.
   - response: 400
     - body: Bad Request
   - response: 500
@@ -183,6 +201,14 @@ $ curl -X GET
         - amount (float): total amount spent in the category within the specified time range.
         - count (integer): total number of transactions in the category within the specified time range.
         - transactions (array): an array of all transactions belonging to the category within the specified time range.
+          - id (number): The Id of the Transaction
+          - transactionDate (string): Date of the transaction in YYYY-MM-DD format.
+          - descriptions (string): Description of the transaction.
+          - amount (number): Amount of the transaction.
+          - AccountId (string): ID of the account the transaction belongs to.
+          - category (string): Category of the transaction.
+          - updatedAt: (date) the date and time of creation.
+          - createdAt: (date) the date and time of update.
   - Response: 400
     - Body: Bad Request.
   - Response: 500
@@ -216,13 +242,15 @@ $ curl -X GET
 
     - Content-Type: `application/json`
     - Body:
-      - rows: (array) an array of all transactions belonging to the user.
-        - transactionid (number): The Id of the Transaction
+      - transactions: (array) an array of all transactions belonging to the user.
+        - id (number): The Id of the Transaction
         - transactionDate (string): Date of the transaction in YYYY-MM-DD format.
         - descriptions (string): Description of the transaction.
         - amount (number): Amount of the transaction.
-        - accountId (string): ID of the account the transaction belongs to.
+        - AccountId (string): ID of the account the transaction belongs to.
         - category (string): Category of the transaction.
+        - updatedAt: (date) the date and time of creation.
+        - createdAt: (date) the date and time of update.
       - totalCount: (number) total Number of transactions regardless of the offset & limit.
 
   - Response: 400
