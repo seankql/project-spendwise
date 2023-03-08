@@ -251,12 +251,14 @@ $ curl -X GET
     - content-type: `application/json`
     - body: object
       - rows: (array) an array of all transactions belonging to the user.
-        - transactionid (number): The Id of the Transaction
+        - id (number): The Id of the Transaction
         - transactionDate (string): Date of the transaction in YYYY-MM-DD format.
         - descriptions (string): Description of the transaction.
         - amount (number): Amount of the transaction.
-        - accountId (string): ID of the account the transaction belongs to.
+        - AccountId (string): ID of the account the transaction belongs to.
         - category (string): Category of the transaction.
+        - updatedAt: (date) the date and time of creation.
+        - createdAt: (date) the date and time of update.
       - totalCount: (number) total Number of transactions regardless of the page & pagesize.
   - response: 400
     - body: Bad Request
@@ -285,12 +287,14 @@ $ curl -X GET
   - response: 201
     - content-type: `application/json`
     - body: object
-      - transactionid (number): The Id of the created Transaction
+      - id (number): The Id of the created Transaction
       - transactionDate (string): Date of the new transaction in YYYY-MM-DD format.
       - descriptions (string): Description of the new transaction.
       - amount (number): Amount of the new transaction.
-      - accountId (string): ID of the account the new transaction belongs to.
+      - AccountId (string): ID of the account the new transaction belongs to.
       - category (string): Category of the new transaction.
+      - updatedAt: (date) the date and time of creation.
+      - createdAt: (date) the date and time of update.
   - response: 400
     - body: Bad Request
     - Description: Possible Missing Required Fields.
@@ -325,8 +329,10 @@ $ curl -X POST
       - transactionDate (string): Date of the updated transaction in YYYY-MM-DD format.
       - descriptions (string): Description of the updated transaction.
       - amount (number): Amount of the updated transaction.
-      - accountId (string): ID of the account the updated transaction belongs to.
+      - AccountId (string): ID of the account the updated transaction belongs to.
       - category (string): Category of the updated transaction.
+      - updatedAt: (date) the date and time of creation.
+      - createdAt: (date) the date and time of update.
   - response: 400
     - body: Bad Request
     - Description: Possible Missing Required Fields.
@@ -349,14 +355,6 @@ $ curl -X PUT
   - Path parameters:
     - transactionId: (string, required): Id of the transaction you want to delete
   - response: 200
-    - content-type: `application/json`
-    - body: object
-      - transactionid (number): The Id of the delete Transaction
-      - transactionDate (string): Date of the delete transaction in YYYY-MM-DD format.
-      - descriptions (string): Description of the delete transaction.
-      - amount (number): Amount of the delete transaction.
-      - accountId (string): ID of the account the delete transaction belongs to.
-      - category (string): Category of the delete transaction.
   - response: 400
     - body: Bad Request
     - Description: Possible Missing Required Fields.
