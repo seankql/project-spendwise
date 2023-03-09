@@ -1,0 +1,38 @@
+.page-header-text {
+  color: black;
+  font-size: 40px;
+  font-weight: bold;
+  line-height: 100%;
+}
+
+.section-header-text {
+  color: black;
+  font-size: 32px;
+  font-weight: bold;
+  line-height: 100%;
+}
+
+.section-subheader-text {
+  color: #353535;
+  font-size: 24px;
+  font-weight: bold;
+  line-height: 100%;
+}
+
+.section-wrapper {
+  margin-top: 24px;
+}
+
+.subsection-wrapper {
+  margin-top: 12px;
+}
+
+.categories-wrapper {
+  padding: 8px;
+  border-radius: 8px;
+}
+
+.section-divider {
+  border-bottom: 1px #e0e0e0 solid;
+  padding-bottom: 10px;
+}
