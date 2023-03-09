@@ -1,22 +1,27 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import useController from "./Controller";
+import TransactionsController from "../../../Controllers/transactionsController";
+import AccountsController from "../../../Controllers/accountsController";
+import ReportsController from "../../../Controllers/reportsController";
 
 export default function DashboardViewModel() {
   const [error, setError] = useState("");
-  const [username, setUsername] = useState(null);
   const [accounts, setAccounts] = useState(null);
   const [transactions, setTransactions] = useState(null);
 
-  const { getUsernameUseCase, getAccountsUseCase, getTransactionsUseCase } =
-    useController();
   const navigate = useNavigate();
 
-  // Would be an async function that calls controller
-  function getUsername() {
-    const { result, error } = getUsernameUseCase();
-    setError(error);
-    setUsername(result);
+  const {
+    getTransactionsUseCase,
+    createTransactionsUseCase,
+    updateTransactionsUseCase,
+    deleteAccountsUseCase,
+  } = TransactionsController();
+
+  const { getAccountsUseCase } = AccountsController();
+
+  function navigateToPage(page = "/") {
+    navigate(page);
   }
 
   async function getAccounts(userId) {
@@ -29,14 +34,8 @@ export default function DashboardViewModel() {
     setTransactions(result);
   }
 
-  function navigateToPage(page = "/") {
-    navigate(page);
-  }
-
   return {
     error,
-    username,
-    getUsername,
     accounts,
     getAccounts,
     transactions,

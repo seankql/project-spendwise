@@ -16,8 +16,6 @@ import "../../Styles/Main.css";
 export default function Dashboard() {
   const {
     navigateToPage,
-    username,
-    getUsername,
     accounts,
     getAccounts,
     transactions,
@@ -40,7 +38,6 @@ export default function Dashboard() {
   ];
 
   useEffect(() => {
-    getUsername();
     getAccounts(1);
     getTransactions(1, 0, 10);
   }, []);

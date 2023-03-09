@@ -16,7 +16,6 @@ export default function List({ data = null }) {
   };
 
   const getRows = () => {
-    console.log(data);
     if (!data || !data.transactions || data.totalCount === 0) {
       return;
     }

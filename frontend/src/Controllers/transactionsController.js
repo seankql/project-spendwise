@@ -1,15 +1,4 @@
 export default function TransactionsController() {
-  // Would be an async function that calls controller
-  function getUsernameUseCase() {
-    return { result: "bob", error: null };
-  }
-
-  async function getAccountsUseCase(userId) {
-    return fetch("http://localhost:3001/api/accounts/user/" + userId, {
-      method: "GET",
-    }).then((res) => res.json());
-  }
-
   async function getTransactionsUseCase(userId, page, pageSize) {
     return fetch(
       "http://localhost:3001/api/transactions?" +
@@ -24,7 +13,7 @@ export default function TransactionsController() {
     ).then((res) => res.json());
   }
 
-  async function postTransactionUseCase(
+  async function createTransactionsUseCase(
     name,
     category,
     amount,
@@ -46,10 +35,39 @@ export default function TransactionsController() {
     }).then((res) => res.json());
   }
 
+  async function updateTransactionsUseCase(
+    name,
+    category,
+    amount,
+    accountId,
+    date,
+    transactionId
+  ) {
+    return fetch("http://localhost:3001/api/transactions/" + transactionId, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        accountId: accountId,
+        descriptions: name,
+        category: category,
+        amount: amount,
+        transactionDate: date,
+      }),
+    }).then((res) => res.json());
+  }
+
+  async function deleteAccountsUseCase(transactionId) {
+    return fetch("http://localhost:3001/api/transactions/" + transactionId, {
+      method: "DELETE",
+    }).then((res) => res.json());
+  }
+
   return {
-    postTransactionUseCase,
     getTransactionsUseCase,
-    getUsernameUseCase,
-    getAccountsUseCase,
+    createTransactionsUseCase,
+    updateTransactionsUseCase,
+    deleteAccountsUseCase,
   };
 }

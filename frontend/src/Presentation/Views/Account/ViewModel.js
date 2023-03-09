@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import useController from "./Controller";
 import downArrow from "../../../Media/arrowDown.svg";
 import upArrow from "../../../Media/arrowUp.svg";
+import AccountsController from "../../../Controllers/accountsController";
 
 export default function AccountViewModel() {
   const [error, setError] = useState("");
@@ -10,9 +10,13 @@ export default function AccountViewModel() {
   const [accounts, setAccounts] = useState(null);
   const [transactionVisiblity, setTransactionVisiblity] = useState("hidden");
 
-  const { getBasicInfoUseCase, getAccountsUseCase, postAccountUseCase } =
-    useController();
   const navigate = useNavigate();
+
+  const { getAccountsUseCase, createAccountsUseCase } = AccountsController();
+
+  function navigateToPage(page = "/") {
+    navigate(page);
+  }
 
   function getCurrentDate() {
     const dateObj = new Date();
@@ -20,18 +24,6 @@ export default function AccountViewModel() {
     const month = (dateObj.getMonth() + 1).toString().padStart(2, "0");
     const day = dateObj.getDate().toString().padStart(2, "0");
     return `${year}-${month}-${day}`;
-  }
-
-  // Would be an async function that calls controller
-  function getBasicInfo() {
-    const { result, error } = getBasicInfoUseCase();
-    setError(error);
-    setBasicInfo(result);
-  }
-
-  async function getAccounts(userId) {
-    const result = await getAccountsUseCase(userId);
-    setAccounts(result);
   }
 
   function toggleTransactionVisiblity() {
@@ -50,14 +42,25 @@ export default function AccountViewModel() {
     }
   }
 
-  async function createAccount(name) {
-    await postAccountUseCase(name, 1);
-    const result = await getAccountsUseCase(1);
+  // Would be an async function that calls controller
+  function getBasicInfo() {
+    setBasicInfo([
+      { id: 1, key: "First Name", value: "Bob" },
+      { id: 2, key: "Last Name", value: "Bobs" },
+      { id: 3, key: "Email", value: "Bob@gmail.com" },
+      { id: 4, key: "Member Since", value: "Apr 19, 2017" },
+    ]);
+  }
+
+  async function getAccounts(userId) {
+    const result = await getAccountsUseCase(userId);
     setAccounts(result);
   }
 
-  function navigateToPage(page = "/") {
-    navigate(page);
+  async function createAccount(userId = 1, name) {
+    await createAccountsUseCase(userId, name);
+    const result = await getAccountsUseCase(userId);
+    setAccounts(result);
   }
 
   return {
