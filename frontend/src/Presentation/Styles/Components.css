@@ -247,3 +247,22 @@
   color: #8bc53f;
   font-size: 14px;
 }
+
+.grid-table-wrapper {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  padding: 12px;
+}
+
+.grid-table-grid {
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  height: 200px;
+  width: 200px;
+  margin: 6px auto 6px auto;
+}
+
+.grid-container {
+  padding: 10px;
+}
