@@ -7,6 +7,8 @@ import { Auth0Provider } from "@auth0/auth0-react";
 
 const domain = process.env.REACT_APP_AUTH0_DOMAIN;
 const clientId = process.env.REACT_APP_AUTH0_CLIENT_ID;
+const audience = process.env.REACT_APP_AUTH0_AUDIENCE;
+const scope = process.env.REACT_APP_AUTH0_SCOPE;
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -15,6 +17,8 @@ root.render(
       domain={domain}
       clientId={clientId}
       redirectUri={window.location.origin + "/dashboard"}
+      audience={audience}
+      scope={scope}
     >
       <App />
     </Auth0Provider>

@@ -8,7 +8,7 @@ export default function DashboardViewModel() {
   const [accounts, setAccounts] = useState(null);
   const [transactions, setTransactions] = useState(null);
 
-  const { getUsernameUseCase, getAccountsUseCase, getTransactionsUseCase } =
+  const { getUsernameUseCase, getAccountsUseCase, getTransactionsUseCase, getUserId } =
     useController();
   const navigate = useNavigate();
 
@@ -42,5 +42,6 @@ export default function DashboardViewModel() {
     transactions,
     getTransactions,
     navigateToPage,
+    getUserId,
   };
 }

@@ -16,6 +16,7 @@ export default function TransactionsViewModel() {
     getAccountsUseCase,
     getTransactionsUseCase,
     postTransactionUseCase,
+    getUserId,
   } = useController();
   const navigate = useNavigate();
 
@@ -83,5 +84,6 @@ export default function TransactionsViewModel() {
     navigateToPage,
     createTransaction,
     getArrow,
+    getUserId,
   };
 }

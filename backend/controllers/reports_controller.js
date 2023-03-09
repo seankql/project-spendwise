@@ -2,7 +2,6 @@ import Router from "express";
 import { Op } from "sequelize";
 import Sentry from "@sentry/node";
 import { TransactionsModel } from "../models/transactionsModel.js";
-import { UsersModel } from "../models/usersModel.js";
 import { AccountsModel } from "../models/accountsModel.js";
 
 // Base route: /api/reports
@@ -25,12 +24,6 @@ reportsController.get("/", async (req, res) => {
           {
             model: AccountsModel,
             where: { UserId: req.query.userId },
-            include: [
-              {
-                model: UsersModel,
-                where: { id: req.query.userId },
-              },
-            ],
           },
         ],
         where: {
@@ -156,12 +149,6 @@ reportsController.get("/categories", async (req, res) => {
           {
             model: AccountsModel,
             where: { UserId: req.query.userId },
-            include: [
-              {
-                model: UsersModel,
-                where: { id: req.query.userId },
-              },
-            ],
           },
         ],
         where: {
@@ -239,12 +226,6 @@ reportsController.get("/filters/:userId/transactions", async (req, res) => {
           {
             model: AccountsModel,
             where: accountId ? { id: accountId } : { UserId: userId },
-            include: [
-              {
-                model: UsersModel,
-                where: { id: userId },
-              },
-            ],
           },
         ],
         where: {

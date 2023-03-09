@@ -10,8 +10,13 @@ export default function TransactionsController() {
     }).then((res) => res.json());
   }
 
+  function getUserId(user){
+    return user?.sub.split("|")[1];
+  }
+
   return {
     getUsernameUseCase,
     getAccountsUseCase,
+    getUserId,
   };
 }

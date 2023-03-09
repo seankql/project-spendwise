@@ -9,6 +9,7 @@ import AccountForm from "../../Components/AccountForm";
 import "../../Styles/Common.css";
 import "../../Styles/Account.css";
 import "../../Styles/Main.css";
+import { useAuth0 } from "@auth0/auth0-react";
 
 export default function Account() {
   const {
@@ -20,6 +21,7 @@ export default function Account() {
     transactionVisiblity,
     toggleTransactionVisiblity,
     createAccount,
+    getUserId,
   } = useViewModel();
 
   // TODO: Show different "Bank Information" form depending on whether or not
@@ -29,10 +31,14 @@ export default function Account() {
 
   const sectionList = ["Profile & Alerts", "Accounts", "Create New Account"];
 
+  const { user, isAuthenticated, isLoading } = useAuth0();
+
   useEffect(() => {
-    getBasicInfo();
-    getAccounts(1);
-  }, []);
+    if (user && isAuthenticated && !isLoading){
+      getBasicInfo();
+      getAccounts(getUserId(user));
+    }
+  }, [user, isAuthenticated, isLoading]);
 
   return (
     <div className="body-wrapper">

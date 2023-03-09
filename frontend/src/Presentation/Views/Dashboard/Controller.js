@@ -24,9 +24,14 @@ export default function DashboardController() {
     ).then((res) => res.json());
   }
 
+  function getUserId(user){
+    return user?.sub.split("|")[1];
+  }
+
   return {
     getTransactionsUseCase,
     getUsernameUseCase,
     getAccountsUseCase,
+    getUserId,
   };
 }

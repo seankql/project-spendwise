@@ -1,7 +1,6 @@
 import Router from "express";
 import { TransactionsModel } from "../models/transactionsModel.js";
 import { AccountsModel } from "../models/accountsModel.js";
-import { UsersModel } from "../models/usersModel.js";
 import Sentry from "@sentry/node";
 // Base route: /api/transactions
 export const transactionsController = Router();
@@ -24,7 +23,6 @@ transactionsController.get("/", async (req, res) => {
           {
             model: AccountsModel,
             where: { UserId: userId },
-            include: [{ model: UsersModel }],
           },
         ],
         offset,
