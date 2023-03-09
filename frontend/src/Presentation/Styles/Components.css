@@ -167,11 +167,14 @@
   margin: auto;
   border: none;
   border-right: 2px solid black;
-  background-color: #5d9943;
 }
 
 .toggle-btn-left:hover {
   background-color: #8bc53f;
+}
+
+.toggle-btn-selected {
+  background-color: #5d9943;
 }
 
 .toggle-img {

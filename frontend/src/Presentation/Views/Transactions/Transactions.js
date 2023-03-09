@@ -2,12 +2,10 @@ import React, { useEffect } from "react";
 import useViewModel from "./ViewModel";
 import Banner from "../../Components/Banner";
 import ScrollBanner from "../../Components/ScrollBanner";
-import TransactionViewToggle from "../../Components/TransactionViewToggle";
-import TransactionListTable from "../../Components/TransactionListTable";
 import TransactionForm from "../../Components/TransactionForm";
-import ListScroller from "../../Components/ListScroller";
 import SearchFilterSideBar from "../../Components/SearchFilterSideBar";
 import AccountSelect from "../../Components/AccountSelect";
+import TransactionViewBox from "../../Components/TransactionViewBox";
 import "../../Styles/Common.css";
 import "../../Styles/Main.css";
 import "../../Styles/Transactions.css";
@@ -69,16 +67,7 @@ export default function Transactions() {
           className="section-wrapper page-row-container"
         >
           <SearchFilterSideBar />
-          <div className="transactions-col">
-            <div className="page-row-container">
-              <div className="section-header-text">Transaction List</div>
-              <div className="row-right-element">
-                <TransactionViewToggle />
-              </div>
-            </div>
-            <TransactionListTable data={transactions} />
-            <ListScroller />
-          </div>
+          <TransactionViewBox transactions={transactions} />
         </div>
       </div>
       <footer />
