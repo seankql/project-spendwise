@@ -58,7 +58,7 @@ export default function TransactionsController() {
     }).then((res) => res.json());
   }
 
-  async function deleteAccountsUseCase(transactionId) {
+  async function deleteTransactionsUseCase(transactionId) {
     return fetch("http://localhost:3001/api/transactions/" + transactionId, {
       method: "DELETE",
     }).then((res) => res.json());
@@ -68,6 +68,6 @@ export default function TransactionsController() {
     getTransactionsUseCase,
     createTransactionsUseCase,
     updateTransactionsUseCase,
-    deleteAccountsUseCase,
+    deleteTransactionsUseCase,
   };
 }

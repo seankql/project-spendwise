@@ -1,10 +1,22 @@
+import React, { useState } from "react";
 import "../Styles/Components.css";
 import "../Styles/Common.css";
 
-export default function List({ data }) {
+export default function List({ data, set }) {
+  const [selectedAccount, setSelectedAccount] = useState("");
+
+  const clickEvent = (value) => {
+    setSelectedAccount(value);
+    if (value === "") {
+      set(null);
+    } else {
+      set(value);
+    }
+  };
+
   const createNewOption = (id, value) => {
     return (
-      <option key={id} value={value}>
+      <option key={id} value={id}>
         {" "}
         {value}{" "}
       </option>
@@ -16,8 +28,11 @@ export default function List({ data }) {
   );
 
   return (
-    <select>
-      <option value={"All Accounts"}> All Accounts </option>
+    <select
+      value={selectedAccount}
+      onChange={(e) => clickEvent(e.target.value)}
+    >
+      <option value={""}> All Accounts </option>
       {options}
     </select>
   );

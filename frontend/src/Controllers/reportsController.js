@@ -21,7 +21,7 @@ export default function ReportsController() {
 
   async function getAccountReportsUseCase(accountId, startDate, endDate) {
     return fetch(
-      "http://localhost:3001/api/reports?" +
+      "http://localhost:3001/api/reports/accounts?" +
         new URLSearchParams({
           accountId: accountId,
           startDate: startDate,

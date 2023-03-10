@@ -10,6 +10,7 @@ export default function TransactionsViewModel() {
   const [accounts, setAccounts] = useState(null);
   const [transactions, setTransactions] = useState(null);
   const [transactionVisiblity, setTransactionVisiblity] = useState("hidden");
+  const [selectedAccount, setSelectedAccount] = useState(null);
   const [page, setPage] = useState(0);
 
   const navigate = useNavigate();
@@ -37,6 +38,13 @@ export default function TransactionsViewModel() {
     } else {
       setTransactionVisiblity("hidden");
     }
+  }
+
+  function getCreateTransactionVisibility() {
+    if (!selectedAccount) {
+      return "hidden";
+    }
+    return "";
   }
 
   function getArrow() {
@@ -74,7 +82,7 @@ export default function TransactionsViewModel() {
       name,
       category,
       amount,
-      5,
+      selectedAccount,
       getCurrentDate()
     );
     const result = await getTransactionsUseCase(1, page, 9);
@@ -95,6 +103,9 @@ export default function TransactionsViewModel() {
     getTransactions,
     navigateToPage,
     createTransaction,
+    selectedAccount,
+    setSelectedAccount,
+    getCreateTransactionVisibility,
     getArrow,
   };
 }

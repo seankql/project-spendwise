@@ -22,7 +22,10 @@ export default function Transactions() {
     page,
     incrementPage,
     decrementPage,
+    selectedAccount,
+    setSelectedAccount,
     createTransaction,
+    getCreateTransactionVisibility,
   } = useViewModel();
 
   const sectionList = ["Add Transaction", "View Transactions"];
@@ -30,7 +33,7 @@ export default function Transactions() {
   useEffect(() => {
     getAccounts(1);
     getTransactions(1, page, 9);
-  }, [page]);
+  }, [page, selectedAccount]);
 
   return (
     <div className="body-wrapper">
@@ -40,10 +43,10 @@ export default function Transactions() {
         <div className="page-header-text page-row-container">
           Transactions
           <div className="row-right-element">
-            <AccountSelect data={accounts} />
+            <AccountSelect data={accounts} set={setSelectedAccount} />
           </div>
         </div>
-        <div className="section-divider">
+        <div className={"section-divider " + getCreateTransactionVisibility()}>
           <div
             id="Add Transaction"
             className="section-wrapper page-row-container section-header-text"

@@ -19,7 +19,10 @@ export default function Dashboard() {
     accounts,
     getAccounts,
     transactions,
-    getTransactions,
+    getReports,
+    getAccountReports,
+    selectedAccount,
+    setSelectedAccount,
   } = useViewModel();
 
   // TODO move to viewmodel
@@ -39,8 +42,12 @@ export default function Dashboard() {
 
   useEffect(() => {
     getAccounts(1);
-    getTransactions(1, 0, 10);
-  }, []);
+    if (!selectedAccount) {
+      getReports(1);
+    } else {
+      getAccountReports(selectedAccount);
+    }
+  }, [selectedAccount]);
 
   return (
     <div className="body-wrapper">
@@ -53,7 +60,7 @@ export default function Dashboard() {
             Summary
           </div>
           <div className="row-right-element">
-            <AccountSelect data={accounts} />
+            <AccountSelect data={accounts} set={setSelectedAccount} />
           </div>
         </div>
         <div className="section-wrapper page-row-container section-divider">
