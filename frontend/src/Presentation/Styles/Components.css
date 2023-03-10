@@ -183,18 +183,31 @@
   border: none;
 }
 
-.scroll-btn-right {
+.scroll-btn {
   margin: auto;
-  margin-left: 0px;
   max-height: 32px;
   max-width: 32px;
+  background-color: #8bc53f;
+}
+
+.scroll-btn:hover {
+  background-color: #5d9943;
+}
+
+.scroll-btn-right {
+  margin-left: 0px;
 }
 
 .scroll-btn-left {
-  margin: auto;
   margin-right: 0px;
-  max-height: 32px;
-  max-width: 32px;
+}
+
+.scroll-btn-disable {
+  background-color: #e0e0e0;
+}
+
+.scroll-btn-disable:hover {
+  background-color: #e0e0e0;
 }
 
 .scroll-right-img {

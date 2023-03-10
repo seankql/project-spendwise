@@ -10,6 +10,7 @@ export default function TransactionsViewModel() {
   const [accounts, setAccounts] = useState(null);
   const [transactions, setTransactions] = useState(null);
   const [transactionVisiblity, setTransactionVisiblity] = useState("hidden");
+  const [page, setPage] = useState(0);
 
   const navigate = useNavigate();
 
@@ -46,6 +47,14 @@ export default function TransactionsViewModel() {
     }
   }
 
+  function incrementPage() {
+    setPage(page + 1);
+  }
+
+  function decrementPage() {
+    setPage(page - 1);
+  }
+
   function navigateToPage(page = "/") {
     navigate(page);
   }
@@ -68,12 +77,16 @@ export default function TransactionsViewModel() {
       5,
       getCurrentDate()
     );
-    const result = await getTransactionsUseCase(1, 0, 16);
+    const result = await getTransactionsUseCase(1, page, 9);
     setTransactions(result);
   }
 
   return {
     error,
+    page,
+    setPage,
+    incrementPage,
+    decrementPage,
     transactionVisiblity,
     toggleTransactionVisiblity,
     accounts,

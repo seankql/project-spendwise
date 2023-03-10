@@ -19,6 +19,9 @@ export default function Transactions() {
     getAccounts,
     transactions,
     getTransactions,
+    page,
+    incrementPage,
+    decrementPage,
     createTransaction,
   } = useViewModel();
 
@@ -26,8 +29,8 @@ export default function Transactions() {
 
   useEffect(() => {
     getAccounts(1);
-    getTransactions(1, 0, 16);
-  }, []);
+    getTransactions(1, page, 9);
+  }, [page]);
 
   return (
     <div className="body-wrapper">
@@ -67,7 +70,12 @@ export default function Transactions() {
           className="section-wrapper page-row-container"
         >
           <SearchFilterSideBar />
-          <TransactionViewBox transactions={transactions} />
+          <TransactionViewBox
+            transactions={transactions}
+            page={page}
+            inc={incrementPage}
+            dec={decrementPage}
+          />
         </div>
       </div>
       <footer />

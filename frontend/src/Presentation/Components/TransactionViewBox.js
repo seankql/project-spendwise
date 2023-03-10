@@ -5,7 +5,7 @@ import TransactionListTable from "./TransactionListTable";
 import TransactionGridTable from "./TransactionGridTable";
 import ListScroller from "./ListScroller";
 
-export default function List({ transactions }) {
+export default function List({ transactions, page, inc, dec }) {
   const [view, setView] = useState("list");
 
   const getTransactionView = () => {
@@ -25,7 +25,12 @@ export default function List({ transactions }) {
         </div>
       </div>
       {getTransactionView()}
-      <ListScroller />
+      <ListScroller
+        count={transactions?.totalCount}
+        page={page}
+        inc={inc}
+        dec={dec}
+      />
     </div>
   );
 }
