@@ -279,3 +279,25 @@
 .grid-container {
   padding: 10px;
 }
+
+.rc-slider-track-over {
+  position: absolute;
+  height: 4px;
+  background-color: #8bc53f;
+  border-radius: 6px;
+}
+
+.rc-slider-handle-over {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  margin-top: -5px;
+  background-color: #fff;
+  border: solid 2px #8bc53f;
+  border-radius: 50%;
+  cursor: pointer;
+  cursor: -webkit-grab;
+  cursor: grab;
+  opacity: 0.8;
+  touch-action: pan-x;
+}

@@ -59,21 +59,22 @@ export default function ReportsController() {
     maxAmount,
     categories
   ) {
+    let searchParams = new URLSearchParams({
+      limit: limit,
+      offset: offset,
+    });
+    if (accountId) searchParams.set("accountId", accountId);
+    if (transactionName) searchParams.set("transactionName", transactionName);
+    if (startDate) searchParams.set("startDate", startDate);
+    if (endDate) searchParams.set("endDate", endDate);
+    if (minAmount) searchParams.set("minAmount", minAmount);
+    if (maxAmount) searchParams.set("maxAmount", maxAmount);
+    if (categories) searchParams.set("categories", categories);
     return fetch(
       "http://localhost:3001/api/reports/filters/" +
         userId +
         "/transactions?" +
-        new URLSearchParams({
-          limit: limit,
-          offset: offset,
-          accountId: accountId,
-          transactionName: transactionName,
-          startDate: startDate,
-          endDate: endDate,
-          minAmount: minAmount,
-          maxAmount: maxAmount,
-          categories: categories,
-        }),
+        searchParams,
       {
         method: "GET",
       }

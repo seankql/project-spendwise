@@ -18,7 +18,6 @@ export default function Transactions() {
     accounts,
     getAccounts,
     transactions,
-    getTransactions,
     page,
     incrementPage,
     decrementPage,
@@ -26,14 +25,31 @@ export default function Transactions() {
     setSelectedAccount,
     createTransaction,
     getCreateTransactionVisibility,
+    getFilterReports,
+    setFilters,
+    name,
+    startDate,
+    endDate,
+    minValue,
+    maxValue,
+    categories,
   } = useViewModel();
 
   const sectionList = ["Add Transaction", "View Transactions"];
 
   useEffect(() => {
     getAccounts(1);
-    getTransactions(1, page, 9);
-  }, [page, selectedAccount]);
+    getFilterReports(1, 9, page);
+  }, [
+    page,
+    selectedAccount,
+    name,
+    startDate,
+    endDate,
+    minValue,
+    maxValue,
+    categories,
+  ]);
 
   return (
     <div className="body-wrapper">
@@ -72,7 +88,7 @@ export default function Transactions() {
           id="View Transactions"
           className="section-wrapper page-row-container"
         >
-          <SearchFilterSideBar />
+          <SearchFilterSideBar setFilters={setFilters} />
           <TransactionViewBox
             transactions={transactions}
             page={page}
