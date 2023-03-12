@@ -9,13 +9,29 @@ import "../../Styles/Main.css";
 import "../../Styles/Visualization.css";
 
 export default function Visualization() {
-  const { accounts, getAccounts } = useViewModel();
+  const { accounts, transactions, getAccounts, getFilterReports,
+    setFilters,
+    name,
+    startDate,
+    endDate,
+    minValue,
+    maxValue,
+    categories,
+    selectedAccount,
+    setSelectedAccount, } = useViewModel();
 
   const sectionList = ["View Visualizations"];
 
   useEffect(() => {
     getAccounts(1);
-  }, []);
+    getFilterReports(1);
+  }, [selectedAccount,
+    name,
+    startDate,
+    endDate,
+    minValue,
+    maxValue,
+    categories]);
 
   return (
     <div className="body-wrapper">
@@ -28,11 +44,11 @@ export default function Visualization() {
         >
           Visualization
           <div className="row-right-element">
-            <AccountSelect data={accounts} />
+            <AccountSelect data={accounts} set={setSelectedAccount} />
           </div>
         </div>
         <div className="section-wrapper page-row-container">
-          <SearchFilterSideBar />
+          <SearchFilterSideBar setFilters={setFilters} />
           <div className="transactions-col"></div>
         </div>
       </div>
