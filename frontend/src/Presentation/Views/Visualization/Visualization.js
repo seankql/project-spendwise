@@ -9,7 +9,11 @@ import "../../Styles/Main.css";
 import "../../Styles/Visualization.css";
 
 export default function Visualization() {
-  const { accounts, transactions, getAccounts, getFilterReports,
+  const {
+    accounts,
+    transactions,
+    getAccounts,
+    getFilterReports,
     setFilters,
     name,
     startDate,
@@ -18,20 +22,23 @@ export default function Visualization() {
     maxValue,
     categories,
     selectedAccount,
-    setSelectedAccount, } = useViewModel();
+    setSelectedAccount,
+  } = useViewModel();
 
   const sectionList = ["View Visualizations"];
 
   useEffect(() => {
     getAccounts(1);
     getFilterReports(1);
-  }, [selectedAccount,
+  }, [
+    selectedAccount,
     name,
     startDate,
     endDate,
     minValue,
     maxValue,
-    categories]);
+    categories,
+  ]);
 
   return (
     <div className="body-wrapper">
