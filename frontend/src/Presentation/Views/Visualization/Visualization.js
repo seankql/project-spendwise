@@ -57,7 +57,7 @@ export default function Visualization() {
         </div>
         <div className="section-wrapper page-row-container">
           <SearchFilterSideBar setFilters={setFilters} />
-          <VisualizationViewBox data={transactions?.transactions}/>
+          <VisualizationViewBox data={transactions?.transactions} />
         </div>
       </div>
       <footer />

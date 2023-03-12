@@ -1,9 +1,8 @@
-import React, { useCallback } from 'react'
-import { VisXYContainer, VisAxis, VisStackedBar   } from '@unovis/react'
+import React, { useCallback } from "react";
+import { VisXYContainer, VisAxis, VisStackedBar } from "@unovis/react";
 import "../Styles/Components.css";
 
 export default function List({ data }) {
-
   function sumEntriesByAttribute(json) {
     if (!json) return;
     let sums = {};
@@ -18,8 +17,8 @@ export default function List({ data }) {
     }
     let result = [];
     Object.keys(sums).forEach((key) => {
-      result.push({x:key, y:sums[key]})
-    })
+      result.push({ x: key, y: sums[key] });
+    });
     console.log(result);
     return result;
   }
@@ -33,17 +32,17 @@ export default function List({ data }) {
     return dateObj;
   }
 
-  const dateFormatter = Intl.DateTimeFormat().format
+  const dateFormatter = Intl.DateTimeFormat().format;
 
   return (
-      <VisXYContainer data={sumEntriesByAttribute(data)}>
-        <VisStackedBar
-          x={useCallback(d => convertToDateObject(d.x), [])}
-          y={useCallback(d => d.y, [])}
-          color={"#8bc53f"}
-        ></VisStackedBar>
-        <VisAxis type="x" numTicks={5} tickFormat={dateFormatter}></VisAxis>
-        <VisAxis type="y"></VisAxis>
-      </VisXYContainer>
+    <VisXYContainer data={sumEntriesByAttribute(data)}>
+      <VisStackedBar
+        x={useCallback((d) => convertToDateObject(d.x), [])}
+        y={useCallback((d) => d.y, [])}
+        color={"#8bc53f"}
+      ></VisStackedBar>
+      <VisAxis type="x" numTicks={5} tickFormat={dateFormatter}></VisAxis>
+      <VisAxis type="y"></VisAxis>
+    </VisXYContainer>
   );
 }
