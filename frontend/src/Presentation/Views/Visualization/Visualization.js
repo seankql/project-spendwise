@@ -4,6 +4,7 @@ import Banner from "../../Components/Banner";
 import ScrollBanner from "../../Components/ScrollBanner";
 import SearchFilterSideBar from "../../Components/SearchFilterSideBar";
 import AccountSelect from "../../Components/AccountSelect";
+import VisualizationViewBox from "../../Components/VisualizationViewBox";
 import "../../Styles/Common.css";
 import "../../Styles/Main.css";
 import "../../Styles/Visualization.css";
@@ -56,7 +57,7 @@ export default function Visualization() {
         </div>
         <div className="section-wrapper page-row-container">
           <SearchFilterSideBar setFilters={setFilters} />
-          <div className="transactions-col"></div>
+          <VisualizationViewBox data={transactions?.transactions}/>
         </div>
       </div>
       <footer />
