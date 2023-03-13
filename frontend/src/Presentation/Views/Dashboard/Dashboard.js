@@ -90,7 +90,7 @@ export default function Dashboard() {
               }}
             />
           </div>
-          <TransactionListTable data={transactions} />
+          <TransactionListTable data={transactions} limit={6} />
           <div className="transaction-list-footer">
             See transactions page for all transactions
           </div>

@@ -301,3 +301,42 @@
   opacity: 0.8;
   touch-action: pan-x;
 }
+
+.list-transaction-container {
+  display: flex;
+  flex-direction: row;
+  height: fit-content;
+  margin-top: 8px;
+  width: 100%;
+  border: 1px solid #e0e0e0;
+  border-radius: 16px;
+}
+
+.transaction-col-container {
+  display: flex;
+  flex-direction: column;
+  width: 20%;
+  margin: auto;
+}
+
+.list-transaction-font {
+  font-size: 16px;
+}
+
+.list-transaction-icon {
+  height: 16px;
+}
+
+.icon-button-wrapper {
+  background: none;
+  border: none;
+}
+
+.icon-button-wrapper:hover {
+  background-color: #8bc53f;
+}
+
+.table-header-spacer {
+  width: 56px;
+  height: 53px;
+}

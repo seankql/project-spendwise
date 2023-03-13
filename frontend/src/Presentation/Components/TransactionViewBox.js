@@ -5,14 +5,18 @@ import TransactionListTable from "./TransactionListTable";
 import TransactionGridTable from "./TransactionGridTable";
 import ListScroller from "./ListScroller";
 
-export default function List({ transactions, page, inc, dec }) {
+export default function List({ transactions, page, inc, dec, editSubmit }) {
   const [view, setView] = useState("list");
 
   const getTransactionView = () => {
     if (view === "list") {
-      return <TransactionListTable data={transactions} />;
+      return (
+        <TransactionListTable data={transactions} editSubmit={editSubmit} />
+      );
     } else {
-      return <TransactionGridTable data={transactions} />;
+      return (
+        <TransactionGridTable data={transactions} editSubmit={editSubmit} />
+      );
     }
   };
 

@@ -27,6 +27,7 @@ export default function Transactions() {
     getCreateTransactionVisibility,
     getFilterReports,
     setFilters,
+    updateTransaction,
     name,
     startDate,
     endDate,
@@ -94,6 +95,7 @@ export default function Transactions() {
             page={page}
             inc={incrementPage}
             dec={decrementPage}
+            editSubmit={updateTransaction}
           />
         </div>
       </div>

@@ -101,6 +101,25 @@ export default function TransactionsViewModel() {
     getFilterReports(1, 9, page);
   }
 
+  async function updateTransaction(
+    name,
+    category,
+    amount,
+    date,
+    transactionId,
+    accountId
+  ) {
+    await updateTransactionsUseCase(
+      name,
+      category,
+      amount,
+      accountId,
+      date,
+      transactionId
+    );
+    getFilterReports(1, 9, page);
+  }
+
   async function getFilterReports(userId, limit, offset) {
     const result = await getFilterReportsUseCase(
       userId,
@@ -136,6 +155,7 @@ export default function TransactionsViewModel() {
     getFilterReports,
     setFilters,
     getArrow,
+    updateTransaction,
     name,
     startDate,
     endDate,
