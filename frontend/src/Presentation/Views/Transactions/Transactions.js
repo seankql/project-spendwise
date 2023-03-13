@@ -28,6 +28,7 @@ export default function Transactions() {
     getFilterReports,
     setFilters,
     updateTransaction,
+    deleteTransaction,
     name,
     startDate,
     endDate,
@@ -96,6 +97,7 @@ export default function Transactions() {
             inc={incrementPage}
             dec={decrementPage}
             editSubmit={updateTransaction}
+            deleteFunction={deleteTransaction}
           />
         </div>
       </div>

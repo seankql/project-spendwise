@@ -120,6 +120,11 @@ export default function TransactionsViewModel() {
     getFilterReports(1, 9, page);
   }
 
+  async function deleteTransaction(transactionId) {
+    const result = await deleteTransactionsUseCase(transactionId);
+    getFilterReports(1, 9, page);
+  }
+
   async function getFilterReports(userId, limit, offset) {
     const result = await getFilterReportsUseCase(
       userId,
@@ -156,6 +161,7 @@ export default function TransactionsViewModel() {
     setFilters,
     getArrow,
     updateTransaction,
+    deleteTransaction,
     name,
     startDate,
     endDate,

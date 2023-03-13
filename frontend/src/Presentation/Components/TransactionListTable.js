@@ -4,7 +4,12 @@ import TransactionListEntry from "./TransactionListEntry";
 
 // TODO: Style the table rows so they actually look good
 // Add some behaviour if data is null
-export default function List({ data = null, editSubmit, limit = null }) {
+export default function List({
+  data = null,
+  editSubmit,
+  deleteFunction,
+  limit = null,
+}) {
   const getRows = () => {
     if (!data || !data.transactions || data.totalCount === 0) {
       return;
@@ -16,6 +21,7 @@ export default function List({ data = null, editSubmit, limit = null }) {
             key={transaction.id}
             data={transaction}
             editSubmit={transaction}
+            deleteFunction={deleteFunction}
             viewOnly={true}
           />
         );
@@ -27,6 +33,7 @@ export default function List({ data = null, editSubmit, limit = null }) {
             key={transaction.id}
             data={transaction}
             editSubmit={editSubmit}
+            deleteFunction={deleteFunction}
           />
         );
       });

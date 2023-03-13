@@ -10,6 +10,7 @@ export default function List({
   data = null,
   editSubmit = null,
   viewOnly = false,
+  deleteFunction,
 }) {
   const [editState, setEditState] = useState(false);
   const [name, setName] = useState(null);
@@ -72,7 +73,10 @@ export default function List({
             <div className="page-row-container table-header-spacer" />
           ) : (
             <div className="page-row-container">
-              <button className="icon-button-wrapper">
+              <button
+                className="icon-button-wrapper"
+                onClick={() => deleteFunction(data.id)}
+              >
                 <img src={del} className="list-transaction-icon" alt="delete" />
               </button>
               <button
