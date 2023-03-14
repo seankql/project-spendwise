@@ -24,6 +24,7 @@ export default function Dashboard() {
     transactions,
     getTransactions,
     getUserId,
+    createUser,
   } = useViewModel();
 
   // TODO move to viewmodel
@@ -45,6 +46,7 @@ export default function Dashboard() {
 
   useEffect(() => {
     if (user && isAuthenticated && !isLoading) {
+      createUser(user);
       getUsername();
       getAccounts(getUserId(user));
       getTransactions(getUserId(user), 0, 10);

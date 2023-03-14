@@ -1,5 +1,6 @@
 import { Sequelize, DataTypes } from "sequelize";
 import { sequelize } from "../database/database.js";
+import { UsersModel } from "./usersModel.js";
 
 /*  ******* Data types *******
 CREATE TABLE IF NOT EXISTS Accounts (
@@ -14,8 +15,7 @@ export const AccountsModel = sequelize.define("Accounts", {
     type: DataTypes.STRING(255),
     allowNull: false,
   },
-  UserId: {
-    type: DataTypes.STRING(255),
-    allowNull: false,
-  },
 });
+
+UsersModel.hasMany(AccountsModel);
+AccountsModel.belongsTo(UsersModel);
