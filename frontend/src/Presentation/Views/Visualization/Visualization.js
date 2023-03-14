@@ -17,8 +17,8 @@ export default function Visualization() {
   const { user, isAuthenticated, isLoading } = useAuth0();
 
   useEffect(() => {
-    if (user && isAuthenticated && !isLoading){
-    getAccounts(getUserId(user));
+    if (user && isAuthenticated && !isLoading) {
+      getAccounts(getUserId(user));
     }
   }, [user, isAuthenticated, isLoading]);
 

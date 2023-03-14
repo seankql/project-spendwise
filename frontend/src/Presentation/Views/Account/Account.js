@@ -34,7 +34,7 @@ export default function Account() {
   const { user, isAuthenticated, isLoading } = useAuth0();
 
   useEffect(() => {
-    if (user && isAuthenticated && !isLoading){
+    if (user && isAuthenticated && !isLoading) {
       getBasicInfo();
       getAccounts(getUserId(user));
     }

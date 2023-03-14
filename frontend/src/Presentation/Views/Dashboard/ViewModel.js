@@ -8,16 +8,18 @@ export default function DashboardViewModel() {
   const [accounts, setAccounts] = useState(null);
   const [transactions, setTransactions] = useState(null);
 
-  const { getUsernameUseCase, getAccountsUseCase, getTransactionsUseCase, getUserId, postUserUseCase } =
-    useController();
+  const {
+    getUsernameUseCase,
+    getAccountsUseCase,
+    getTransactionsUseCase,
+    getUserId,
+    postUserUseCase,
+  } = useController();
   const navigate = useNavigate();
 
-  async function createUser(user){
+  async function createUser(user) {
     await postUserUseCase(getUserId(user), user.email);
   }
-
-
-
 
   // Would be an async function that calls controller
   function getUsername() {

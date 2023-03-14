@@ -30,7 +30,7 @@ export default function AccountController() {
     }).then((res) => res.json());
   }
 
-  function getUserId(user){
+  function getUserId(user) {
     return user?.sub.split("|")[1];
   }
 

@@ -11,8 +11,12 @@ export default function AccountViewModel() {
   const [accounts, setAccounts] = useState(null);
   const [transactionVisiblity, setTransactionVisiblity] = useState("hidden");
 
-  const { getBasicInfoUseCase, getAccountsUseCase, postAccountUseCase, getUserId } =
-    useController();
+  const {
+    getBasicInfoUseCase,
+    getAccountsUseCase,
+    postAccountUseCase,
+    getUserId,
+  } = useController();
   const navigate = useNavigate();
 
   const { user } = useAuth0();
