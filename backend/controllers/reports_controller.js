@@ -163,7 +163,6 @@ reportsController.get("/categories", async (req, res) => {
               },
             ],
           },
-          
         ],
         where: {
           transactionDate: {

@@ -14,12 +14,12 @@ usersController.post("/", async (req, res) => {
       return res.status(400).send("Missing required fields");
     }
     const user = await UsersModel.findByPk(userId);
-    if (!user){
-        const newUser = await UsersModel.create({
-            id: userId,
-            email: email,
-        });
-        return res.status(201).send(newUser);
+    if (!user) {
+      const newUser = await UsersModel.create({
+        id: userId,
+        email: email,
+      });
+      return res.status(201).send(newUser);
     }
   } catch (err) {
     return res.status(500).send("Internal Server error" + err);
@@ -33,7 +33,9 @@ usersController.delete("/:userId", async (req, res) => {
     if (!userId) {
       return res.status(400).send("Missing required fields");
     }
-    const numOfDeletedRows = await UsersModel.destroy({ where: { id: userId } });
+    const numOfDeletedRows = await UsersModel.destroy({
+      where: { id: userId },
+    });
     if (numOfDeletedRows === 0) {
       return res.status(404).send("User not found");
     }
@@ -50,7 +52,7 @@ usersController.get("/:userId", async (req, res) => {
     if (!userId) {
       return res.status(400).send("Missing required fields");
     }
-    console.log("dfg" + userId)
+    console.log("dfg" + userId);
     const user = await UsersModel.findOne({ where: { id: userId } });
     if (!user) {
       return res.status(404).send("User not found");
