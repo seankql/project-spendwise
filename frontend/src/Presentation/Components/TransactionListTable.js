@@ -20,7 +20,7 @@ export default function List({
           <TransactionListEntry
             key={transaction.id}
             data={transaction}
-            editSubmit={transaction}
+            editSubmit={editSubmit}
             deleteFunction={deleteFunction}
             viewOnly={true}
           />
