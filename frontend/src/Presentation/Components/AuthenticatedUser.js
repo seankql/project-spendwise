@@ -5,7 +5,7 @@ const AuthenticatedUser = () => {
 
   return (
     isAuthenticated && (
-      <div className="authenticated-user-container">{user?.name}</div>
+      <div className="authenticated-user-container">{user?.email}</div>
     )
   );
 };

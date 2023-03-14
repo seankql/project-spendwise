@@ -4,6 +4,19 @@ export default function DashboardController() {
     return { result: "bob", error: null };
   }
 
+  async function postUserUseCase(userId, email) {
+    return fetch("http://localhost:3001/api/users", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        userId: userId,
+        email: email,
+      }),
+    }).then((res) => res.json());
+  }
+
   async function getAccountsUseCase(userId) {
     return fetch("http://localhost:3001/api/accounts/user/" + userId, {
       method: "GET",
@@ -24,9 +37,15 @@ export default function DashboardController() {
     ).then((res) => res.json());
   }
 
+  function getUserId(user) {
+    return user?.sub.split("|")[1];
+  }
+
   return {
     getTransactionsUseCase,
+    postUserUseCase,
     getUsernameUseCase,
     getAccountsUseCase,
+    getUserId,
   };
 }

@@ -7,7 +7,7 @@ export default function VisualizationViewModel() {
   const [username, setUsername] = useState(null);
   const [accounts, setAccounts] = useState(null);
 
-  const { getUsernameUseCase, getAccountsUseCase } = useController();
+  const { getUsernameUseCase, getAccountsUseCase, getUserId } = useController();
   const navigate = useNavigate();
 
   // Would be an async function that calls controller
@@ -33,5 +33,6 @@ export default function VisualizationViewModel() {
     accounts,
     getAccounts,
     navigateToPage,
+    getUserId,
   };
 }

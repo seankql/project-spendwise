@@ -3,24 +3,19 @@ import { sequelize } from "../database/database.js";
 
 /*  ******* Data types *******
 CREATE TABLE IF NOT EXISTS Transactions (
-  id SERIAL PRIMARY KEY,
-  username VARCHAR(255) NOT NULL,
-  hashedPassword VARCHAR(255) NOT NULL,
-  email VARCHAR(255) NOT NULL
+  id VARCHAR(255) PRIMARY KEY,
+  email VARCHAR(255) NOT NULL UNIQUE
 );
 */
 
 export const UsersModel = sequelize.define("Users", {
-  username: {
+  id: {
     type: DataTypes.STRING(255),
-    allowNull: false,
-  },
-  hashedPassword: {
-    type: DataTypes.STRING(255),
-    allowNull: false,
+    primaryKey: true,
   },
   email: {
     type: DataTypes.STRING(255),
     allowNull: false,
+    unique: true,
   },
 });

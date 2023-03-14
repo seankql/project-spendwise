@@ -16,5 +16,6 @@ export const AccountsModel = sequelize.define("Accounts", {
     allowNull: false,
   },
 });
+
 UsersModel.hasMany(AccountsModel);
 AccountsModel.belongsTo(UsersModel);

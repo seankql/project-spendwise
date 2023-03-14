@@ -30,9 +30,14 @@ export default function AccountController() {
     }).then((res) => res.json());
   }
 
+  function getUserId(user) {
+    return user?.sub.split("|")[1];
+  }
+
   return {
     postAccountUseCase,
     getBasicInfoUseCase,
     getAccountsUseCase,
+    getUserId,
   };
 }

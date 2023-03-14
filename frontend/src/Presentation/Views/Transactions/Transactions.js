@@ -11,6 +11,7 @@ import AccountSelect from "../../Components/AccountSelect";
 import "../../Styles/Common.css";
 import "../../Styles/Main.css";
 import "../../Styles/Transactions.css";
+import { useAuth0 } from "@auth0/auth0-react";
 
 export default function Transactions() {
   const {
@@ -22,14 +23,19 @@ export default function Transactions() {
     transactions,
     getTransactions,
     createTransaction,
+    getUserId,
   } = useViewModel();
 
   const sectionList = ["Add Transaction", "View Transactions"];
 
+  const { user, isAuthenticated, isLoading } = useAuth0();
+
   useEffect(() => {
-    getAccounts(1);
-    getTransactions(1, 0, 16);
-  }, []);
+    if (user && isAuthenticated && !isLoading) {
+      getAccounts(getUserId(user));
+      getTransactions(getUserId(user), 0, 16);
+    }
+  }, [user, isAuthenticated, isLoading]);
 
   return (
     <div className="body-wrapper">

@@ -12,6 +12,7 @@ import redChart from "../../../Media/red-bar-graph.png";
 import "../../Styles/Common.css";
 import "../../Styles/Dashboard.css";
 import "../../Styles/Main.css";
+import { useAuth0 } from "@auth0/auth0-react";
 
 export default function Dashboard() {
   const {
@@ -22,6 +23,8 @@ export default function Dashboard() {
     getAccounts,
     transactions,
     getTransactions,
+    getUserId,
+    createUser,
   } = useViewModel();
 
   // TODO move to viewmodel
@@ -39,11 +42,16 @@ export default function Dashboard() {
     { category: "Transportation", amount: 30 },
   ];
 
+  const { user, isAuthenticated, isLoading } = useAuth0();
+
   useEffect(() => {
-    getUsername();
-    getAccounts(1);
-    getTransactions(1, 0, 10);
-  }, []);
+    if (user && isAuthenticated && !isLoading) {
+      createUser(user);
+      getUsername();
+      getAccounts(getUserId(user));
+      getTransactions(getUserId(user), 0, 10);
+    }
+  }, [user, isAuthenticated, isLoading]);
 
   return (
     <div className="body-wrapper">

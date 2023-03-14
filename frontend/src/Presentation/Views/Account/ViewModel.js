@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import useController from "./Controller";
 import downArrow from "../../../Media/arrowDown.svg";
 import upArrow from "../../../Media/arrowUp.svg";
+import { useAuth0 } from "@auth0/auth0-react";
 
 export default function AccountViewModel() {
   const [error, setError] = useState("");
@@ -10,9 +11,15 @@ export default function AccountViewModel() {
   const [accounts, setAccounts] = useState(null);
   const [transactionVisiblity, setTransactionVisiblity] = useState("hidden");
 
-  const { getBasicInfoUseCase, getAccountsUseCase, postAccountUseCase } =
-    useController();
+  const {
+    getBasicInfoUseCase,
+    getAccountsUseCase,
+    postAccountUseCase,
+    getUserId,
+  } = useController();
   const navigate = useNavigate();
+
+  const { user } = useAuth0();
 
   function getCurrentDate() {
     const dateObj = new Date();
@@ -51,8 +58,8 @@ export default function AccountViewModel() {
   }
 
   async function createAccount(name) {
-    await postAccountUseCase(name, 1);
-    const result = await getAccountsUseCase(1);
+    await postAccountUseCase(name, getUserId(user));
+    const result = await getAccountsUseCase(getUserId(user));
     setAccounts(result);
   }
 
@@ -70,5 +77,6 @@ export default function AccountViewModel() {
     navigateToPage,
     getArrow,
     createAccount,
+    getUserId,
   };
 }
