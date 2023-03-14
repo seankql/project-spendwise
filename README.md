@@ -92,7 +92,7 @@
 - Authentication Auth0 Api (1 point)
   - https://auth0.com/docs/secure/multi-factor-authentication/multi-factor-authentication-developer-resources/mfa-api
 - Celery worker for Async job (3 points)
-  - Daily Scheduled worker that will fetch user account transactions
+  - Scheduled Async Reports ondemand when user press generate report button.
   - https://github.com/celery/celery
 - Sentry Error logging (1 point)
   - https://sentry.io/welcome/
