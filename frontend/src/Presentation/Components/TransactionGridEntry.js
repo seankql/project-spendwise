@@ -32,7 +32,7 @@ export default function List({
       alert("invalid date string");
       return;
     }
-    if (parseFloat(amount) != amount) {
+    if (parseFloat(amount) !== amount) {
       alert("invalid amount");
       return;
     }

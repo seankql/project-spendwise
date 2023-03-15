@@ -1,6 +1,6 @@
 import React, { useCallback } from "react";
 import { VisXYContainer, VisAxis, VisStackedBar } from "@unovis/react";
-import "../Styles/Components.css";
+import "../../Styles/Components.css";
 
 export default function List({ data }) {
   function sumEntriesByAttribute(json) {
