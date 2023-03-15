@@ -32,7 +32,12 @@
     - Node
 - DB: Postgresql
 - Error Tracking: Sentry
+- Task Queue: Bee-Queue
 ```
+
+### Task Queue WorkFlow
+
+![Task Queue WorkFlow](./backend/media/TaskQueueWorkFlow.png)
 
 ## Features
 
@@ -42,7 +47,7 @@
   - Done Using [Unovis](https://unovis.dev/gallery)
 - [ ] Link your bank account to [Plaid API](https://plaid.com/) for automatic entry
   - Once you link your account, we will fetch all the transactions for this month
-  - automatic update daily using [Celery](https://github.com/celery/celery)
+  - get user Transactions in Task Queue using [Bee-Queue](https://github.com/bee-queue/bee-queue)
 - [ ] Grid of All Transaction (frontend)
   - List of all transactions will be displayed in a grid
   - sort in time
@@ -64,13 +69,13 @@
 
 - **Front-End:** The alpha version of Project SpendWise will include a minimally interactive skeleton of the web application. Users of the website will at this point be able to navigate from the homepage through to all the pages that will be available by the final version. The general layout and basic design elements of each page should be apparent by this point. Users will be able to sign up and login.
 
-- **Back-End:** The alpha version of Project SpendWise will include all the backend logic of the manual CRUD transactions and Sentry setup. No [Plaid API](https://plaid.com/) and [Celery](https://github.com/celery/celery) at this point. The general layout and basic design of the backend should be apparent by this point. Backend logic for sign up and login. Auth0 API should be setup.
+- **Back-End:** The alpha version of Project SpendWise will include all the backend logic of the manual CRUD transactions and Sentry setup. No [Plaid API](https://plaid.com/) and [Bee-Queue](https://github.com/bee-queue/bee-queue) at this point. The general layout and basic design of the backend should be apparent by this point. Backend logic for sign up and login. Auth0 API should be setup.
 
 #### Beta Version
 
 - **Front-End:** The Beta version of Project SpendWise will seek intergrate server-side generated elements into the Frontend. By the Beta Version, users will be able to both view data originating from the backend (i.e., transaction data) as well as inputting user generated data from the front-end (i.e., profile data). Data visualization tools will also be implemented to some extent by the Beta version, allowing users to have their transaction data visualized in a limited manner. All authentication and authorization should be done.
 
-- **Back-End:** The Beta version of Project SpendWise will contain the implementation of linking your finical accounts via [Plaid API](https://plaid.com/) and daily transaction entry via [Celery](https://github.com/celery/celery). Email service using SendGrid should be done.
+- **Back-End:** The Beta version of Project SpendWise will contain the implementation of linking your finical accounts via [Plaid API](https://plaid.com/) and daily transaction entry via [Bee-Queue](https://github.com/bee-queue/bee-queue). Email service using SendGrid should be done.
 
 #### Final Version
 
@@ -91,9 +96,9 @@
   - https://unovis.dev/gallery
 - Authentication Auth0 Api (1 point)
   - https://auth0.com/docs/secure/multi-factor-authentication/multi-factor-authentication-developer-resources/mfa-api
-- Celery worker for Async job (3 points)
-  - Scheduled Async Reports ondemand when user press generate report button.
-  - https://github.com/celery/celery
+- Bee-Queue worker for Async job (3 points)
+  - Scheduled and ondemand jobs when user tries to get bank transactions from plaid.
+  - https://github.com/bee-queue/bee-queue
 - Sentry Error logging (1 point)
   - https://sentry.io/welcome/
 
@@ -107,7 +112,7 @@
 
 ### Chongmin-Bai:
 
-Student Number: 1004986599. Responsible for general backend-end development, including backend logic for manual entry of transactions, automatic entry of transaction of Plaid API, Setting up Celery worker for async jobs and Setting up Sentry for Error Logging.
+Student Number: 1004986599. Responsible for general backend-end development, including backend logic for manual entry of transactions, automatic entry of transaction of Plaid API, Setting up Bee-Queue for async jobs and Setting up Sentry for Error Logging.
 
 ### Matthew Melchior
 
