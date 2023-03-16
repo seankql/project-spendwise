@@ -2,6 +2,7 @@ import Router from "express";
 import { TransactionsModel } from "../models/transactionsModel.js";
 import { AccountsModel } from "../models/accountsModel.js";
 import { UsersModel } from "../models/usersModel.js";
+import { Op } from "sequelize";
 import Sentry from "@sentry/node";
 // Base route: /api/transactions
 export const transactionsController = Router();
@@ -29,7 +30,7 @@ transactionsController.get("/", async (req, res) => {
         ],
         offset,
         limit,
-        order: [["createdAt", "DESC"]],
+        order: [["transactionDate", "DESC"]],
       });
 
     if (resultTransactions) {
@@ -42,6 +43,7 @@ transactionsController.get("/", async (req, res) => {
         createdAt: transaction.createdAt,
         updatedAt: transaction.updatedAt,
         AccountId: transaction.AccountId,
+        plaidTransactionId: transaction.plaidTransactionId,
       }));
       return res
         .status(200)
@@ -50,8 +52,8 @@ transactionsController.get("/", async (req, res) => {
       return res.status(400).send("Error getting transactions");
     }
   } catch (err) {
-    Sentry.captureException(err);
-    return res.status(500).send("Internal Server error");
+    // Sentry.captureException(err);
+    return res.status(500).send("Internal Server error " + err);
   }
 });
 
@@ -85,8 +87,8 @@ transactionsController.post("/", async (req, res) => {
       return res.status(400).send("Error creating transaction");
     }
   } catch (err) {
-    Sentry.captureException(err);
-    return res.status(500).send("Internal Server error");
+    // Sentry.captureException(err);
+    return res.status(500).send("Internal Server error " + err);
   }
 });
 // Update a transaction: PUT /api/transactions/:transactionId
@@ -141,8 +143,8 @@ transactionsController.put("/:transactionId", async (req, res) => {
         );
     }
   } catch (err) {
-    Sentry.captureException(err);
-    return res.status(500).send("Internal Server error");
+    // Sentry.captureException(err);
+    return res.status(500).send("Internal Server error " + err);
   }
 });
 // Delete a transaction: DELETE /api/transactions/:transactionId
@@ -166,7 +168,85 @@ transactionsController.delete("/:transactionId", async (req, res) => {
         );
     }
   } catch (err) {
-    Sentry.captureException(err);
-    return res.status(500).send("Internal Server error");
+    // Sentry.captureException(err);
+    return res.status(500).send("Internal Server error " + err);
   }
 });
+
+// Get All Transactions with filters:
+// GET: /api/transactions/filters/:userId/transactions?accountId=1&transactionName=Groceries&startDate=2021-01-01&endDate=2021-01-31&minAmount=0&maxAmount=100&categories=Food,Groceries&limit=10&offset=0
+
+transactionsController.get(
+  "/filters/:userId/transactions",
+  async (req, res) => {
+    try {
+      if (!req.params.userId || !req.query.limit || !req.query.offset) {
+        return res
+          .status(400)
+          .send(
+            "Missing required fields. Must contain [userId, limit, offset]"
+          );
+      }
+      const userId = req.params.userId;
+      const accountId = req.query.accountId || null;
+      const transactionName = req.query.transactionName || "";
+      const startDate = req.query.startDate || "1900-01-01";
+      const endDate = req.query.endDate || "2999-12-31";
+      const minAmount = req.query.minAmount || Number.MIN_SAFE_INTEGER;
+      const maxAmount = req.query.maxAmount || Number.MAX_SAFE_INTEGER;
+      const categories = req.query.categories
+        ? req.query.categories.split(",")
+        : [];
+      const limit = parseInt(req.query.limit);
+      const offset = parseInt(req.query.offset) * limit;
+
+      const { rows: resultTrans, count } =
+        await TransactionsModel.findAndCountAll({
+          include: [
+            {
+              model: AccountsModel,
+              where: accountId ? { id: accountId } : { UserId: userId },
+              include: [
+                {
+                  model: UsersModel,
+                  where: { id: userId },
+                },
+              ],
+            },
+          ],
+          where: {
+            descriptions: { [Op.like]: `%${transactionName}%` },
+            transactionDate: { [Op.between]: [startDate, endDate] },
+            amount: { [Op.between]: [minAmount, maxAmount] },
+            ...(categories.length > 0 && { category: { [Op.in]: categories } }),
+          },
+          order: [["transactionDate", "DESC"]],
+          limit,
+          offset,
+        });
+
+      if (count > 0) {
+        const filteredResultTrans = resultTrans.map((transaction) => ({
+          id: transaction.id,
+          transactionDate: transaction.transactionDate,
+          descriptions: transaction.descriptions,
+          amount: transaction.amount,
+          category: transaction.category,
+          createdAt: transaction.createdAt,
+          updatedAt: transaction.updatedAt,
+          AccountId: transaction.AccountId,
+          plaidTransactionId: transaction.plaidTransactionId,
+        }));
+        return res.status(200).send({
+          totalCount: count,
+          transactions: filteredResultTrans,
+        });
+      } else {
+        return res.status(400).send("Error getting transactions");
+      }
+    } catch (err) {
+      //   Sentry.captureException(err);
+      return res.status(500).send("Internal Server error " + err);
+    }
+  }
+);

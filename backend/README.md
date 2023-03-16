@@ -25,9 +25,9 @@
 1. Users Table
    - This table would contain information about the user such as
      - id (primary key)
-     - username
-     - hashedPassword
      - email
+     - access_token
+     - cursor
 2. Accounts Table
    - This table would contain information about the financial accounts that each user has.
    - Contains fields such as
@@ -45,6 +45,7 @@
      - amount
      - accountId (foregin key)
      - category
+     - plaidTransactionId
    - Each transaction must be associated with one account & one category.
 
 ## Deployment

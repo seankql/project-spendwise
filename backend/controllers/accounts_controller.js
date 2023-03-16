@@ -21,8 +21,8 @@ accountsController.post("/", async (req, res) => {
       return res.status(400).send("Error creating account");
     }
   } catch (err) {
-    Sentry.captureException(err);
-    return res.status(500).send("Internal Server error");
+    // Sentry.captureException(err);
+    return res.status(500).send("Internal Server error " + err);
   }
 });
 
@@ -40,7 +40,7 @@ accountsController.put("/:accountId", async (req, res) => {
     const account = await AccountsModel.findByPk(accountId);
     if (account) {
       const updatedAccount = await account.update(data);
-      await account.reload();
+      await account.save();
       if (updatedAccount) {
         return res.status(200).send(updatedAccount);
       } else {
@@ -54,8 +54,8 @@ accountsController.put("/:accountId", async (req, res) => {
         .send("Error finding account for account id: " + accountId);
     }
   } catch (err) {
-    Sentry.captureException(err);
-    return res.status(500).send("Internal Server error");
+    // Sentry.captureException(err);
+    return res.status(500).send("Internal Server error " + err);
   }
 });
 
@@ -79,8 +79,8 @@ accountsController.delete("/:accountId", async (req, res) => {
         .send("Error finding account for account id: " + accountId);
     }
   } catch (err) {
-    Sentry.captureException(err);
-    return res.status(500).send("Internal Server error");
+    // Sentry.captureException(err);
+    return res.status(500).send("Internal Server error " + err);
   }
 });
 
@@ -99,7 +99,7 @@ accountsController.get("/user/:userId", async (req, res) => {
         .send("Error fetching accounts for user id: " + userId);
     }
   } catch (err) {
-    Sentry.captureException(err);
-    return res.status(500).send("Internal Server error");
+    // Sentry.captureException(err);
+    return res.status(500).send("Internal Server error " + err);
   }
 });
