@@ -14,11 +14,21 @@
 
 4. Start/Create PostgreSQL locally by creating a database. Make sure the Database name and password match what is written in `.env`
 
-5. Start the development backend
+5. Install Redis if not already installed
+
+   ```
+   brew install redis
+   ```
+
+6. Start Redis
+   ```
+   redis-server
+   ```
+7. Start the development backend
    ```
    npm run dev
    ```
-6. The development backend will be running at http://localhost:3001
+8. The development backend will be running at http://localhost:3001
 
 ## Database Design
 

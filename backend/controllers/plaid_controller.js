@@ -5,6 +5,16 @@ import { Configuration, PlaidApi, PlaidEnvironments } from "plaid";
 import { UsersModel } from "../models/usersModel.js";
 import { AccountsModel } from "../models/accountsModel.js";
 import { TransactionsModel } from "../models/transactionsModel.js";
+import Queue from "bee-queue";
+import redis from "redis";
+
+const redisClient = redis.createClient({
+  host: "localhost",
+  port: 6379,
+});
+const transactionQueue = new Queue("transactions", {
+  redis: redisClient,
+});
 
 const configuration = new Configuration({
   basePath: PlaidEnvironments[config.PLAID_ENV],
@@ -131,16 +141,28 @@ plaidController.get("/transactions/sync", async (req, res) => {
     user.cursor = cursor;
     await user.save();
 
-    // add new accounts to our database if not already exists
-    await updatePlaidAccounts(ACCESS_TOKEN, userId);
-    // createPlaidTransactions based on added
-    await createPlaidTransactions(added);
-    // updatePlaidTransactions based on modified
-    await updatePlaidTransactions(modified);
-    // deletePlaidTransactions based on removed
-    await deletePlaidTransactions(removed);
+    transactionQueue
+      .createJob({
+        ACCESS_TOKEN,
+        userId,
+        added,
+        modified,
+        removed,
+      })
+      .on("succeeded", function () {
+        console.log(`Job succeeded`);
+      })
+      .on("failed", function (errorMessage) {
+        console.log(`Job failed with error message: ${errorMessage}`);
+      })
+      .on("retrying", function (err) {
+        console.log(
+          `Job failed with error message: ${err.message}.  It is being retried!`
+        );
+      })
+      .save();
 
-    return res.status(200).send("Success");
+    return res.status(200).send("Job started successfully");
   } catch (err) {
     return res.status(500).send("Internal Server error " + err);
   }
@@ -169,7 +191,29 @@ plaidController.get("/has_linked_plaid", async (req, res) => {
     return res.status(500).send("Internal Server error " + err);
   }
 });
-
+// check if job is done: GET /api/plaid/job_status?jobId=${}
+plaidController.get("/job_status", async (req, res) => {
+  try {
+    const jobId = req.query.jobId;
+    if (!jobId) {
+      return res
+        .status(400)
+        .send("Missing required fields. Must contain [jobId]");
+    }
+    const job = await transactionQueue.getJob(jobId);
+    if (!job) {
+      return res.status(400).send("Error getting job");
+    }
+    if (job.isCompleted()) {
+      return res.status(200).send("Success");
+    } else {
+      return res.status(400).send("Job not completed");
+    }
+  } catch (err) {
+    // Sentry.captureException(err);
+    return res.status(500).send("Internal Server error " + err);
+  }
+});
 async function createPlaidTransactions(added) {
   for (let transaction of added) {
     const plaidAccountId = transaction.account_id;
@@ -260,3 +304,15 @@ async function updatePlaidAccounts(ACCESS_TOKEN, userId) {
     }
   }
 }
+
+transactionQueue.process(async (job) => {
+  const { ACCESS_TOKEN, userId, added, modified, removed } = job.data;
+  // add new accounts to our database if not already exists
+  await updatePlaidAccounts(ACCESS_TOKEN, userId);
+  // createPlaidTransactions based on added
+  await createPlaidTransactions(added);
+  // updatePlaidTransactions based on modified
+  await updatePlaidTransactions(modified);
+  // deletePlaidTransactions based on removed
+  await deletePlaidTransactions(removed);
+});

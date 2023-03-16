@@ -64,6 +64,15 @@ accountsController.delete("/:accountId", async (req, res) => {
   try {
     const { accountId } = req.params;
     const account = await AccountsModel.findByPk(accountId);
+    // delete all transactions assoicated with this account
+    const transactions = await TransactionsModel.findAll({
+      where: { AccountId: accountId },
+    });
+    if (transactions) {
+      for (let i = 0; i < transactions.length; i++) {
+        await transactions[i].destroy();
+      }
+    }
     if (account) {
       const deletedAccount = await account.destroy();
       if (deletedAccount) {
