@@ -11,9 +11,10 @@ CREATE TABLE IF NOT EXISTS Transactions (
 */
 
 export const UsersModel = sequelize.define("Users", {
-  id: {
+  auth0UserId: {
     type: DataTypes.STRING(255),
-    primaryKey: true,
+    allowNull: false,
+    unique: true,
   },
   email: {
     type: DataTypes.STRING(255),
