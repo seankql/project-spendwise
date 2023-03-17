@@ -8,6 +8,7 @@ import { sequelize } from "./database/database.js";
 const PORT = 3001;
 
 export const app = express();
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(express.static("static"));
 

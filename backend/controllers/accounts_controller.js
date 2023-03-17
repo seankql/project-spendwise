@@ -21,8 +21,8 @@ accountsController.post("/", async (req, res) => {
       return res.status(400).send("Error creating account");
     }
   } catch (err) {
-    Sentry.captureException(err);
-    return res.status(500).send("Internal Server error");
+    // Sentry.captureException(err);
+    return res.status(500).send("Internal Server error " + err);
   }
 });
 
@@ -40,7 +40,7 @@ accountsController.put("/:accountId", async (req, res) => {
     const account = await AccountsModel.findByPk(accountId);
     if (account) {
       const updatedAccount = await account.update(data);
-      await account.reload();
+      await account.save();
       if (updatedAccount) {
         return res.status(200).send(updatedAccount);
       } else {
@@ -54,8 +54,8 @@ accountsController.put("/:accountId", async (req, res) => {
         .send("Error finding account for account id: " + accountId);
     }
   } catch (err) {
-    Sentry.captureException(err);
-    return res.status(500).send("Internal Server error");
+    // Sentry.captureException(err);
+    return res.status(500).send("Internal Server error " + err);
   }
 });
 
@@ -64,6 +64,15 @@ accountsController.delete("/:accountId", async (req, res) => {
   try {
     const { accountId } = req.params;
     const account = await AccountsModel.findByPk(accountId);
+    // delete all transactions assoicated with this account
+    const transactions = await TransactionsModel.findAll({
+      where: { AccountId: accountId },
+    });
+    if (transactions) {
+      for (let i = 0; i < transactions.length; i++) {
+        await transactions[i].destroy();
+      }
+    }
     if (account) {
       const deletedAccount = await account.destroy();
       if (deletedAccount) {
@@ -79,8 +88,8 @@ accountsController.delete("/:accountId", async (req, res) => {
         .send("Error finding account for account id: " + accountId);
     }
   } catch (err) {
-    Sentry.captureException(err);
-    return res.status(500).send("Internal Server error");
+    // Sentry.captureException(err);
+    return res.status(500).send("Internal Server error " + err);
   }
 });
 
@@ -99,7 +108,7 @@ accountsController.get("/user/:userId", async (req, res) => {
         .send("Error fetching accounts for user id: " + userId);
     }
   } catch (err) {
-    Sentry.captureException(err);
-    return res.status(500).send("Internal Server error");
+    // Sentry.captureException(err);
+    return res.status(500).send("Internal Server error " + err);
   }
 });

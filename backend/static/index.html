@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Plaid Link Token Example</title>
+  </head>
+  <body>
+    <button id="link-button">Link Account</button>
+    <script src="https://cdn.plaid.com/link/v2/stable/link-initialize.js"></script>
+    <script>
+      const userId = "1"; // Replace with your user ID
+      const url = `/api/plaid/link_token?userId=${userId}`;
+
+      // Make an AJAX request to retrieve the link token
+      fetch(url)
+        .then((response) => response.json())
+        .then((data) => {
+          const linkToken = data.link_token;
+          const handler = Plaid.create({
+            token: linkToken,
+            onSuccess: function (publicToken, metadata) {
+              // Handle the success callback
+              console.log(publicToken, metadata);
+
+              fetch("/api/plaid/token_exchange", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                  public_token: publicToken,
+                  userId: userId,
+                }),
+              })
+                .then((ressss) => {
+                  console.log(ressss);
+                  fetch(`/api/plaid/transactions/sync?userId=${userId}`)
+                    .then((data) => {
+                      console.log(data);
+                    })
+                    .catch((error) => console.error(error));
+                })
+                .catch((error) => console.error(error));
+            },
+            onExit: function (err, metadata) {
+              // Handle the exit callback
+              console.log(err, metadata);
+            },
+          });
+          document
+            .querySelector("#link-button")
+            .addEventListener("click", function (e) {
+              // Open the Plaid Link flow when the button is clicked
+              handler.open();
+            });
+        })
+        .catch((error) => console.error(error));
+    </script>
+  </body>
+</html>
