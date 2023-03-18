@@ -6,9 +6,9 @@ import TransactionListTable from "../../Components/TransactionListTable";
 import Banner from "../../Components/Banner";
 import ScrollBanner from "../../Components/ScrollBanner";
 import AccountSelect from "../../Components/AccountSelect";
-import pieChart from "../../../Media/dashboard-pie-chart.png";
-import greenChart from "../../../Media/green-bar-graph.png";
-import redChart from "../../../Media/red-bar-graph.png";
+import ExpenditureGraph from "../../Components//Graphs/ExpenditureGraph";
+import IncomeGraph from "../../Components/Graphs/IncomeGraph";
+import CategoryGraph from "../../Components//Graphs/CategoryGraph";
 import "../../Styles/Common.css";
 import "../../Styles/Dashboard.css";
 import "../../Styles/Main.css";
@@ -105,12 +105,12 @@ export default function Dashboard() {
           Income VS Expenditure
         </div>
         <div className="page-row-container section-divider">
-          <img className="sml-graph-img-wrapper" src={greenChart} alt="logo" />
-          <img
-            className="sml-graph-img-wrapper row-right-element"
-            src={redChart}
-            alt="logo"
-          />
+          <div className="graph-padder sml-graph-img-wrapper">
+            <IncomeGraph data={transactions?.transactions} />
+          </div>
+          <div className="graph-padder sml-graph-img-wrapper row-right-element">
+            <ExpenditureGraph data={transactions?.transactions} />
+          </div>
         </div>
         <div
           id="Category Chart"
@@ -118,7 +118,9 @@ export default function Dashboard() {
         >
           Category Chart
         </div>
-        <img className="section-divider" src={pieChart} alt="logo" />
+        <div className="graph-padder">
+          <CategoryGraph data={transactions?.transactions} />
+        </div>
       </div>
       <footer />
     </div>

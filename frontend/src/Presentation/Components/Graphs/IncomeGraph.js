@@ -14,7 +14,7 @@ export default function List({ data }) {
     for (let i = 0; i < json.length; i++) {
       const entry = json[i];
       const attrValue = entry["transactionDate"];
-      if (entry["category"] === "Income") continue;
+      if (entry["category"] !== "Income") continue;
       if (attrValue in sums) {
         sums[attrValue] += parseInt(entry.amount);
       } else {
@@ -25,7 +25,6 @@ export default function List({ data }) {
     Object.keys(sums).forEach((key) => {
       result.push({ x: key, y: sums[key] });
     });
-    console.log(result);
     return result;
   }
 
@@ -46,7 +45,7 @@ export default function List({ data }) {
         <VisStackedBar
           x={useCallback((d) => convertToDateObject(d.x), [])}
           y={useCallback((d) => d.y, [])}
-          color={"#FF0000"}
+          color={"#8bc53f"}
         ></VisStackedBar>
         <VisAxis type="x" numTicks={5} tickFormat={dateFormatter}></VisAxis>
         <VisAxis type="y"></VisAxis>
