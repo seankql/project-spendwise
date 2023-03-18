@@ -8,6 +8,7 @@ export default function DashboardViewModel() {
   const [accounts, setAccounts] = useState(null);
   const [selectedAccount, setSelectedAccount] = useState(null);
   const [transactions, setTransactions] = useState(null);
+  const [categoryData, setCategoryData] = useState(null);
 
   const navigate = useNavigate();
 
@@ -62,10 +63,20 @@ export default function DashboardViewModel() {
     setTransactions(result);
   }
 
+  async function getCategoryData(userId) {
+    const startDate = getCurrentMonth();
+    const endDate = getCurrentDate();
+    const result = await getCategoryReportsUseCase(userId, startDate, endDate);
+    setCategoryData(result);
+  }
+
   return {
     error,
     accounts,
     getAccounts,
+    categoryData,
+    setCategoryData,
+    getCategoryData,
     transactions,
     getReports,
     getAccountReports,

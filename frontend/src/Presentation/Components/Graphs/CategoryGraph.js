@@ -44,7 +44,7 @@ export default function List({ data }) {
       <VisBulletLegend items={getLegend(data)} />
       <VisSingleContainer data={sumEntriesByAttribute(data)}>
         <VisDonut
-          arcWidth={80}
+          arcWidth={40}
           value={useCallback((d) => d.y, [])}
           centralLabel="Category Breakdown"
         />

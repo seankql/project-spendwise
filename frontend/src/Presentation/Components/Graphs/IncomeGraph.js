@@ -47,7 +47,7 @@ export default function List({ data }) {
           y={useCallback((d) => d.y, [])}
           color={"#8bc53f"}
         ></VisStackedBar>
-        <VisAxis type="x" numTicks={5} tickFormat={dateFormatter}></VisAxis>
+        <VisAxis type="x" tickFormat={dateFormatter}></VisAxis>
         <VisAxis type="y"></VisAxis>
       </VisXYContainer>
     </div>

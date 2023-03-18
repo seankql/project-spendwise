@@ -15,14 +15,17 @@ import "../../Styles/Main.css";
 
 export default function Dashboard() {
   const {
-    navigateToPage,
     accounts,
     getAccounts,
+    categoryData,
+    setCategoryData,
+    getCategoryData,
     transactions,
     getReports,
     getAccountReports,
     selectedAccount,
     setSelectedAccount,
+    navigateToPage,
   } = useViewModel();
 
   // TODO move to viewmodel
@@ -33,15 +36,9 @@ export default function Dashboard() {
     "Category Chart",
   ];
 
-  const mockIncomeData = [{ category: "Income", amount: 2000 }];
-  const mockExpenseData = [
-    { category: "Food", amount: 150 },
-    { category: "Housing", amount: 1000 },
-    { category: "Transportation", amount: 30 },
-  ];
-
   useEffect(() => {
     getAccounts(1);
+    getCategoryData(1);
     if (!selectedAccount) {
       getReports(1);
     } else {
@@ -66,14 +63,15 @@ export default function Dashboard() {
         <div className="section-wrapper page-row-container section-divider">
           <SummaryCard
             title="This Month's Income"
-            aggregatedData="$1,501.62"
-            data={mockIncomeData}
+            isIncome={true}
+            aggregatedData={transactions?.income}
+            data={categoryData}
           />
           <div className="row-right-element">
             <SummaryCard
               title="This Month's Spending"
-              aggregatedData="$896.21"
-              data={mockExpenseData}
+              aggregatedData={transactions?.expense}
+              data={categoryData}
             />
           </div>
         </div>

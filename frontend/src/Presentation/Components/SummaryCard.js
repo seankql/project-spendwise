@@ -4,7 +4,12 @@ import upArrow from "../../Media/arrowUp.svg";
 import "../Styles/Components.css";
 import "../Styles/Common.css";
 
-export default function List({ title, aggregatedData = null, data = null }) {
+export default function List({
+  title,
+  aggregatedData = null,
+  data = null,
+  isIncome = false,
+}) {
   const [open, setOpen] = useState(false);
 
   const toggleBreakdown = () => {
@@ -19,28 +24,35 @@ export default function List({ title, aggregatedData = null, data = null }) {
     }
   };
 
-  const createNewRowElement = (id, category, amount) => {
+  const createNewRowElement = (category) => {
     return (
-      <div key={id} className="page-row-container">
+      <div key={category} className="page-row-container">
         <div className="component-subheader-text card-sml-padding-wrapper">
           {category}
         </div>
         <div className="row-right-element card-sml-padding-wrapper">
-          {amount}
+          {data[category].amount.toFixed(2)}
         </div>
       </div>
     );
   };
 
-  const getRows = data?.map((item) =>
-    createNewRowElement(item.id, item.category, item.amount)
-  );
+  const getRows = () => {
+    if (!data) return;
+    let elements = [];
+    for (let category in data) {
+      if (isIncome && category !== "Income") continue;
+      if (!isIncome && category === "Income") continue;
+      elements.push(createNewRowElement(category));
+    }
+    return elements;
+  };
 
   const getBreakdown = () => {
     if (!open) {
       return;
     } else {
-      return <div className="card-wrapper-2">{getRows}</div>;
+      return <div className="card-wrapper-2">{getRows()}</div>;
     }
   };
 
@@ -51,7 +63,7 @@ export default function List({ title, aggregatedData = null, data = null }) {
           {title}
         </div>
         <div className="card-padding-wrapper row-right-element component-header-text">
-          {aggregatedData}
+          {aggregatedData.toFixed(2)}
         </div>
       </div>
       <div className="card-wrapper-2">

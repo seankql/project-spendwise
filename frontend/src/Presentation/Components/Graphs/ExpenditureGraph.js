@@ -25,7 +25,6 @@ export default function List({ data }) {
     Object.keys(sums).forEach((key) => {
       result.push({ x: key, y: sums[key] });
     });
-    console.log(result);
     return result;
   }
 
@@ -48,7 +47,7 @@ export default function List({ data }) {
           y={useCallback((d) => d.y, [])}
           color={"#FF0000"}
         ></VisStackedBar>
-        <VisAxis type="x" numTicks={5} tickFormat={dateFormatter}></VisAxis>
+        <VisAxis type="x" tickFormat={dateFormatter}></VisAxis>
         <VisAxis type="y"></VisAxis>
       </VisXYContainer>
     </div>

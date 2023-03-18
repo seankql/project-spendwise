@@ -74,6 +74,8 @@ export default function List({ data }) {
             useCallback((d) => d.y["Gas"], []),
             useCallback((d) => d.y["Restaurants"], []),
             useCallback((d) => d.y["Furniture"], []),
+            useCallback((d) => d.y["Groceries"], []),
+            useCallback((d) => d.y["Income"], []),
           ]}
           curveType={CurveType.StepAfter}
         />
