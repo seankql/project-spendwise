@@ -3,6 +3,10 @@ import { useNavigate } from "react-router-dom";
 import useController from "./Controller";
 import downArrow from "../../../Media/arrowDown.svg";
 import upArrow from "../../../Media/arrowUp.svg";
+import TransactionsController from "../../../Controllers/transactionsController";
+import AccountsController from "../../../Controllers/accountsController";
+import ReportsController from "../../../Controllers/reportsController";
+import UserController from "../../../Controllers/userController";
 
 export default function TransactionsViewModel() {
   const [error, setError] = useState("");
@@ -10,14 +14,25 @@ export default function TransactionsViewModel() {
   const [accounts, setAccounts] = useState(null);
   const [transactions, setTransactions] = useState(null);
   const [transactionVisiblity, setTransactionVisiblity] = useState("hidden");
+  const [selectedAccount, setSelectedAccount] = useState(null);
+  const [page, setPage] = useState(0);
+  const [name, setName] = useState(null);
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
+  const [minValue, setMinValue] = useState(null);
+  const [maxValue, setMaxValue] = useState(null);
+  const [categories, setCategories] = useState(null);
 
   const {
-    getUsernameUseCase,
-    getAccountsUseCase,
-    getTransactionsUseCase,
-    postTransactionUseCase,
-    getUserId,
-  } = useController();
+    createTransactionsUseCase,
+    updateTransactionsUseCase,
+    deleteTransactionsUseCase,
+  } = TransactionsController();
+
+  const { getFilterReportsUseCase } = ReportsController();
+
+  const { getAccountsUseCase } = AccountsController();
+
   const navigate = useNavigate();
 
   function getCurrentDate() {
@@ -28,16 +43,12 @@ export default function TransactionsViewModel() {
     return `${year}-${month}-${day}`;
   }
 
-  // Would be an async function that calls controller
-  function getUsername() {
-    const { result, error } = getUsernameUseCase();
-    setError(error);
-    setUsername(result);
+  function getUserId(user) {
+    return user?.sub.split("|")[1];
   }
 
-  async function getAccounts(userId) {
-    const result = await getAccountsUseCase(userId);
-    setAccounts(result);
+  function navigateToPage(page = "/") {
+    navigate(page);
   }
 
   function toggleTransactionVisiblity() {
@@ -48,6 +59,13 @@ export default function TransactionsViewModel() {
     }
   }
 
+  function getCreateTransactionVisibility() {
+    if (!selectedAccount) {
+      return "hidden";
+    }
+    return "";
+  }
+
   function getArrow() {
     if (transactionVisiblity === "hidden") {
       return downArrow;
@@ -56,19 +74,82 @@ export default function TransactionsViewModel() {
     }
   }
 
-  async function getTransactions(userId, page, pageSize) {
-    const result = await getTransactionsUseCase(userId, page, pageSize);
-    setTransactions(result);
+  function incrementPage() {
+    setPage(page + 1);
   }
 
-  async function createTransaction(name, category, amount) {
-    await postTransactionUseCase(name, category, amount, 5, getCurrentDate());
-    const result = await getTransactionsUseCase(1, 0, 16);
-    setTransactions(result);
+  function decrementPage() {
+    setPage(page - 1);
   }
 
   function navigateToPage(page = "/") {
     navigate(page);
+  }
+
+  function setFilters(filtersJSON) {
+    const filters = JSON.parse(filtersJSON);
+    setName(filters.name);
+    setStartDate(filters.startDate);
+    setEndDate(filters.endDate);
+    setMinValue(filters.minValue);
+    setMaxValue(filters.maxValue);
+    setCategories(filters.categories);
+  }
+
+  async function getAccounts(userId) {
+    const result = await getAccountsUseCase(userId);
+    setAccounts(result);
+  }
+
+  async function createTransaction(name, category, amount) {
+    await createTransactionsUseCase(
+      name,
+      category,
+      amount,
+      selectedAccount,
+      getCurrentDate()
+    );
+    getFilterReports(1, 9, page);
+  }
+
+  async function updateTransaction(
+    name,
+    category,
+    amount,
+    date,
+    transactionId,
+    accountId
+  ) {
+    await updateTransactionsUseCase(
+      name,
+      category,
+      amount,
+      accountId,
+      date,
+      transactionId
+    );
+    getFilterReports(1, 9, page);
+  }
+
+  async function deleteTransaction(transactionId) {
+    const result = await deleteTransactionsUseCase(transactionId);
+    getFilterReports(1, 9, page);
+  }
+
+  async function getFilterReports(userId, limit, offset) {
+    const result = await getFilterReportsUseCase(
+      userId,
+      limit,
+      offset,
+      selectedAccount,
+      name,
+      startDate,
+      endDate,
+      minValue,
+      maxValue,
+      categories
+    );
+    setTransactions(result);
   }
 
   return {

@@ -1,21 +1,50 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import useController from "./Controller";
+import AccountsController from "../../../Controllers/accountsController";
+import ReportsController from "../../../Controllers/reportsController";
+import UserController from "../../../Controllers/userController";
 
 export default function DashboardViewModel() {
   const [error, setError] = useState("");
   const [username, setUsername] = useState(null);
   const [accounts, setAccounts] = useState(null);
+  const [selectedAccount, setSelectedAccount] = useState(null);
   const [transactions, setTransactions] = useState(null);
+  const [categoryData, setCategoryData] = useState(null);
 
   const {
-    getUsernameUseCase,
-    getAccountsUseCase,
-    getTransactionsUseCase,
-    getUserId,
-    postUserUseCase,
-  } = useController();
+    getReportsUseCase,
+    getAccountReportsUseCase,
+    getCategoryReportsUseCase,
+  } = ReportsController();
+  const { getAccountsUseCase } = AccountsController();
+  const { postUserUseCase } = UserController();
+
   const navigate = useNavigate();
+
+  function getCurrentDate() {
+    const dateObj = new Date();
+    const year = dateObj.getFullYear();
+    const month = (dateObj.getMonth() + 1).toString().padStart(2, "0");
+    const day = dateObj.getDate().toString().padStart(2, "0");
+    return `${year}-${month}-${day}`;
+  }
+
+  function getCurrentMonth() {
+    const dateObj = new Date();
+    const year = dateObj.getFullYear();
+    const month = (dateObj.getMonth() + 1).toString().padStart(2, "0");
+    const day = "01";
+    return `${year}-${month}-${day}`;
+  }
+
+  function navigateToPage(page = "/") {
+    navigate(page);
+  }
+
+  function getUserId(user) {
+    return user?.sub.split("|")[1];
+  }
 
   async function createUser(user) {
     await postUserUseCase(getUserId(user), user.email);
@@ -33,13 +62,29 @@ export default function DashboardViewModel() {
     setAccounts(result);
   }
 
-  async function getTransactions(userId, page, pageSize) {
-    const result = await getTransactionsUseCase(userId, page, pageSize);
+  async function getReports(userId) {
+    const startDate = getCurrentMonth();
+    const endDate = getCurrentDate();
+    const result = await getReportsUseCase(userId, startDate, endDate);
     setTransactions(result);
   }
 
-  function navigateToPage(page = "/") {
-    navigate(page);
+  async function getAccountReports(accountId) {
+    const startDate = getCurrentMonth();
+    const endDate = getCurrentDate();
+    const result = await getAccountReportsUseCase(
+      accountId,
+      startDate,
+      endDate
+    );
+    setTransactions(result);
+  }
+
+  async function getCategoryData(userId) {
+    const startDate = getCurrentMonth();
+    const endDate = getCurrentDate();
+    const result = await getCategoryReportsUseCase(userId, startDate, endDate);
+    setCategoryData(result);
   }
 
   return {
@@ -53,5 +98,12 @@ export default function DashboardViewModel() {
     navigateToPage,
     getUserId,
     createUser,
+    categoryData,
+    setCategoryData,
+    getCategoryData,
+    getReports,
+    getAccountReports,
+    selectedAccount,
+    setSelectedAccount,
   };
 }

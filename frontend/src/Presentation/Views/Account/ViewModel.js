@@ -4,6 +4,7 @@ import useController from "./Controller";
 import downArrow from "../../../Media/arrowDown.svg";
 import upArrow from "../../../Media/arrowUp.svg";
 import { useAuth0 } from "@auth0/auth0-react";
+import AccountsController from "../../../Controllers/accountsController";
 
 export default function AccountViewModel() {
   const [error, setError] = useState("");
@@ -29,11 +30,17 @@ export default function AccountViewModel() {
     return `${year}-${month}-${day}`;
   }
 
-  // Would be an async function that calls controller
+  function getUserId(user) {
+    return user?.sub.split("|")[1];
+  }
+
   function getBasicInfo() {
-    const { result, error } = getBasicInfoUseCase();
-    setError(error);
-    setBasicInfo(result);
+    setBasicInfo([
+      { id: 1, key: "First Name", value: "Bob" },
+      { id: 2, key: "Last Name", value: "Bobs" },
+      { id: 3, key: "Email", value: "Bob@gmail.com" },
+      { id: 4, key: "Member Since", value: "Apr 19, 2017" },
+    ]);
   }
 
   async function getAccounts(userId) {
