@@ -451,3 +451,81 @@ $ curl -X DELETE
        -H "Content-Type: `application/json`"
        http://localhost:3001/api/transactions/1'
 ```
+
+## Users API
+
+### Create A User
+
+- URL: `POST /api/users/:auth0UserId`
+  - content-type: `application/json`
+  - Description: Create A new user based on the auth0UserId
+  - Body parameters:
+    - auth0UserId: (string, required, unique): Id of the auth0 user.
+    - email: (string, required, unique): email of the created user.
+  - response: 201
+    - content-type: `application/json`
+    - body: object
+      - id (number): The Id of the created user.
+      - auth0UserId (number): auth0UserId that was used to create the user.
+      - email (string): email
+      - access_token (string): null
+      - cursor (string): null
+  - response: 400
+    - body: Bad Request
+    - Description: Possible Missing Required Fields.
+  - response: 500
+    - body: Internal Server Error
+    - Description: Internal Server Error.
+
+```
+$ curl -X POST
+       -H "Content-Type: `application/json`"
+       http://localhost:3001/api/users/:1'
+```
+
+### DELETE A User
+
+- URL: `DELETE /api/users/:auth0UserId`
+  - content-type: `application/json`
+  - Description: DELETE A user based on the auth0UserId
+  - Request parameters:
+    - auth0UserId: (string, required, unique): Id of the auth0 user.
+  - response: 204
+  - response: 400
+    - body: Bad Request
+    - Description: Possible Missing Required Fields.
+  - response: 500
+    - body: Internal Server Error
+    - Description: Internal Server Error.
+
+```
+$ curl -X DELETE
+       -H "Content-Type: `application/json`"
+       http://localhost:3001/api/users/:1'
+```
+
+### GET A User
+
+- URL: `GET /api/users/:auth0UserId`
+  - content-type: `application/json`
+  - Description: GET A user based on the auth0UserId
+  - Request parameters:
+    - auth0UserId: (string, required, unique): Id of the auth0 user.
+  - response: 200
+    - content-type: `application/json`
+    - body: object
+      - id (number): The Id of the fetch user.
+      - auth0UserId (number): auth0UserId that was used to create the user.
+      - email (string): email
+  - response: 400
+    - body: Bad Request
+    - Description: Possible Missing Required Fields.
+  - response: 500
+    - body: Internal Server Error
+    - Description: Internal Server Error.
+
+```
+$ curl -X GET
+       -H "Content-Type: `application/json`"
+       http://localhost:3001/api/users/:1'
+```
