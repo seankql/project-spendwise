@@ -51,13 +51,6 @@ export default function DashboardViewModel() {
     await postUserUseCase(getUserId(user), user.email);
   }
 
-  // Would be an async function that calls controller
-  function getUsername() {
-    const { result, error } = getUsernameUseCase();
-    setError(error);
-    setUsername(result);
-  }
-
   async function getAccounts(userId) {
     const result = await getAccountsUseCase(userId);
     setAccounts(result);

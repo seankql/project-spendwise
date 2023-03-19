@@ -17,6 +17,7 @@ export default function Visualization() {
     getAccounts,
     getFilterReports,
     setFilters,
+    page,
     name,
     startDate,
     endDate,
