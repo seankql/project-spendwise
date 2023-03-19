@@ -8,7 +8,6 @@ export default function List({ classes = "", submit }) {
   const [name, setName] = useState("");
   const [category, setCategory] = useState("Grocery");
   const [amount, setAmount] = useState("");
-  const [description, setDescription] = useState("");
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -20,7 +19,6 @@ export default function List({ classes = "", submit }) {
     setName("");
     setCategory("Grocery");
     setAmount("");
-    setDescription("");
   };
 
   return (
@@ -71,18 +69,6 @@ export default function List({ classes = "", submit }) {
             value={amount}
             required
             onChange={(e) => setAmount(e.target.value)}
-          />
-        </div>
-        <div className="page-row-container">
-          <label className="card-sml-padding-wrapper component-subheader-text">
-            Description
-          </label>
-          <textarea
-            className="row-right-element account-create-input"
-            type="text"
-            value={description}
-            required
-            onChange={(e) => setDescription(e.target.value)}
           />
         </div>
       </div>

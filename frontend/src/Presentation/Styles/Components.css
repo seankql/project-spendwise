@@ -167,11 +167,14 @@
   margin: auto;
   border: none;
   border-right: 2px solid black;
-  background-color: #5d9943;
 }
 
 .toggle-btn-left:hover {
   background-color: #8bc53f;
+}
+
+.toggle-btn-selected {
+  background-color: #5d9943;
 }
 
 .toggle-img {
@@ -180,18 +183,31 @@
   border: none;
 }
 
-.scroll-btn-right {
+.scroll-btn {
   margin: auto;
-  margin-left: 0px;
   max-height: 32px;
   max-width: 32px;
+  background-color: #8bc53f;
+}
+
+.scroll-btn:hover {
+  background-color: #5d9943;
+}
+
+.scroll-btn-right {
+  margin-left: 0px;
 }
 
 .scroll-btn-left {
-  margin: auto;
   margin-right: 0px;
-  max-height: 32px;
-  max-width: 32px;
+}
+
+.scroll-btn-disable {
+  background-color: #e0e0e0;
+}
+
+.scroll-btn-disable:hover {
+  background-color: #e0e0e0;
 }
 
 .scroll-right-img {
@@ -243,4 +259,103 @@
 .scroll-banner-element:hover {
   color: #8bc53f;
   font-size: 14px;
+}
+
+.grid-table-wrapper {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  padding: 12px;
+}
+
+.grid-table-grid {
+  border: 1px solid #5d9943;
+  border-radius: 12px;
+  height: 200px;
+  width: 200px;
+  margin: 6px auto 6px auto;
+}
+
+.grid-container {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  height: 100%;
+}
+
+.grid-button-wrapper {
+  display: flex;
+  height: 100%;
+  margin-top: auto;
+  margin-bottom: 0px;
+}
+
+.rc-slider-track-over {
+  position: absolute;
+  height: 4px;
+  background-color: #8bc53f;
+  border-radius: 6px;
+}
+
+.rc-slider-handle-over {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  margin-top: -5px;
+  background-color: #fff;
+  border: solid 2px #8bc53f;
+  border-radius: 50%;
+  cursor: pointer;
+  cursor: -webkit-grab;
+  cursor: grab;
+  opacity: 0.8;
+  touch-action: pan-x;
+}
+
+.list-transaction-container {
+  display: flex;
+  flex-direction: row;
+  height: fit-content;
+  margin-top: 8px;
+  width: 100%;
+  border: 1px solid #5d9943;
+  border-radius: 16px;
+}
+
+.transaction-col-container {
+  display: flex;
+  flex-direction: column;
+  width: 20%;
+  margin: auto;
+}
+
+.list-transaction-font {
+  font-size: 16px;
+}
+
+.list-transaction-icon {
+  height: 16px;
+}
+
+.icon-button-wrapper {
+  background: none;
+  border: none;
+}
+
+.table-header-spacer {
+  width: 56px;
+  height: 53px;
+}
+
+.grid-inner-divider {
+  border-bottom: 1px solid #e0e0e0;
+  padding: 4px;
+}
+
+.grid-input-container {
+  width: 100%;
+}
+
+.grid-seal-wrapper {
+  width: 50%;
 }

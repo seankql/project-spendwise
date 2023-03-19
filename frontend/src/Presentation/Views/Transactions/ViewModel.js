@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import useController from "./Controller";
 import downArrow from "../../../Media/arrowDown.svg";
 import upArrow from "../../../Media/arrowUp.svg";
 import TransactionsController from "../../../Controllers/transactionsController";
@@ -10,7 +9,6 @@ import UserController from "../../../Controllers/userController";
 
 export default function TransactionsViewModel() {
   const [error, setError] = useState("");
-  const [username, setUsername] = useState(null);
   const [accounts, setAccounts] = useState(null);
   const [transactions, setTransactions] = useState(null);
   const [transactionVisiblity, setTransactionVisiblity] = useState("hidden");
@@ -154,17 +152,31 @@ export default function TransactionsViewModel() {
 
   return {
     error,
+    page,
+    setPage,
+    incrementPage,
+    decrementPage,
     transactionVisiblity,
     toggleTransactionVisiblity,
-    username,
-    getUsername,
     accounts,
     getAccounts,
     transactions,
-    getTransactions,
     navigateToPage,
     createTransaction,
+    selectedAccount,
+    setSelectedAccount,
+    getCreateTransactionVisibility,
+    getFilterReports,
+    setFilters,
     getArrow,
     getUserId,
+    updateTransaction,
+    deleteTransaction,
+    name,
+    startDate,
+    endDate,
+    minValue,
+    maxValue,
+    categories,
   };
 }

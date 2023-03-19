@@ -6,9 +6,9 @@ import TransactionListTable from "../../Components/TransactionListTable";
 import Banner from "../../Components/Banner";
 import ScrollBanner from "../../Components/ScrollBanner";
 import AccountSelect from "../../Components/AccountSelect";
-import pieChart from "../../../Media/dashboard-pie-chart.png";
-import greenChart from "../../../Media/green-bar-graph.png";
-import redChart from "../../../Media/red-bar-graph.png";
+import ExpenditureGraph from "../../Components//Graphs/ExpenditureGraph";
+import IncomeGraph from "../../Components/Graphs/IncomeGraph";
+import CategoryGraph from "../../Components//Graphs/CategoryGraph";
 import "../../Styles/Common.css";
 import "../../Styles/Dashboard.css";
 import "../../Styles/Main.css";
@@ -16,15 +16,20 @@ import { useAuth0 } from "@auth0/auth0-react";
 
 export default function Dashboard() {
   const {
-    navigateToPage,
-    username,
-    getUsername,
     accounts,
     getAccounts,
+    categoryData,
+    setCategoryData,
+    getCategoryData,
     transactions,
     getTransactions,
     getUserId,
     createUser,
+    getReports,
+    getAccountReports,
+    selectedAccount,
+    setSelectedAccount,
+    navigateToPage,
   } = useViewModel();
 
   // TODO move to viewmodel
@@ -47,11 +52,15 @@ export default function Dashboard() {
   useEffect(() => {
     if (user && isAuthenticated && !isLoading) {
       createUser(user);
-      getUsername();
       getAccounts(getUserId(user));
-      getTransactions(getUserId(user), 0, 10);
+      getCategoryData(getUserId(user));
+      if (!selectedAccount) {
+        getReports(getUserId(user));
+      } else {
+        getAccountReports(selectedAccount);
+      }
     }
-  }, [user, isAuthenticated, isLoading]);
+  }, [user, isAuthenticated, isLoading, selectedAccount]);
 
   return (
     <div className="body-wrapper">
@@ -64,20 +73,21 @@ export default function Dashboard() {
             Summary
           </div>
           <div className="row-right-element">
-            <AccountSelect data={accounts} />
+            <AccountSelect data={accounts} set={setSelectedAccount} />
           </div>
         </div>
         <div className="section-wrapper page-row-container section-divider">
           <SummaryCard
             title="This Month's Income"
-            aggregatedData="$1,501.62"
-            data={mockIncomeData}
+            isIncome={true}
+            aggregatedData={transactions?.income}
+            data={categoryData}
           />
           <div className="row-right-element">
             <SummaryCard
               title="This Month's Spending"
-              aggregatedData="$896.21"
-              data={mockExpenseData}
+              aggregatedData={transactions?.expense}
+              data={categoryData}
             />
           </div>
         </div>
@@ -94,7 +104,7 @@ export default function Dashboard() {
               }}
             />
           </div>
-          <TransactionListTable data={transactions} />
+          <TransactionListTable data={transactions} limit={6} />
           <div className="transaction-list-footer">
             See transactions page for all transactions
           </div>
@@ -109,12 +119,12 @@ export default function Dashboard() {
           Income VS Expenditure
         </div>
         <div className="page-row-container section-divider">
-          <img className="sml-graph-img-wrapper" src={greenChart} alt="logo" />
-          <img
-            className="sml-graph-img-wrapper row-right-element"
-            src={redChart}
-            alt="logo"
-          />
+          <div className="graph-padder sml-graph-img-wrapper">
+            <IncomeGraph data={transactions?.transactions} />
+          </div>
+          <div className="graph-padder sml-graph-img-wrapper row-right-element">
+            <ExpenditureGraph data={transactions?.transactions} />
+          </div>
         </div>
         <div
           id="Category Chart"
@@ -122,7 +132,9 @@ export default function Dashboard() {
         >
           Category Chart
         </div>
-        <img className="section-divider" src={pieChart} alt="logo" />
+        <div className="graph-padder">
+          <CategoryGraph data={transactions?.transactions} />
+        </div>
       </div>
       <footer />
     </div>

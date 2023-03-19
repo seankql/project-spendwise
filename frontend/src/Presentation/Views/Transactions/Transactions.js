@@ -2,12 +2,10 @@ import React, { useEffect } from "react";
 import useViewModel from "./ViewModel";
 import Banner from "../../Components/Banner";
 import ScrollBanner from "../../Components/ScrollBanner";
-import TransactionViewToggle from "../../Components/TransactionViewToggle";
-import TransactionListTable from "../../Components/TransactionListTable";
 import TransactionForm from "../../Components/TransactionForm";
-import ListScroller from "../../Components/ListScroller";
 import SearchFilterSideBar from "../../Components/SearchFilterSideBar";
 import AccountSelect from "../../Components/AccountSelect";
+import TransactionViewBox from "../../Components/TransactionViewBox";
 import "../../Styles/Common.css";
 import "../../Styles/Main.css";
 import "../../Styles/Transactions.css";
@@ -21,9 +19,24 @@ export default function Transactions() {
     accounts,
     getAccounts,
     transactions,
-    getTransactions,
+    page,
+    incrementPage,
+    decrementPage,
+    selectedAccount,
+    setSelectedAccount,
     createTransaction,
     getUserId,
+    getCreateTransactionVisibility,
+    getFilterReports,
+    setFilters,
+    updateTransaction,
+    deleteTransaction,
+    name,
+    startDate,
+    endDate,
+    minValue,
+    maxValue,
+    categories,
   } = useViewModel();
 
   const sectionList = ["Add Transaction", "View Transactions"];
@@ -33,9 +46,23 @@ export default function Transactions() {
   useEffect(() => {
     if (user && isAuthenticated && !isLoading) {
       getAccounts(getUserId(user));
-      getTransactions(getUserId(user), 0, 16);
+      getFilterReports(getUserId(user), 9, page);
     }
-  }, [user, isAuthenticated, isLoading]);
+  }, [
+    user,
+    isAuthenticated,
+    isLoading,
+    isAuthenticated,
+    isLoading,
+    page,
+    selectedAccount,
+    name,
+    startDate,
+    endDate,
+    minValue,
+    maxValue,
+    categories
+  ]);
 
   return (
     <div className="body-wrapper">
@@ -45,10 +72,10 @@ export default function Transactions() {
         <div className="page-header-text page-row-container">
           Transactions
           <div className="row-right-element">
-            <AccountSelect data={accounts} />
+            <AccountSelect data={accounts} set={setSelectedAccount} />
           </div>
         </div>
-        <div className="section-divider">
+        <div className={"section-divider " + getCreateTransactionVisibility()}>
           <div
             id="Add Transaction"
             className="section-wrapper page-row-container section-header-text"
@@ -74,17 +101,15 @@ export default function Transactions() {
           id="View Transactions"
           className="section-wrapper page-row-container"
         >
-          <SearchFilterSideBar />
-          <div className="transactions-col">
-            <div className="page-row-container">
-              <div className="section-header-text">Transaction List</div>
-              <div className="row-right-element">
-                <TransactionViewToggle />
-              </div>
-            </div>
-            <TransactionListTable data={transactions} />
-            <ListScroller />
-          </div>
+          <SearchFilterSideBar setFilters={setFilters} />
+          <TransactionViewBox
+            transactions={transactions}
+            page={page}
+            inc={incrementPage}
+            dec={decrementPage}
+            editSubmit={updateTransaction}
+            deleteFunction={deleteTransaction}
+          />
         </div>
       </div>
       <footer />

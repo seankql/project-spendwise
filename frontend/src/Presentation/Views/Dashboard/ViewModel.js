@@ -6,7 +6,6 @@ import UserController from "../../../Controllers/userController";
 
 export default function DashboardViewModel() {
   const [error, setError] = useState("");
-  const [username, setUsername] = useState(null);
   const [accounts, setAccounts] = useState(null);
   const [selectedAccount, setSelectedAccount] = useState(null);
   const [transactions, setTransactions] = useState(null);
@@ -17,7 +16,9 @@ export default function DashboardViewModel() {
     getAccountReportsUseCase,
     getCategoryReportsUseCase,
   } = ReportsController();
+
   const { getAccountsUseCase } = AccountsController();
+
   const { postUserUseCase } = UserController();
 
   const navigate = useNavigate();
@@ -89,12 +90,16 @@ export default function DashboardViewModel() {
 
   return {
     error,
-    username,
-    getUsername,
     accounts,
     getAccounts,
+    categoryData,
+    setCategoryData,
+    getCategoryData,
     transactions,
-    getTransactions,
+    getReports,
+    getAccountReports,
+    selectedAccount,
+    setSelectedAccount,
     navigateToPage,
     getUserId,
     createUser,

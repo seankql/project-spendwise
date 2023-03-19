@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import useController from "./Controller";
 import downArrow from "../../../Media/arrowDown.svg";
 import upArrow from "../../../Media/arrowUp.svg";
 import { useAuth0 } from "@auth0/auth0-react";
@@ -12,15 +11,9 @@ export default function AccountViewModel() {
   const [accounts, setAccounts] = useState(null);
   const [transactionVisiblity, setTransactionVisiblity] = useState("hidden");
 
-  const {
-    getBasicInfoUseCase,
-    getAccountsUseCase,
-    postAccountUseCase,
-    getUserId,
-  } = useController();
+  const { getBasicInfoUseCase, getAccountsUseCase, postAccountUseCase } =
+    useController();
   const navigate = useNavigate();
-
-  const { user } = useAuth0();
 
   function getCurrentDate() {
     const dateObj = new Date();
@@ -30,17 +23,11 @@ export default function AccountViewModel() {
     return `${year}-${month}-${day}`;
   }
 
-  function getUserId(user) {
-    return user?.sub.split("|")[1];
-  }
-
+  // Would be an async function that calls controller
   function getBasicInfo() {
-    setBasicInfo([
-      { id: 1, key: "First Name", value: "Bob" },
-      { id: 2, key: "Last Name", value: "Bobs" },
-      { id: 3, key: "Email", value: "Bob@gmail.com" },
-      { id: 4, key: "Member Since", value: "Apr 19, 2017" },
-    ]);
+    const { result, error } = getBasicInfoUseCase();
+    setError(error);
+    setBasicInfo(result);
   }
 
   async function getAccounts(userId) {
@@ -65,13 +52,15 @@ export default function AccountViewModel() {
   }
 
   async function createAccount(name) {
-    await postAccountUseCase(name, getUserId(user));
-    const result = await getAccountsUseCase(getUserId(user));
+    await postAccountUseCase(name, 1);
+    const result = await getAccountsUseCase(1);
     setAccounts(result);
   }
 
-  function navigateToPage(page = "/") {
-    navigate(page);
+  async function createAccount(userId = 1, name) {
+    await createAccountsUseCase(userId, name);
+    const result = await getAccountsUseCase(userId);
+    setAccounts(result);
   }
 
   return {

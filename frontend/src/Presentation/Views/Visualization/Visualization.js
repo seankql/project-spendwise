@@ -4,13 +4,29 @@ import Banner from "../../Components/Banner";
 import ScrollBanner from "../../Components/ScrollBanner";
 import SearchFilterSideBar from "../../Components/SearchFilterSideBar";
 import AccountSelect from "../../Components/AccountSelect";
+import VisualizationViewBox from "../../Components/VisualizationViewBox";
 import "../../Styles/Common.css";
 import "../../Styles/Main.css";
 import "../../Styles/Visualization.css";
 import { useAuth0 } from "@auth0/auth0-react";
 
 export default function Visualization() {
-  const { accounts, getAccounts, getUserId } = useViewModel();
+  const {
+    accounts,
+    transactions,
+    getAccounts,
+    getFilterReports,
+    setFilters,
+    name,
+    startDate,
+    endDate,
+    minValue,
+    maxValue,
+    categories,
+    selectedAccount,
+    setSelectedAccount,
+    getUserId,
+  } = useViewModel();
 
   const sectionList = ["View Visualizations"];
 
@@ -19,8 +35,23 @@ export default function Visualization() {
   useEffect(() => {
     if (user && isAuthenticated && !isLoading) {
       getAccounts(getUserId(user));
+      getFilterReports(getUserId(user), 9, page);
     }
-  }, [user, isAuthenticated, isLoading]);
+  }, [
+    user,
+    isAuthenticated,
+    isLoading,
+    isAuthenticated,
+    isLoading,
+    page,
+    selectedAccount,
+    name,
+    startDate,
+    endDate,
+    minValue,
+    maxValue,
+    categories
+  ]);
 
   return (
     <div className="body-wrapper">
@@ -33,12 +64,12 @@ export default function Visualization() {
         >
           Visualization
           <div className="row-right-element">
-            <AccountSelect data={accounts} />
+            <AccountSelect data={accounts} set={setSelectedAccount} />
           </div>
         </div>
         <div className="section-wrapper page-row-container">
-          <SearchFilterSideBar />
-          <div className="transactions-col"></div>
+          <SearchFilterSideBar setFilters={setFilters} />
+          <VisualizationViewBox data={transactions?.transactions} />
         </div>
       </div>
       <footer />
