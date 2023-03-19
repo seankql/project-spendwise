@@ -282,19 +282,23 @@ async function updatePlaidAccounts(ACCESS_TOKEN, userId) {
   const accountsResponse = await client.accountsGet({
     access_token: ACCESS_TOKEN,
   });
-
-  for (let account of accountsResponse.data.accounts) {
-    const plaidAccountId = account.account_id;
-    const accountFounded = await AccountsModel.findOne({
-      where: { plaidAccountId: plaidAccountId },
+  if (accountsResponse.status === 200) {
+    //find all accounts of this user and delete them all
+    const userAccounts = await AccountsModel.findAll({
+      where: { UserId: userId },
     });
-    if (accountFounded) {
-      await accountFounded.update({
-        accountName: account.name,
-        plaidAccountId: account.account_id,
+    for (let userAccount of userAccounts) {
+      // delete all transactions of this account
+      const transactions = await TransactionsModel.findAll({
+        where: { AccountId: userAccount.id },
       });
-      await accountFounded.save();
-    } else {
+      for (let transaction of transactions) {
+        await transaction.destroy();
+      }
+      await userAccount.destroy();
+    }
+    for (let account of accountsResponse.data.accounts) {
+      // create new accounts for this user
       const createdAccount = await AccountsModel.create({
         accountName: account.name,
         plaidAccountId: account.account_id,
