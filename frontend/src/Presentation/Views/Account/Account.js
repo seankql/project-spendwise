@@ -25,6 +25,8 @@ export default function Account() {
     updateAccount,
     deleteAccount,
     fetchData,
+    linkToken,
+    exchangeAndSync,
   } = useViewModel();
 
   // TODO: Show different "Bank Information" form depending on whether or not
@@ -76,6 +78,8 @@ export default function Account() {
           data={accounts}
           editSubmit={updateAccount}
           deleteFunction={deleteAccount}
+          linkToken={linkToken}
+          successFunction={exchangeAndSync}
         />
         <div className="section-divider">
           <div

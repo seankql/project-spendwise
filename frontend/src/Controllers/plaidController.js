@@ -1,7 +1,7 @@
 export default function PlaidController() {
-  async function getPlaidLinkToken(userId) {
+  async function getPlaidLinkTokenUseCase(userId) {
     return fetch(
-      "http://localhost:3001/api/plaid/?" +
+      "http://localhost:3001/api/plaid/link_token?" +
         new URLSearchParams({
           userId: userId,
         }),
@@ -11,9 +11,9 @@ export default function PlaidController() {
     ).then((res) => res.json());
   }
 
-  async function syncPlaidTransactions(userId) {
+  async function syncPlaidTransactionsUseCase(userId) {
     return fetch(
-      "http://localhost:3001/api/plaid/transactions/?" +
+      "http://localhost:3001/api/plaid/transactions/sync?" +
         new URLSearchParams({
           userId: userId,
         }),
@@ -23,9 +23,9 @@ export default function PlaidController() {
     ).then((res) => res.json());
   }
 
-  async function getPlaidLinkedStatus(userId) {
+  async function getPlaidLinkedStatusUseCase(userId) {
     return fetch(
-      "http://localhost:3001/api/plaid/has_linked_plaid/?" +
+      "http://localhost:3001/api/plaid/has_linked_plaid?" +
         new URLSearchParams({
           userId: userId,
         }),
@@ -35,7 +35,7 @@ export default function PlaidController() {
     ).then((res) => res.json());
   }
 
-  async function exchangePlaidToken(userId, public_token) {
+  async function exchangePlaidTokenUseCase(userId, public_token) {
     return fetch("http://localhost:3001/api/plaid/token_exchange", {
       method: "POST",
       headers: {
@@ -49,9 +49,9 @@ export default function PlaidController() {
   }
 
   return {
-    getPlaidLinkToken,
-    syncPlaidTransactions,
-    getPlaidLinkedStatus,
-    exchangePlaidToken,
+    getPlaidLinkTokenUseCase,
+    syncPlaidTransactionsUseCase,
+    getPlaidLinkedStatusUseCase,
+    exchangePlaidTokenUseCase,
   };
 }

@@ -2,9 +2,9 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import downArrow from "../../../Media/arrowDown.svg";
 import upArrow from "../../../Media/arrowUp.svg";
-import { useAuth0 } from "@auth0/auth0-react";
 import AccountsController from "../../../Controllers/accountsController";
 import UserController from "../../../Controllers/userController";
+import PlaidController from "../../../Controllers/plaidController";
 
 export default function AccountViewModel() {
   const [error, setError] = useState("");
@@ -14,6 +14,7 @@ export default function AccountViewModel() {
   const [dateCreated, setDateCreated] = useState("");
   const [accounts, setAccounts] = useState(null);
   const [transactionVisiblity, setTransactionVisiblity] = useState("hidden");
+  const [linkToken, setLinkToken] = useState(null);
 
   const navigate = useNavigate();
 
@@ -24,7 +25,13 @@ export default function AccountViewModel() {
     deleteAccountsUseCase,
   } = AccountsController();
 
-  const { postUserUseCase, getUserUseCase } = UserController();
+  const {
+    getPlaidLinkTokenUseCase,
+    syncPlaidTransactionsUseCase,
+    exchangePlaidTokenUseCase,
+  } = PlaidController();
+
+  const { getUserUseCase } = UserController();
 
   function navigateToPage(page = "/") {
     navigate(page);
@@ -51,6 +58,12 @@ export default function AccountViewModel() {
     }
   }
 
+  function setProfileData(user) {
+    setDateCreated(user.updated_at);
+    setNickname(user.nickname);
+    setEmail(user.name);
+  }
+
   async function createAccount(name) {
     await createAccountsUseCase(userId, name);
     const result = await getAccountsUseCase(userId);
@@ -69,10 +82,22 @@ export default function AccountViewModel() {
     setAccounts(result);
   }
 
-  function setProfileData(user) {
-    setDateCreated(user.updated_at);
-    setNickname(user.nickname);
-    setEmail(user.name);
+  async function getPlaidLinkToken(userId) {
+    const result = await getPlaidLinkTokenUseCase(userId);
+    setLinkToken(result.link_token);
+  }
+
+  async function exchangePlaidToken(publicToken) {
+    const result = await exchangePlaidTokenUseCase(userId, publicToken);
+  }
+
+  async function syncPlaidTransactions() {
+    const result = await syncPlaidTransactionsUseCase(userId);
+  }
+
+  async function exchangeAndSync(publicToken) {
+    await exchangePlaidToken(userId, publicToken);
+    await syncPlaidTransactions(userId);
   }
 
   async function fetchData(user) {
@@ -85,6 +110,7 @@ export default function AccountViewModel() {
 
     setUserId(userId);
     getAccounts(userId);
+    getPlaidLinkToken(userId);
   }
 
   return {
@@ -101,5 +127,7 @@ export default function AccountViewModel() {
     updateAccount,
     deleteAccount,
     fetchData,
+    linkToken,
+    exchangeAndSync,
   };
 }
