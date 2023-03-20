@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import useViewModel from "./ViewModel";
 import Banner from "../../Components/Banner";
 import ScrollBanner from "../../Components/ScrollBanner";
-import InfoCard from "../../Components/InfoCard";
+import ProfileCard from "../../Components/ProfileCard";
 import AlertCard from "../../Components/AlertCard";
 import AccountCardGenerator from "../../Components/AccountCardGenerator";
 import AccountForm from "../../Components/AccountForm";
@@ -13,9 +13,10 @@ import { useAuth0 } from "@auth0/auth0-react";
 
 export default function Account() {
   const {
+    email,
+    dateCreated,
+    nickname,
     getArrow,
-    basicInfo,
-    getBasicInfo,
     accounts,
     getAccounts,
     transactionVisiblity,
@@ -38,6 +39,7 @@ export default function Account() {
   useEffect(() => {
     if (user && isAuthenticated && !isLoading) {
       fetchData(user);
+      console.log(user);
     }
   }, [user, isAuthenticated, isLoading]);
 
@@ -55,9 +57,10 @@ export default function Account() {
             Profile & Alerts
           </div>
           <div className="section-wrapper page-row-container section-divider">
-            <InfoCard
-              data={basicInfo}
-              title={"Basic Information"}
+            <ProfileCard
+              email={email}
+              nickname={nickname}
+              dateCreated={dateCreated}
               classes={"basic-info-card"}
             />
             <div className="page-col-container row-right-element">

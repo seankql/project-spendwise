@@ -9,7 +9,9 @@ import UserController from "../../../Controllers/userController";
 export default function AccountViewModel() {
   const [error, setError] = useState("");
   const [userId, setUserId] = useState(null);
-  const [basicInfo, setBasicInfo] = useState(null);
+  const [nickname, setNickname] = useState("");
+  const [email, setEmail] = useState("");
+  const [dateCreated, setDateCreated] = useState("");
   const [accounts, setAccounts] = useState(null);
   const [transactionVisiblity, setTransactionVisiblity] = useState("hidden");
 
@@ -26,15 +28,6 @@ export default function AccountViewModel() {
 
   function navigateToPage(page = "/") {
     navigate(page);
-  }
-
-  function getBasicInfo() {
-    setBasicInfo([
-      { id: 1, key: "First Name", value: "Bob" },
-      { id: 2, key: "Last Name", value: "Bobs" },
-      { id: 3, key: "Email", value: "Bob@gmail.com" },
-      { id: 4, key: "Member Since", value: "Apr 19, 2017" },
-    ]);
   }
 
   async function getAccounts(uId = userId) {
@@ -76,22 +69,30 @@ export default function AccountViewModel() {
     setAccounts(result);
   }
 
+  function setProfileData(user) {
+    setDateCreated(user.updated_at);
+    setNickname(user.nickname);
+    setEmail(user.name);
+  }
+
   async function fetchData(user) {
-    const auth0User = user?.sub.split("|")[1];
+    if (!user) return;
+    setProfileData(user);
+    const auth0User = user.sub.split("|")[1];
     const result = await getUserUseCase(auth0User);
     if (!result) return;
     const userId = result.id;
 
     setUserId(userId);
-    getBasicInfo();
     getAccounts(userId);
   }
 
   return {
+    email,
+    dateCreated,
+    nickname,
     transactionVisiblity,
     toggleTransactionVisiblity,
-    getBasicInfo,
-    basicInfo,
     accounts,
     getAccounts,
     navigateToPage,
