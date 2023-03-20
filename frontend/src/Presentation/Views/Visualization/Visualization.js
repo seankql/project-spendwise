@@ -5,6 +5,7 @@ import ScrollBanner from "../../Components/ScrollBanner";
 import SearchFilterSideBar from "../../Components/SearchFilterSideBar";
 import AccountSelect from "../../Components/AccountSelect";
 import VisualizationViewBox from "../../Components/VisualizationViewBox";
+import GraphSelect from "../../Components/GraphSelect";
 import "../../Styles/Common.css";
 import "../../Styles/Main.css";
 import "../../Styles/Visualization.css";
@@ -14,8 +15,8 @@ export default function Visualization() {
   const {
     accounts,
     transactions,
-    getAccounts,
-    getFilterReports,
+    graph,
+    setGraph,
     setFilters,
     page,
     name,
@@ -29,7 +30,7 @@ export default function Visualization() {
     fetchData,
   } = useViewModel();
 
-  const sectionList = ["View Visualizations"];
+  const sectionList = ["View Visualizations", "Graph Select"];
 
   const { user, isAuthenticated, isLoading } = useAuth0();
 
@@ -69,7 +70,13 @@ export default function Visualization() {
         </div>
         <div className="section-wrapper page-row-container">
           <SearchFilterSideBar setFilters={setFilters} />
-          <VisualizationViewBox data={transactions?.transactions} />
+          <VisualizationViewBox
+            graph={graph}
+            data={transactions?.transactions}
+          />
+        </div>
+        <div id="Graph Select" className="section-wrapper">
+          <GraphSelect setGraph={setGraph} />
         </div>
       </div>
       <footer />

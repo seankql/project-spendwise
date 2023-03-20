@@ -359,3 +359,39 @@
 .grid-seal-wrapper {
   width: 50%;
 }
+
+.graph-select-box-wrapper {
+  width: 1024px;
+  border: 1px solid #e0e0e0;
+  padding: 8px;
+}
+
+.graph-select-wrapper {
+  display: flex;
+  margin: auto;
+  padding: 8px;
+}
+
+.component-buffer {
+  margin-top: 16px;
+}
+
+.graph-picture-wrapper {
+  height: 64px;
+}
+
+.graph-button-wrapper {
+  background: none;
+  border: none;
+  margin: auto;
+}
+
+.graph-button-wrapper:hover {
+  background-color: #8bc53f;
+  border: none;
+  margin: auto;
+}
+
+.graph-button-text {
+  margin: auto;
+}

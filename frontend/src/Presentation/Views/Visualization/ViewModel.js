@@ -6,6 +6,7 @@ import UserController from "../../../Controllers/userController";
 
 export default function VisualizationViewModel() {
   const [error, setError] = useState("");
+  const [graph, setGraph] = useState("pie");
   const [transactions, setTransactions] = useState(null);
   const [accounts, setAccounts] = useState(null);
   const [selectedAccount, setSelectedAccount] = useState(null);
@@ -86,5 +87,7 @@ export default function VisualizationViewModel() {
     maxValue,
     categories,
     fetchData,
+    graph,
+    setGraph,
   };
 }
