@@ -88,11 +88,11 @@ export default function AccountViewModel() {
   }
 
   async function exchangePlaidToken(publicToken) {
-    const result = await exchangePlaidTokenUseCase(userId, publicToken);
+    await exchangePlaidTokenUseCase(userId, publicToken);
   }
 
   async function syncPlaidTransactions() {
-    const result = await syncPlaidTransactionsUseCase(userId);
+    await syncPlaidTransactionsUseCase(userId);
   }
 
   async function exchangeAndSync(publicToken) {

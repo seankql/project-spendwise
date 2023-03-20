@@ -41,7 +41,6 @@ export default function Account() {
   useEffect(() => {
     if (user && isAuthenticated && !isLoading) {
       fetchData(user);
-      console.log(user);
     }
   }, [user, isAuthenticated, isLoading]);
 

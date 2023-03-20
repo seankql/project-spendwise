@@ -1,6 +1,6 @@
 import express from "express";
 import bodyParser from "body-parser";
-import cors from 'cors';
+import cors from "cors";
 import { router } from "./routers/router.js";
 import * as Sentry from "@sentry/node";
 import { config } from "./config/config.js";
