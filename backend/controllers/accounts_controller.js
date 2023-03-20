@@ -1,6 +1,7 @@
 import Router from "express";
 import Sentry from "@sentry/node";
 import { AccountsModel } from "../models/accountsModel.js";
+import { TransactionsModel } from "../models/transactionsModel.js";
 
 // Base route: /api/accounts
 export const accountsController = Router();
