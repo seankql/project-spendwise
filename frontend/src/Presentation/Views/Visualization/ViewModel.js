@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AccountsController from "../../../Controllers/accountsController";
-import ReportsController from "../../../Controllers/reportsController";
+import TransactionsController from "../../../Controllers/transactionsController";
+import UserController from "../../../Controllers/userController";
 
 export default function VisualizationViewModel() {
   const [error, setError] = useState("");
@@ -17,17 +18,15 @@ export default function VisualizationViewModel() {
 
   const navigate = useNavigate();
 
-  function getUserId(user) {
-    return user?.sub.split("|")[1];
-  }
-
   function navigateToPage(page = "/") {
     navigate(page);
   }
 
-  const { getFilterReportsUseCase } = ReportsController();
+  const { getFilterTransactionsUseCase } = TransactionsController();
 
   const { getAccountsUseCase } = AccountsController();
+
+  const { postUserUseCase, getUserUseCase } = UserController();
 
   function setFilters(filtersJSON) {
     const filters = JSON.parse(filtersJSON);
@@ -45,7 +44,7 @@ export default function VisualizationViewModel() {
   }
 
   async function getFilterReports(userId) {
-    const result = await getFilterReportsUseCase(
+    const result = await getFilterTransactionsUseCase(
       userId,
       Number.MAX_SAFE_INTEGER,
       0,
@@ -60,13 +59,22 @@ export default function VisualizationViewModel() {
     setTransactions(result);
   }
 
+  async function fetchData(user) {
+    const auth0User = user?.sub.split("|")[1];
+    const result = await getUserUseCase(auth0User);
+    if (!result) return;
+    const userId = result.id;
+
+    getAccounts(userId);
+    getFilterReports(userId);
+  }
+
   return {
     error,
     accounts,
     transactions,
     getAccounts,
     navigateToPage,
-    getUserId,
     setFilters,
     getFilterReports,
     selectedAccount,
@@ -77,5 +85,6 @@ export default function VisualizationViewModel() {
     minValue,
     maxValue,
     categories,
+    fetchData,
   };
 }

@@ -17,7 +17,6 @@ export default function Transactions() {
     transactionVisiblity,
     toggleTransactionVisiblity,
     accounts,
-    getAccounts,
     transactions,
     page,
     incrementPage,
@@ -25,9 +24,7 @@ export default function Transactions() {
     selectedAccount,
     setSelectedAccount,
     createTransaction,
-    getUserId,
     getCreateTransactionVisibility,
-    getFilterReports,
     setFilters,
     updateTransaction,
     deleteTransaction,
@@ -37,6 +34,7 @@ export default function Transactions() {
     minValue,
     maxValue,
     categories,
+    fetchData,
   } = useViewModel();
 
   const sectionList = ["Add Transaction", "View Transactions"];
@@ -45,8 +43,7 @@ export default function Transactions() {
 
   useEffect(() => {
     if (user && isAuthenticated && !isLoading) {
-      getAccounts(getUserId(user));
-      getFilterReports(getUserId(user), 9, page);
+      fetchData(user);
     }
   }, [
     user,
@@ -61,7 +58,7 @@ export default function Transactions() {
     endDate,
     minValue,
     maxValue,
-    categories
+    categories,
   ]);
 
   return (

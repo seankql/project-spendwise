@@ -19,7 +19,7 @@ export default function DashboardViewModel() {
 
   const { getAccountsUseCase } = AccountsController();
 
-  const { postUserUseCase } = UserController();
+  const { postUserUseCase, getUserUseCase } = UserController();
 
   const navigate = useNavigate();
 
@@ -43,8 +43,11 @@ export default function DashboardViewModel() {
     navigate(page);
   }
 
-  function getUserId(user) {
-    return user?.sub.split("|")[1];
+  async function getUserId(user) {
+    const auth0User = user?.sub.split("|")[1];
+    const result = await getUserUseCase(auth0User);
+    if (!result) return null;
+    return result.id;
   }
 
   async function createUser(user) {
@@ -81,6 +84,21 @@ export default function DashboardViewModel() {
     setCategoryData(result);
   }
 
+  async function fetchData(user) {
+    const auth0User = user?.sub.split("|")[1];
+    const result = await getUserUseCase(auth0User);
+    if (!result) return;
+    const userId = result.id;
+
+    getCategoryData(userId);
+    await getAccounts(userId);
+    if (!selectedAccount) {
+      getReports(userId);
+    } else {
+      getAccountReports(selectedAccount);
+    }
+  }
+
   return {
     error,
     accounts,
@@ -103,5 +121,6 @@ export default function DashboardViewModel() {
     getAccountReports,
     selectedAccount,
     setSelectedAccount,
+    fetchData,
   };
 }

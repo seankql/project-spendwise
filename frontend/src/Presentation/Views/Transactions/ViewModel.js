@@ -4,11 +4,11 @@ import downArrow from "../../../Media/arrowDown.svg";
 import upArrow from "../../../Media/arrowUp.svg";
 import TransactionsController from "../../../Controllers/transactionsController";
 import AccountsController from "../../../Controllers/accountsController";
-import ReportsController from "../../../Controllers/reportsController";
 import UserController from "../../../Controllers/userController";
 
 export default function TransactionsViewModel() {
   const [error, setError] = useState("");
+  const [userId, setUserId] = useState(null);
   const [accounts, setAccounts] = useState(null);
   const [transactions, setTransactions] = useState(null);
   const [transactionVisiblity, setTransactionVisiblity] = useState("hidden");
@@ -25,11 +25,12 @@ export default function TransactionsViewModel() {
     createTransactionsUseCase,
     updateTransactionsUseCase,
     deleteTransactionsUseCase,
+    getFilterTransactionsUseCase,
   } = TransactionsController();
 
-  const { getFilterReportsUseCase } = ReportsController();
-
   const { getAccountsUseCase } = AccountsController();
+
+  const { postUserUseCase, getUserUseCase } = UserController();
 
   const navigate = useNavigate();
 
@@ -40,11 +41,7 @@ export default function TransactionsViewModel() {
     const day = dateObj.getDate().toString().padStart(2, "0");
     return `${year}-${month}-${day}`;
   }
-
-  function getUserId(user) {
-    return user?.sub.split("|")[1];
-  }
-
+  
   function navigateToPage(page = "/") {
     navigate(page);
   }
@@ -94,8 +91,8 @@ export default function TransactionsViewModel() {
     setCategories(filters.categories);
   }
 
-  async function getAccounts(userId) {
-    const result = await getAccountsUseCase(userId);
+  async function getAccounts(uid = userId) {
+    const result = await getAccountsUseCase(uid);
     setAccounts(result);
   }
 
@@ -107,7 +104,7 @@ export default function TransactionsViewModel() {
       selectedAccount,
       getCurrentDate()
     );
-    getFilterReports(1, 9, page);
+    getFilterReports(userId, 9, page);
   }
 
   async function updateTransaction(
@@ -126,17 +123,17 @@ export default function TransactionsViewModel() {
       date,
       transactionId
     );
-    getFilterReports(1, 9, page);
+    getFilterReports(userId, 9, page);
   }
 
   async function deleteTransaction(transactionId) {
     const result = await deleteTransactionsUseCase(transactionId);
-    getFilterReports(1, 9, page);
+    getFilterReports(userId, 9, page);
   }
 
-  async function getFilterReports(userId, limit, offset) {
-    const result = await getFilterReportsUseCase(
-      userId,
+  async function getFilterReports(uid = userId, limit, offset) {
+    const result = await getFilterTransactionsUseCase(
+      uid,
       limit,
       offset,
       selectedAccount,
@@ -148,6 +145,17 @@ export default function TransactionsViewModel() {
       categories
     );
     setTransactions(result);
+  }
+
+  async function fetchData(user) {
+    const auth0User = user?.sub.split("|")[1];
+    const result = await getUserUseCase(auth0User);
+    if (!result) return;
+    const userId = result.id;
+
+    getAccounts(userId);
+    getFilterReports(userId, 9, page);
+    setUserId(userId);
   }
 
   return {
@@ -169,7 +177,6 @@ export default function TransactionsViewModel() {
     getFilterReports,
     setFilters,
     getArrow,
-    getUserId,
     updateTransaction,
     deleteTransaction,
     name,
@@ -178,5 +185,6 @@ export default function TransactionsViewModel() {
     minValue,
     maxValue,
     categories,
+    fetchData,
   };
 }

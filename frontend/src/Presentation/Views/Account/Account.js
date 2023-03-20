@@ -21,7 +21,7 @@ export default function Account() {
     transactionVisiblity,
     toggleTransactionVisiblity,
     createAccount,
-    getUserId,
+    fetchData,
   } = useViewModel();
 
   // TODO: Show different "Bank Information" form depending on whether or not
@@ -35,8 +35,7 @@ export default function Account() {
 
   useEffect(() => {
     if (user && isAuthenticated && !isLoading) {
-      getBasicInfo();
-      getAccounts(getUserId(user));
+      fetchData(user);
     }
   }, [user, isAuthenticated, isLoading]);
 

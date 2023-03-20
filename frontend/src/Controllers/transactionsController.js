@@ -64,8 +64,43 @@ export default function TransactionsController() {
     }).then((res) => res.json());
   }
 
+  async function getFilterTransactionsUseCase(
+    userId,
+    limit,
+    offset,
+    accountId,
+    transactionName,
+    startDate,
+    endDate,
+    minAmount,
+    maxAmount,
+    categories
+  ) {
+    let searchParams = new URLSearchParams({
+      limit: limit,
+      offset: offset,
+    });
+    if (accountId) searchParams.set("accountId", accountId);
+    if (transactionName) searchParams.set("transactionName", transactionName);
+    if (startDate) searchParams.set("startDate", startDate);
+    if (endDate) searchParams.set("endDate", endDate);
+    if (minAmount) searchParams.set("minAmount", minAmount);
+    if (maxAmount) searchParams.set("maxAmount", maxAmount);
+    if (categories) searchParams.set("categories", categories);
+    return fetch(
+      "http://localhost:3001/api/transactions/filters/" +
+        userId +
+        "/transactions?" +
+        searchParams,
+      {
+        method: "GET",
+      }
+    ).then((res) => res.json());
+  }
+
   return {
     getTransactionsUseCase,
+    getFilterTransactionsUseCase,
     createTransactionsUseCase,
     updateTransactionsUseCase,
     deleteTransactionsUseCase,

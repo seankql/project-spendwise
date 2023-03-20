@@ -26,7 +26,7 @@ export default function Visualization() {
     categories,
     selectedAccount,
     setSelectedAccount,
-    getUserId,
+    fetchData,
   } = useViewModel();
 
   const sectionList = ["View Visualizations"];
@@ -35,8 +35,7 @@ export default function Visualization() {
 
   useEffect(() => {
     if (user && isAuthenticated && !isLoading) {
-      getAccounts(getUserId(user));
-      getFilterReports(getUserId(user), 9, page);
+      fetchData(user);
     }
   }, [
     user,
@@ -51,7 +50,7 @@ export default function Visualization() {
     endDate,
     minValue,
     maxValue,
-    categories
+    categories,
   ]);
 
   return (

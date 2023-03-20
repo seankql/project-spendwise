@@ -31,7 +31,7 @@ export default function List({
           {category}
         </div>
         <div className="row-right-element card-sml-padding-wrapper">
-          {data[category].amount.toFixed(2)}
+          {data[category]?.amount.toFixed(2)}
         </div>
       </div>
     );
@@ -63,7 +63,7 @@ export default function List({
           {title}
         </div>
         <div className="card-padding-wrapper row-right-element component-header-text">
-          {aggregatedData.toFixed(2)}
+          {aggregatedData?.toFixed(2)}
         </div>
       </div>
       <div className="card-wrapper-2">

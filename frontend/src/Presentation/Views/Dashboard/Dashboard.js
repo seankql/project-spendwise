@@ -17,19 +17,13 @@ import { useAuth0 } from "@auth0/auth0-react";
 export default function Dashboard() {
   const {
     accounts,
-    getAccounts,
     categoryData,
-    setCategoryData,
-    getCategoryData,
     transactions,
-    getTransactions,
-    getUserId,
     createUser,
-    getReports,
-    getAccountReports,
     selectedAccount,
     setSelectedAccount,
     navigateToPage,
+    fetchData,
   } = useViewModel();
 
   // TODO move to viewmodel
@@ -40,25 +34,12 @@ export default function Dashboard() {
     "Category Chart",
   ];
 
-  const mockIncomeData = [{ category: "Income", amount: 2000 }];
-  const mockExpenseData = [
-    { category: "Food", amount: 150 },
-    { category: "Housing", amount: 1000 },
-    { category: "Transportation", amount: 30 },
-  ];
-
   const { user, isAuthenticated, isLoading } = useAuth0();
 
   useEffect(() => {
     if (user && isAuthenticated && !isLoading) {
-      createUser(user);
-      getAccounts(getUserId(user));
-      getCategoryData(getUserId(user));
-      if (!selectedAccount) {
-        getReports(getUserId(user));
-      } else {
-        getAccountReports(selectedAccount);
-      }
+      //createUser(user);
+      fetchData(user);
     }
   }, [user, isAuthenticated, isLoading, selectedAccount]);
 
