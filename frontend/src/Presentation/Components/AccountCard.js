@@ -27,6 +27,14 @@ export default function List({ title, data = null, classes = "" }) {
             {data.createdAt?.substring(0, data.createdAt.indexOf("T"))}
           </div>
         </div>
+        <div className="page-row-container">
+          <div className="card-sml-padding-wrapper component-subheader-text">
+            Linked to Plaid Account
+          </div>
+          <div className="card-sml-padding-wrapper component-subheader-text row-right-element">
+            {data.plaidAccountId ? "True" : "False"}
+          </div>
+        </div>
       </div>
     </div>
   );

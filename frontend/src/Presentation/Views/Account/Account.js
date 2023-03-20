@@ -21,6 +21,8 @@ export default function Account() {
     transactionVisiblity,
     toggleTransactionVisiblity,
     createAccount,
+    updateAccount,
+    deleteAccount,
     fetchData,
   } = useViewModel();
 
@@ -67,7 +69,11 @@ export default function Account() {
           {" "}
           Accounts{" "}
         </div>
-        <AccountCardGenerator data={accounts} />
+        <AccountCardGenerator
+          data={accounts}
+          editSubmit={updateAccount}
+          deleteFunction={deleteAccount}
+        />
         <div className="section-divider">
           <div
             id="Create New Account"

@@ -41,7 +41,7 @@ export default function TransactionsViewModel() {
     const day = dateObj.getDate().toString().padStart(2, "0");
     return `${year}-${month}-${day}`;
   }
-  
+
   function navigateToPage(page = "/") {
     navigate(page);
   }

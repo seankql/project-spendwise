@@ -15,14 +15,19 @@ export default function AccountViewModel() {
 
   const navigate = useNavigate();
 
-  const { getAccountsUseCase, createAccountsUseCase } = AccountsController();
+  const {
+    getAccountsUseCase,
+    createAccountsUseCase,
+    updateAccountsUseCase,
+    deleteAccountsUseCase,
+  } = AccountsController();
 
   const { postUserUseCase, getUserUseCase } = UserController();
 
   function navigateToPage(page = "/") {
     navigate(page);
   }
-  
+
   function getBasicInfo() {
     setBasicInfo([
       { id: 1, key: "First Name", value: "Bob" },
@@ -30,14 +35,6 @@ export default function AccountViewModel() {
       { id: 3, key: "Email", value: "Bob@gmail.com" },
       { id: 4, key: "Member Since", value: "Apr 19, 2017" },
     ]);
-  }
-
-  function getCurrentDate() {
-    const dateObj = new Date();
-    const year = dateObj.getFullYear();
-    const month = (dateObj.getMonth() + 1).toString().padStart(2, "0");
-    const day = dateObj.getDate().toString().padStart(2, "0");
-    return `${year}-${month}-${day}`;
   }
 
   async function getAccounts(uId = userId) {
@@ -67,6 +64,18 @@ export default function AccountViewModel() {
     setAccounts(result);
   }
 
+  async function updateAccount(name, accountId) {
+    await updateAccountsUseCase(userId, name, accountId);
+    const result = await getAccountsUseCase(userId);
+    setAccounts(result);
+  }
+
+  async function deleteAccount(accountId) {
+    await deleteAccountsUseCase(accountId);
+    const result = await getAccountsUseCase(userId);
+    setAccounts(result);
+  }
+
   async function fetchData(user) {
     const auth0User = user?.sub.split("|")[1];
     const result = await getUserUseCase(auth0User);
@@ -88,6 +97,8 @@ export default function AccountViewModel() {
     navigateToPage,
     getArrow,
     createAccount,
+    updateAccount,
+    deleteAccount,
     fetchData,
   };
 }
