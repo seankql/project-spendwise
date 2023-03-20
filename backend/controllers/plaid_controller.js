@@ -7,7 +7,6 @@ import { AccountsModel } from "../models/accountsModel.js";
 import { TransactionsModel } from "../models/transactionsModel.js";
 import Queue from "bee-queue";
 import redis from "redis";
-import { Op } from "sequelize";
 
 const redisClient = redis.createClient({
   host: "localhost",
@@ -60,8 +59,8 @@ plaidController.get("/link_token", async (req, res) => {
   }
 });
 
-// Exchange the public_token for an access_token and store it in the database: POST /api/plaid/token_And_Sync
-plaidController.post("/token_And_Sync", async (req, res) => {
+// Exchange the public_token for an access_token and store it in the database: POST /api/plaid/token_exchange
+plaidController.post("/token_exchange", async (req, res) => {
   try {
     const public_token = req.body.public_token;
     const userId = req.body.userId;
@@ -92,6 +91,32 @@ plaidController.post("/token_And_Sync", async (req, res) => {
     };
     await user.update(data);
     await user.save();
+    return res.status(200).send("Success");
+  } catch (e) {
+    return res.status(500).send("Internal Server error " + err);
+  }
+});
+
+//Sync transactions given an userId that is linked to plaid: GET /api/plaid/transactions/sync?userId=${}
+plaidController.get("/transactions/sync", async (req, res) => {
+  try {
+    const userId = req.query.userId;
+    if (!userId) {
+      return res
+        .status(400)
+        .send("Missing required fields. Must contain [userId]");
+    }
+
+    const user = await UsersModel.findOne({ where: { id: userId } });
+    if (!user) {
+      return res.status(400).send("Error getting user");
+    }
+    let ACCESS_TOKEN = user.access_token;
+    if (!ACCESS_TOKEN) {
+      return res
+        .status(400)
+        .send("User not linked to Plaid for user " + userId);
+    }
 
     let cursor = user.cursor ? user.cursor : null;
     let added = [];
@@ -99,9 +124,10 @@ plaidController.post("/token_And_Sync", async (req, res) => {
     let removed = [];
     let hasMore = true;
 
+    // Sync transactions
     while (hasMore) {
       const response = await client.transactionsSync({
-        access_token: user.access_token,
+        access_token: ACCESS_TOKEN,
         cursor: cursor,
       });
       const data = response.data;
@@ -116,6 +142,7 @@ plaidController.post("/token_And_Sync", async (req, res) => {
     user.cursor = cursor;
     await user.save();
 
+    // Create a job to process the transactions
     transactionQueue
       .createJob({
         ACCESS_TOKEN,
@@ -138,7 +165,7 @@ plaidController.post("/token_And_Sync", async (req, res) => {
       .save();
 
     return res.status(200).send("Job started successfully");
-  } catch (e) {
+  } catch (err) {
     return res.status(500).send("Internal Server error " + err);
   }
 });
@@ -234,32 +261,28 @@ async function updatePlaidAccounts(ACCESS_TOKEN, userId) {
   const accountsResponse = await client.accountsGet({
     access_token: ACCESS_TOKEN,
   });
-  if (accountsResponse.status === 200) {
-    //find all accounts of this user and delete them all if plaidAccountId exists
-    const userAccounts = await AccountsModel.findAll({
-      where: { UserId: userId, plaidAccountId: { [Op.ne]: null } },
+
+  for (let account of accountsResponse.data.accounts) {
+    const plaidAccountId = account.account_id;
+    const accountFounded = await AccountsModel.findOne({
+      where: { plaidAccountId: plaidAccountId },
     });
-    for (let userAccount of userAccounts) {
-      // delete all transactions of this account
-      const transactions = await TransactionsModel.findAll({
-        where: {
-          AccountId: userAccount.id,
-          plaidTransactionId: { [Op.ne]: null },
-        },
-      });
-      for (let transaction of transactions) {
-        await transaction.destroy();
-      }
-      await userAccount.destroy();
-    }
-    // create new accounts for this user
-    for (let account of accountsResponse.data.accounts) {
-      const createdAccount = await AccountsModel.create({
+    if (accountFounded) {
+      await accountFounded.update({
         accountName: account.name,
         plaidAccountId: account.account_id,
-        UserId: userId,
       });
-      await createdAccount.save();
+      await accountFounded.save();
+    } else {
+      for (let account of accountsResponse.data.accounts) {
+        // create new accounts for this user
+        const createdAccount = await AccountsModel.create({
+          accountName: account.name,
+          plaidAccountId: account.account_id,
+          UserId: userId,
+        });
+        await createdAccount.save();
+      }
     }
   }
 }
