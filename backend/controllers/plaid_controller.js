@@ -7,6 +7,7 @@ import { AccountsModel } from "../models/accountsModel.js";
 import { TransactionsModel } from "../models/transactionsModel.js";
 import Queue from "bee-queue";
 import redis from "redis";
+import { Op } from "sequelize";
 
 const redisClient = redis.createClient({
   host: "localhost",
@@ -283,22 +284,22 @@ async function updatePlaidAccounts(ACCESS_TOKEN, userId) {
     access_token: ACCESS_TOKEN,
   });
   if (accountsResponse.status === 200) {
-    //find all accounts of this user and delete them all
+    //find all accounts of this user and delete them all if plaidAccountId exists
     const userAccounts = await AccountsModel.findAll({
-      where: { UserId: userId },
+      where: { UserId: userId , plaidAccountId: {[Op.ne]: null}},
     });
     for (let userAccount of userAccounts) {
       // delete all transactions of this account
       const transactions = await TransactionsModel.findAll({
-        where: { AccountId: userAccount.id },
+        where: { AccountId: userAccount.id , plaidTransactionId: {[Op.ne]: null}},
       });
       for (let transaction of transactions) {
         await transaction.destroy();
       }
       await userAccount.destroy();
     }
+    // create new accounts for this user
     for (let account of accountsResponse.data.accounts) {
-      // create new accounts for this user
       const createdAccount = await AccountsModel.create({
         accountName: account.name,
         plaidAccountId: account.account_id,
