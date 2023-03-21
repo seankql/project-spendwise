@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AccountsController from "../../../Controllers/accountsController";
 import ReportsController from "../../../Controllers/reportsController";
+import UserController from "../../../Controllers/userController";
 
 export default function DashboardViewModel() {
   const [error, setError] = useState("");
@@ -10,8 +11,6 @@ export default function DashboardViewModel() {
   const [transactions, setTransactions] = useState(null);
   const [categoryData, setCategoryData] = useState(null);
 
-  const navigate = useNavigate();
-
   const {
     getReportsUseCase,
     getAccountReportsUseCase,
@@ -19,6 +18,10 @@ export default function DashboardViewModel() {
   } = ReportsController();
 
   const { getAccountsUseCase } = AccountsController();
+
+  const { postUserUseCase, getUserUseCase } = UserController();
+
+  const navigate = useNavigate();
 
   function getCurrentDate() {
     const dateObj = new Date();
@@ -38,6 +41,17 @@ export default function DashboardViewModel() {
 
   function navigateToPage(page = "/") {
     navigate(page);
+  }
+
+  async function getUserId(user) {
+    const auth0User = user?.sub.split("|")[1];
+    const result = await getUserUseCase(auth0User);
+    if (!result) return null;
+    return result.id;
+  }
+
+  async function createUser(user) {
+    await postUserUseCase(getUserId(user), user.email);
   }
 
   async function getAccounts(userId) {
@@ -70,6 +84,21 @@ export default function DashboardViewModel() {
     setCategoryData(result);
   }
 
+  async function fetchData(user) {
+    const auth0User = user?.sub.split("|")[1];
+    const result = await getUserUseCase(auth0User);
+    if (!result) return;
+    const userId = result.id;
+
+    getCategoryData(userId);
+    await getAccounts(userId);
+    if (!selectedAccount) {
+      getReports(userId);
+    } else {
+      getAccountReports(selectedAccount);
+    }
+  }
+
   return {
     error,
     accounts,
@@ -83,5 +112,15 @@ export default function DashboardViewModel() {
     selectedAccount,
     setSelectedAccount,
     navigateToPage,
+    getUserId,
+    createUser,
+    categoryData,
+    setCategoryData,
+    getCategoryData,
+    getReports,
+    getAccountReports,
+    selectedAccount,
+    setSelectedAccount,
+    fetchData,
   };
 }

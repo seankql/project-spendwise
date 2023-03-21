@@ -2,21 +2,29 @@ import "../Styles/Components.css";
 import "../Styles/Common.css";
 import "../Styles/Account.css";
 
-export default function List({ title, data = null, classes = "" }) {
+export default function List({ email, nickname, dateCreated, classes = "" }) {
   return (
     <div className={"card-wrapper " + classes}>
       <div className="page-row-container">
         <div className="card-padding-wrapper component-header-text">
-          {title}
+          Profile Data
         </div>
       </div>
       <div className="card-wrapper-2">
         <div className="page-row-container">
           <div className="card-sml-padding-wrapper component-subheader-text">
-            Account Name
+            Username
           </div>
           <div className="card-sml-padding-wrapper component-subheader-text row-right-element">
-            {data.accountName}
+            {nickname}
+          </div>
+        </div>
+        <div className="page-row-container">
+          <div className="card-sml-padding-wrapper component-subheader-text">
+            email
+          </div>
+          <div className="card-sml-padding-wrapper component-subheader-text row-right-element">
+            {email}
           </div>
         </div>
         <div className="page-row-container">
@@ -24,15 +32,7 @@ export default function List({ title, data = null, classes = "" }) {
             Date Created
           </div>
           <div className="card-sml-padding-wrapper component-subheader-text row-right-element">
-            {data.createdAt?.substring(0, data.createdAt.indexOf("T"))}
-          </div>
-        </div>
-        <div className="page-row-container">
-          <div className="card-sml-padding-wrapper component-subheader-text">
-            Linked to Plaid Account
-          </div>
-          <div className="card-sml-padding-wrapper component-subheader-text row-right-element">
-            {data.plaidAccountId ? "True" : "False"}
+            {dateCreated?.substring(0, dateCreated.indexOf("T"))}
           </div>
         </div>
       </div>

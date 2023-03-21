@@ -9,6 +9,7 @@ import TransactionViewBox from "../../Components/TransactionViewBox";
 import "../../Styles/Common.css";
 import "../../Styles/Main.css";
 import "../../Styles/Transactions.css";
+import { useAuth0 } from "@auth0/auth0-react";
 
 export default function Transactions() {
   const {
@@ -16,7 +17,6 @@ export default function Transactions() {
     transactionVisiblity,
     toggleTransactionVisiblity,
     accounts,
-    getAccounts,
     transactions,
     page,
     incrementPage,
@@ -25,7 +25,6 @@ export default function Transactions() {
     setSelectedAccount,
     createTransaction,
     getCreateTransactionVisibility,
-    getFilterReports,
     setFilters,
     updateTransaction,
     deleteTransaction,
@@ -35,14 +34,23 @@ export default function Transactions() {
     minValue,
     maxValue,
     categories,
+    fetchData,
   } = useViewModel();
 
   const sectionList = ["Add Transaction", "View Transactions"];
 
+  const { user, isAuthenticated, isLoading } = useAuth0();
+
   useEffect(() => {
-    getAccounts(1);
-    getFilterReports(1, 9, page);
+    if (user && isAuthenticated && !isLoading) {
+      fetchData(user);
+    }
   }, [
+    user,
+    isAuthenticated,
+    isLoading,
+    isAuthenticated,
+    isLoading,
     page,
     selectedAccount,
     name,

@@ -19,3 +19,11 @@ https://blog.logrocket.com/customize-reusable-react-dropdown-menu-component/#:~:
 <a href="https://www.flaticon.com/free-icons/confirm" title="confirm icons">Confirm icons created by bqlqn - Flaticon</a>
 
 <a href="https://www.flaticon.com/free-icons/cancel" title="cancel icons">Cancel icons created by Fingerprint Designs - Flaticon</a>
+
+<a href="https://www.flaticon.com/free-icons/growth" title="growth icons">Growth icons created by Freepik - Flaticon</a>
+
+<a href="https://www.flaticon.com/free-icons/stock-market" title="stock market icons">Stock market icons created by Freepik - Flaticon</a>
+
+<a href="https://www.flaticon.com/free-icons/pie-chart" title="pie chart icons">Pie chart icons created by itim2101 - Flaticon</a>
+
+<a href="https://www.flaticon.com/free-icons/business-and-finance" title="business and finance icons">Business and finance icons created by Nuion - Flaticon</a>

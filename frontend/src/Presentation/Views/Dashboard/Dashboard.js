@@ -12,20 +12,18 @@ import CategoryGraph from "../../Components//Graphs/CategoryGraph";
 import "../../Styles/Common.css";
 import "../../Styles/Dashboard.css";
 import "../../Styles/Main.css";
+import { useAuth0 } from "@auth0/auth0-react";
 
 export default function Dashboard() {
   const {
     accounts,
-    getAccounts,
     categoryData,
-    setCategoryData,
-    getCategoryData,
     transactions,
-    getReports,
-    getAccountReports,
+    createUser,
     selectedAccount,
     setSelectedAccount,
     navigateToPage,
+    fetchData,
   } = useViewModel();
 
   // TODO move to viewmodel
@@ -36,15 +34,14 @@ export default function Dashboard() {
     "Category Chart",
   ];
 
+  const { user, isAuthenticated, isLoading } = useAuth0();
+
   useEffect(() => {
-    getAccounts(1);
-    getCategoryData(1);
-    if (!selectedAccount) {
-      getReports(1);
-    } else {
-      getAccountReports(selectedAccount);
+    if (user && isAuthenticated && !isLoading) {
+      //createUser(user);
+      fetchData(user);
     }
-  }, [selectedAccount]);
+  }, [user, isAuthenticated, isLoading, selectedAccount]);
 
   return (
     <div className="body-wrapper">

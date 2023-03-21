@@ -9,7 +9,7 @@ export default function List({ submit }) {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    submit(1, name);
+    submit(name);
     setName("");
   };
 

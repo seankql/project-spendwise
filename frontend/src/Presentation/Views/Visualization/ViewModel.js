@@ -1,10 +1,12 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AccountsController from "../../../Controllers/accountsController";
-import ReportsController from "../../../Controllers/reportsController";
+import TransactionsController from "../../../Controllers/transactionsController";
+import UserController from "../../../Controllers/userController";
 
 export default function VisualizationViewModel() {
   const [error, setError] = useState("");
+  const [graph, setGraph] = useState("pie");
   const [transactions, setTransactions] = useState(null);
   const [accounts, setAccounts] = useState(null);
   const [selectedAccount, setSelectedAccount] = useState(null);
@@ -21,9 +23,11 @@ export default function VisualizationViewModel() {
     navigate(page);
   }
 
-  const { getFilterReportsUseCase } = ReportsController();
+  const { getFilterTransactionsUseCase } = TransactionsController();
 
   const { getAccountsUseCase } = AccountsController();
+
+  const { postUserUseCase, getUserUseCase } = UserController();
 
   function setFilters(filtersJSON) {
     const filters = JSON.parse(filtersJSON);
@@ -41,7 +45,7 @@ export default function VisualizationViewModel() {
   }
 
   async function getFilterReports(userId) {
-    const result = await getFilterReportsUseCase(
+    const result = await getFilterTransactionsUseCase(
       userId,
       Number.MAX_SAFE_INTEGER,
       0,
@@ -54,6 +58,16 @@ export default function VisualizationViewModel() {
       categories
     );
     setTransactions(result);
+  }
+
+  async function fetchData(user) {
+    const auth0User = user?.sub.split("|")[1];
+    const result = await getUserUseCase(auth0User);
+    if (!result) return;
+    const userId = result.id;
+
+    getAccounts(userId);
+    getFilterReports(userId);
   }
 
   return {
@@ -72,5 +86,8 @@ export default function VisualizationViewModel() {
     minValue,
     maxValue,
     categories,
+    fetchData,
+    graph,
+    setGraph,
   };
 }
