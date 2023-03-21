@@ -77,6 +77,11 @@ export default function TransactionsViewModel() {
     setPage(page - 1);
   }
 
+  function setSelectedAccountFunction(account) {
+    setSelectedAccount(account);
+    setPage(0);
+  }
+
   function navigateToPage(page = "/") {
     navigate(page);
   }
@@ -144,7 +149,12 @@ export default function TransactionsViewModel() {
       maxValue,
       categories
     );
-    setTransactions(result);
+    if (result.transactions.length === 0 && page > 0) {
+      getFilterReports(userId, limit, offset - 1);
+      setPage(page - 1);
+    } else {
+      setTransactions(result);
+    }
   }
 
   async function fetchData(user) {
@@ -172,7 +182,7 @@ export default function TransactionsViewModel() {
     navigateToPage,
     createTransaction,
     selectedAccount,
-    setSelectedAccount,
+    setSelectedAccountFunction,
     getCreateTransactionVisibility,
     getFilterReports,
     setFilters,
