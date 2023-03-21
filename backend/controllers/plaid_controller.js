@@ -7,12 +7,18 @@ import { AccountsModel } from "../models/accountsModel.js";
 import { TransactionsModel } from "../models/transactionsModel.js";
 import Queue from "bee-queue";
 import redis from "redis";
+import axios from "axios";
+import { Op } from "sequelize";
+import cron from "node-cron";
 
 const redisClient = redis.createClient({
   host: "localhost",
   port: 6379,
 });
 const transactionQueue = new Queue("transactions", {
+  redis: redisClient,
+});
+const syncQueue = new Queue("sync", {
   redis: redisClient,
 });
 
@@ -123,6 +129,18 @@ plaidController.get("/transactions/sync", async (req, res) => {
     let modified = [];
     let removed = [];
     let hasMore = true;
+
+    // Invalidate the access token to get a new one for periodic sync
+    const invalidateAccessTokenresponse =
+      await client.itemAccessTokenInvalidate({
+        access_token: ACCESS_TOKEN,
+      });
+    if (invalidateAccessTokenresponse.data.error) {
+      // Sentry.captureException(invalidateAccessTokenresponse.data.error);
+      return res.status(400).send(data.error);
+    }
+    ACCESS_TOKEN = invalidateAccessTokenresponse.data.new_access_token;
+    user.access_token = ACCESS_TOKEN;
 
     // Sync transactions
     while (hasMore) {
@@ -286,6 +304,40 @@ async function updatePlaidAccounts(ACCESS_TOKEN, userId) {
     }
   }
 }
+async function syncTransactions(userId) {
+  try {
+    const response = await axios.get(
+      "http://localhost:3001/api/plaid/transactions/sync?userId=" + userId
+    );
+    console.log(response.data);
+  } catch (err) {
+    console.log(err);
+    // Sentry.captureException(err + " in cron job syncTransactions"");
+  }
+}
+
+cron.schedule("0 0 * * *", async () => {
+  console.log("Running cron job at midnight every day!");
+
+  // get all users that have linked Plaid
+  try {
+    const users = await UsersModel.findAll({
+      where: { access_token: { [Op.ne]: null } },
+    });
+
+    for (const user of users) {
+      // create a job to sync transactions for each user
+      syncQueue.createJob({ userId: user.id }).save();
+    }
+  } catch (err) {
+    console.log(err);
+    // Sentry.captureException(err + " in cron job"");
+  }
+});
+syncQueue.process(async (job) => {
+  const { userId } = job.data;
+  await syncTransactions(userId);
+});
 
 transactionQueue.process(async (job) => {
   const { ACCESS_TOKEN, userId, added, modified, removed } = job.data;
