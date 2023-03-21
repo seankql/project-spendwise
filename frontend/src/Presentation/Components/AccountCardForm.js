@@ -5,13 +5,7 @@ import "../Styles/Components.css";
 import "../Styles/Common.css";
 import "../Styles/Account.css";
 
-export default function List({
-  data = null,
-  editSubmit,
-  deleteFunction,
-  linkToken,
-  successFunction,
-}) {
+export default function List({ data = null, editSubmit, deleteFunction }) {
   const [editState, setEditState] = useState(false);
   const [name, setName] = useState(null);
 
@@ -29,13 +23,6 @@ export default function List({
       setEditState(false);
     }
   };
-
-  const { open, ready } = usePlaidLink({
-    token: linkToken,
-    onSuccess: (public_token, metadata) => {
-      successFunction(public_token);
-    },
-  });
 
   const createAccountCardForm = (accountData) => {
     if (!editState) {
@@ -62,14 +49,6 @@ export default function List({
               className={"btn btn-sml account-btns-left"}
             >
               Delete Account
-            </button>
-            <button
-              type="button"
-              onClick={() => open()}
-              disabled={!ready}
-              className={"btn btn-sml account-btns-left"}
-            >
-              Connect a bank account
             </button>
           </div>
         </div>

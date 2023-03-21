@@ -32,7 +32,7 @@ export default function PlaidController() {
       {
         method: "GET",
       }
-    ).then((res) => res.json());
+    ).then((res) => res);
   }
 
   async function exchangePlaidTokenUseCase(userId, public_token) {

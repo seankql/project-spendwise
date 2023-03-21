@@ -6,6 +6,7 @@ import ProfileCard from "../../Components/ProfileCard";
 import AlertCard from "../../Components/AlertCard";
 import AccountCardGenerator from "../../Components/AccountCardGenerator";
 import AccountForm from "../../Components/AccountForm";
+import { usePlaidLink } from "react-plaid-link";
 import "../../Styles/Common.css";
 import "../../Styles/Account.css";
 import "../../Styles/Main.css";
@@ -27,6 +28,7 @@ export default function Account() {
     fetchData,
     linkToken,
     exchangeAndSync,
+    hasLinkedPlaid,
   } = useViewModel();
 
   // TODO: Show different "Bank Information" form depending on whether or not
@@ -37,6 +39,13 @@ export default function Account() {
   const sectionList = ["Profile & Alerts", "Accounts", "Create New Account"];
 
   const { user, isAuthenticated, isLoading } = useAuth0();
+
+  const { open, ready } = usePlaidLink({
+    token: linkToken,
+    onSuccess: (public_token, metadata) => {
+      exchangeAndSync(public_token);
+    },
+  });
 
   useEffect(() => {
     if (user && isAuthenticated && !isLoading) {
@@ -66,6 +75,20 @@ export default function Account() {
             />
             <div className="page-col-container row-right-element">
               <AlertCard title={"Alerts"} classes={"alert-card "} />
+              <div className="section-wrapper ">
+                {hasLinkedPlaid ? (
+                  ""
+                ) : (
+                  <button
+                    type="button"
+                    onClick={() => open()}
+                    disabled={!ready}
+                    className={"btn btn-sml account-btns-left"}
+                  >
+                    Connect a bank account
+                  </button>
+                )}
+              </div>
             </div>
           </div>
         </div>
@@ -77,8 +100,6 @@ export default function Account() {
           data={accounts}
           editSubmit={updateAccount}
           deleteFunction={deleteAccount}
-          linkToken={linkToken}
-          successFunction={exchangeAndSync}
         />
         <div className="section-divider">
           <div

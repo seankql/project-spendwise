@@ -8,6 +8,7 @@ import PlaidController from "../../../Controllers/plaidController";
 
 export default function AccountViewModel() {
   const [error, setError] = useState("");
+  const [hasLinkedPlaid, setHasLinkedPlaid] = useState(false);
   const [userId, setUserId] = useState(null);
   const [nickname, setNickname] = useState("");
   const [email, setEmail] = useState("");
@@ -29,6 +30,7 @@ export default function AccountViewModel() {
     getPlaidLinkTokenUseCase,
     syncPlaidTransactionsUseCase,
     exchangePlaidTokenUseCase,
+    getPlaidLinkedStatusUseCase,
   } = PlaidController();
 
   const { getUserUseCase } = UserController();
@@ -100,6 +102,11 @@ export default function AccountViewModel() {
     await syncPlaidTransactions(userId);
   }
 
+  async function getPlaidLinkedStatus(userId) {
+    const result = await getPlaidLinkedStatusUseCase(userId);
+    setHasLinkedPlaid(result.status === 200);
+  }
+
   async function fetchData(user) {
     if (!user) return;
     setProfileData(user);
@@ -111,6 +118,7 @@ export default function AccountViewModel() {
     setUserId(userId);
     getAccounts(userId);
     getPlaidLinkToken(userId);
+    getPlaidLinkedStatus(userId);
   }
 
   return {
@@ -129,5 +137,6 @@ export default function AccountViewModel() {
     fetchData,
     linkToken,
     exchangeAndSync,
+    hasLinkedPlaid,
   };
 }
