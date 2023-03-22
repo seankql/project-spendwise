@@ -4,12 +4,14 @@ import Sentry from "@sentry/node";
 import { TransactionsModel } from "../models/transactionsModel.js";
 import { UsersModel } from "../models/usersModel.js";
 import { AccountsModel } from "../models/accountsModel.js";
+import { validateAccessToken, isAuthorizedUserId } from "../middleware/auth.js";
+import jwt_decode from "jwt-decode";
 
 // Base route: /api/reports
 export const reportsController = Router();
 
 // Get Report for user: GET /api/reports?userId=${}&startDate=${}&endDate=${}
-reportsController.get("/", async (req, res) => {
+reportsController.get("/", validateAccessToken, isAuthorizedUserId, async (req, res) => {
   try {
     if (!req.query.userId || !req.query.startDate || !req.query.endDate) {
       return res
@@ -85,7 +87,7 @@ reportsController.get("/", async (req, res) => {
 });
 
 // Get All Transactions for one accounts: GET /api/reports/accounts?accountId=${}&startDate=${}&endDate=${}
-reportsController.get("/accounts", async (req, res) => {
+reportsController.get("/accounts", validateAccessToken, async (req, res) => {
   try {
     if (!req.query.accountId || !req.query.startDate || !req.query.endDate) {
       return res
@@ -94,6 +96,18 @@ reportsController.get("/accounts", async (req, res) => {
           "Missing required fields. Must contain [accountId, startDate, endDate]"
         );
     }
+    // check if authorized to get this report
+    const account = await AccountsModel.findByPk(req.query.accountId);
+    const accessToken = req.headers.authorization.split(" ")[1];
+    const decoded = jwt_decode(accessToken);
+    const currentAuth0UserId = decoded.sub.split("|")[1];
+    const currentUser = await UsersModel.findOne({
+      where: { auth0UserId: currentAuth0UserId }
+    });
+    if (Number(currentUser.id) !== Number(account.UserId)) {
+      return res.status(403).send("Unauthorized");
+    }
+
     const { count, rows: resultReport } =
       await TransactionsModel.findAndCountAll({
         where: {
@@ -139,7 +153,7 @@ reportsController.get("/accounts", async (req, res) => {
 
 // Get All Transactions for one user and enerate a report for each category: GET /api/reports/categories?userId=${}&startDate=${}&endDate=${}
 
-reportsController.get("/categories", async (req, res) => {
+reportsController.get("/categories", validateAccessToken, isAuthorizedUserId, async (req, res) => {
   try {
     if (!req.query.userId || !req.query.startDate || !req.query.endDate) {
       return res

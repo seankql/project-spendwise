@@ -4,11 +4,13 @@ import { AccountsModel } from "../models/accountsModel.js";
 import { UsersModel } from "../models/usersModel.js";
 import { Op } from "sequelize";
 import Sentry from "@sentry/node";
+import { validateAccessToken, isAuthorizedUserId } from "../middleware/auth.js";
+import jwt_decode from "jwt-decode";
 // Base route: /api/transactions
 export const transactionsController = Router();
 
 // Get the most recent transactions: GET /api/transactions?userId=${}&page={}&pageSize={}
-transactionsController.get("/", async (req, res) => {
+transactionsController.get("/", validateAccessToken, isAuthorizedUserId, async (req, res) => {
   try {
     const { userId, page, pageSize } = req.query;
     if (!userId || !page || !pageSize) {
@@ -58,7 +60,7 @@ transactionsController.get("/", async (req, res) => {
 });
 
 // Create a new transaction: POST /api/transactions
-transactionsController.post("/", async (req, res) => {
+transactionsController.post("/", validateAccessToken, async (req, res) => {
   try {
     const data = {
       transactionDate: req.body.transactionDate,
@@ -80,6 +82,18 @@ transactionsController.post("/", async (req, res) => {
           "Missing required fields. Must contain [transactionDate, descriptions, amount, accountId, category]"
         );
     }
+    // check if authorized to create this transaction
+    const account = await AccountsModel.findByPk(data.AccountId);
+    const accessToken = req.headers.authorization.split(" ")[1];
+    const decoded = jwt_decode(accessToken);
+    const currentAuth0UserId = decoded.sub.split("|")[1];
+    const currentUser = await UsersModel.findOne({
+      where: { auth0UserId: currentAuth0UserId }
+    });
+    if (Number(currentUser.id) !== Number(account.UserId)) {
+      return res.status(403).send("Unauthorized");
+    }
+
     const createdTransaction = await TransactionsModel.create(data);
     if (createdTransaction) {
       return res.status(201).send(createdTransaction);
@@ -92,7 +106,7 @@ transactionsController.post("/", async (req, res) => {
   }
 });
 // Update a transaction: PUT /api/transactions/:transactionId
-transactionsController.put("/:transactionId", async (req, res) => {
+transactionsController.put("/:transactionId", validateAccessToken, async (req, res) => {
   try {
     const { transactionId } = req.params;
     const data = {
@@ -124,6 +138,17 @@ transactionsController.put("/:transactionId", async (req, res) => {
         .send("Error finding account for accountid: " + data.AccountId);
     }
 
+    // check if authorized to update this transaction
+    const accessToken = req.headers.authorization.split(" ")[1];
+    const decoded = jwt_decode(accessToken);
+    const currentAuth0UserId = decoded.sub.split("|")[1];
+    const currentUser = await UsersModel.findOne({
+      where: { auth0UserId: currentAuth0UserId }
+    });
+    if (Number(currentUser.id) !== Number(account.UserId)) {
+      return res.status(403).send("Unauthorized");
+    }
+
     const transaction = await TransactionsModel.findByPk(transactionId);
     if (!transaction) {
       return res
@@ -148,7 +173,7 @@ transactionsController.put("/:transactionId", async (req, res) => {
   }
 });
 // Delete a transaction: DELETE /api/transactions/:transactionId
-transactionsController.delete("/:transactionId", async (req, res) => {
+transactionsController.delete("/:transactionId", validateAccessToken, async (req, res) => {
   try {
     const { transactionId } = req.params;
     if (!transactionId) {
@@ -157,6 +182,20 @@ transactionsController.delete("/:transactionId", async (req, res) => {
         .send("Missing required fields. Must contain [transactionId]");
     }
     const selectedTransaction = await TransactionsModel.findByPk(transactionId);
+    // check if authorized to delete this transaction
+    const account = await AccountsModel.findOne({
+      where: { id: selectedTransaction.AccountId },
+    });
+    const accessToken = req.headers.authorization.split(" ")[1];
+    const decoded = jwt_decode(accessToken);
+    const currentAuth0UserId = decoded.sub.split("|")[1];
+    const currentUser = await UsersModel.findOne({
+      where: { auth0UserId: currentAuth0UserId }
+    });
+    if (Number(currentUser.id) !== Number(account.UserId)) {
+      return res.status(403).send("Unauthorized");
+    }
+
     if (selectedTransaction) {
       await selectedTransaction.destroy();
       return res.status(200).send(selectedTransaction);
@@ -177,7 +216,7 @@ transactionsController.delete("/:transactionId", async (req, res) => {
 // GET: /api/transactions/filters/:userId/transactions?accountId=1&transactionName=Groceries&startDate=2021-01-01&endDate=2021-01-31&minAmount=0&maxAmount=100&categories=Food,Groceries&limit=10&offset=0
 
 transactionsController.get(
-  "/filters/:userId/transactions",
+  "/filters/:userId/transactions", validateAccessToken, isAuthorizedUserId,
   async (req, res) => {
     try {
       if (!req.params.userId || !req.query.limit || !req.query.offset) {

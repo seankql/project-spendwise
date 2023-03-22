@@ -1,14 +1,13 @@
 import Router from "express";
 import { UsersModel } from "../models/usersModel.js";
 import Sentry from "@sentry/node";
-
-//******** This is A test file to be later deleted. Using Auth0 for authentication and user creation.***************
+import { validateAccessToken, isAuthorizedAuth0UserId } from "../middleware/auth.js";
 
 // Base route: /api/users
 export const usersController = Router();
 
 // Create a new user: POST /api/users
-usersController.post("/", async (req, res) => {
+usersController.post("/", validateAccessToken, isAuthorizedAuth0UserId, async (req, res) => {
   try {
     const { auth0UserId, email } = req.body;
     if (!auth0UserId || !email) {
@@ -31,7 +30,7 @@ usersController.post("/", async (req, res) => {
 });
 
 // Delete a user: DELETE /api/users/:auth0UserId
-usersController.delete("/:auth0UserId", async (req, res) => {
+usersController.delete("/:auth0UserId", validateAccessToken, isAuthorizedAuth0UserId, async (req, res) => {
   try {
     const { auth0UserId } = req.params;
     if (!auth0UserId) {
@@ -51,7 +50,7 @@ usersController.delete("/:auth0UserId", async (req, res) => {
 });
 
 // Get a user based on auth0UserId: GET /api/users/:auth0UserId
-usersController.get("/:auth0UserId", async (req, res) => {
+usersController.get("/:auth0UserId", validateAccessToken, isAuthorizedAuth0UserId, async (req, res) => {
   try {
     const { auth0UserId } = req.params;
     if (!auth0UserId) {

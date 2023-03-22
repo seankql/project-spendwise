@@ -10,6 +10,7 @@ import redis from "redis";
 import axios from "axios";
 import { Op } from "sequelize";
 import cron from "node-cron";
+import { validateAccessToken, isAuthorizedUserId } from "../middleware/auth.js";
 
 const redisClient = redis.createClient({
   host: "localhost",
@@ -39,7 +40,7 @@ const client = new PlaidApi(configuration);
 export const plaidController = Router();
 
 // Obtain a link_token: GET /api/plaid/link_token?userId=${}
-plaidController.get("/link_token", async (req, res) => {
+plaidController.get("/link_token", validateAccessToken, isAuthorizedUserId, async (req, res) => {
   try {
     const userId = req.query.userId;
     if (!userId) {
@@ -66,7 +67,7 @@ plaidController.get("/link_token", async (req, res) => {
 });
 
 // Exchange the public_token for an access_token and store it in the database: POST /api/plaid/token_exchange
-plaidController.post("/token_exchange", async (req, res) => {
+plaidController.post("/token_exchange", validateAccessToken, isAuthorizedUserId, async (req, res) => {
   try {
     const public_token = req.body.public_token;
     const userId = req.body.userId;
@@ -104,7 +105,7 @@ plaidController.post("/token_exchange", async (req, res) => {
 });
 
 //Sync transactions given an userId that is linked to plaid: GET /api/plaid/transactions/sync?userId=${}
-plaidController.get("/transactions/sync", async (req, res) => {
+plaidController.get("/transactions/sync", validateAccessToken, isAuthorizedUserId, async (req, res) => {
   try {
     const userId = req.query.userId;
     if (!userId) {
@@ -189,7 +190,7 @@ plaidController.get("/transactions/sync", async (req, res) => {
 });
 
 // check if user has linked Plaid: GET /api/plaid/has_linked_plaid?userId=${}
-plaidController.get("/has_linked_plaid", async (req, res) => {
+plaidController.get("/has_linked_plaid", validateAccessToken, isAuthorizedUserId, async (req, res) => {
   try {
     const userId = req.query.userId;
     if (!userId) {
