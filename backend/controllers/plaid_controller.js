@@ -40,178 +40,198 @@ const client = new PlaidApi(configuration);
 export const plaidController = Router();
 
 // Obtain a link_token: GET /api/plaid/link_token?userId=${}
-plaidController.get("/link_token", validateAccessToken, isAuthorizedUserId, async (req, res) => {
-  try {
-    const userId = req.query.userId;
-    if (!userId) {
-      return res
-        .status(400)
-        .send("Missing required fields. Must contain [userId]");
+plaidController.get(
+  "/link_token",
+  validateAccessToken,
+  isAuthorizedUserId,
+  async (req, res) => {
+    try {
+      const userId = req.query.userId;
+      if (!userId) {
+        return res
+          .status(400)
+          .send("Missing required fields. Must contain [userId]");
+      }
+      const createTokenResponse = await client.linkTokenCreate({
+        user: {
+          client_user_id: userId,
+        },
+        client_name: "SpendWise",
+        products: ["transactions"],
+        country_codes: ["US"],
+        language: "en",
+      });
+      return res.status(200).send({
+        link_token: createTokenResponse.data.link_token,
+      });
+    } catch (err) {
+      // Sentry.captureException(err);
+      return res.status(500).send("Internal Server error " + err);
     }
-    const createTokenResponse = await client.linkTokenCreate({
-      user: {
-        client_user_id: userId,
-      },
-      client_name: "SpendWise",
-      products: ["transactions"],
-      country_codes: ["US"],
-      language: "en",
-    });
-    return res.status(200).send({
-      link_token: createTokenResponse.data.link_token,
-    });
-  } catch (err) {
-    // Sentry.captureException(err);
-    return res.status(500).send("Internal Server error " + err);
   }
-});
+);
 
 // Exchange the public_token for an access_token and store it in the database: POST /api/plaid/token_exchange
-plaidController.post("/token_exchange", validateAccessToken, isAuthorizedUserId, async (req, res) => {
-  try {
-    const public_token = req.body.public_token;
-    const userId = req.body.userId;
+plaidController.post(
+  "/token_exchange",
+  validateAccessToken,
+  isAuthorizedUserId,
+  async (req, res) => {
+    try {
+      const public_token = req.body.public_token;
+      const userId = req.body.userId;
 
-    if (!public_token || !userId) {
-      return res
-        .status(400)
-        .send("Missing required fields. Must contain [publicToken, userId]");
-    }
-    const tokenResponse = await client.itemPublicTokenExchange({
-      public_token: public_token,
-    });
+      if (!public_token || !userId) {
+        return res
+          .status(400)
+          .send("Missing required fields. Must contain [publicToken, userId]");
+      }
+      const tokenResponse = await client.itemPublicTokenExchange({
+        public_token: public_token,
+      });
 
-    let ACCESS_TOKEN = tokenResponse.data.access_token;
-    if (!ACCESS_TOKEN) {
-      return res.status(400).send("Error getting access token");
-    }
+      let ACCESS_TOKEN = tokenResponse.data.access_token;
+      if (!ACCESS_TOKEN) {
+        return res.status(400).send("Error getting access token");
+      }
 
-    // given the userId, update the user's access_token in the database
-    const user = await UsersModel.findOne({ where: { id: userId } });
-    if (!user) {
-      return res.status(400).send("Error getting user");
+      // given the userId, update the user's access_token in the database
+      const user = await UsersModel.findOne({ where: { id: userId } });
+      if (!user) {
+        return res.status(400).send("Error getting user");
+      }
+      const data = {
+        access_token: ACCESS_TOKEN,
+        email: user.email,
+        cursor: null,
+      };
+      await user.update(data);
+      await user.save();
+      return res.status(200).send("Success");
+    } catch (e) {
+      return res.status(500).send("Internal Server error " + err);
     }
-    const data = {
-      access_token: ACCESS_TOKEN,
-      email: user.email,
-      cursor: null,
-    };
-    await user.update(data);
-    await user.save();
-    return res.status(200).send("Success");
-  } catch (e) {
-    return res.status(500).send("Internal Server error " + err);
   }
-});
+);
 
 //Sync transactions given an userId that is linked to plaid: GET /api/plaid/transactions/sync?userId=${}
-plaidController.get("/transactions/sync", validateAccessToken, isAuthorizedUserId, async (req, res) => {
-  try {
-    const userId = req.query.userId;
-    if (!userId) {
-      return res
-        .status(400)
-        .send("Missing required fields. Must contain [userId]");
+plaidController.get(
+  "/transactions/sync",
+  validateAccessToken,
+  isAuthorizedUserId,
+  async (req, res) => {
+    try {
+      const userId = req.query.userId;
+      if (!userId) {
+        return res
+          .status(400)
+          .send("Missing required fields. Must contain [userId]");
+      }
+
+      const user = await UsersModel.findOne({ where: { id: userId } });
+      if (!user) {
+        return res.status(400).send("Error getting user");
+      }
+      let ACCESS_TOKEN = user.access_token;
+      if (!ACCESS_TOKEN) {
+        return res
+          .status(400)
+          .send("User not linked to Plaid for user " + userId);
+      }
+
+      let cursor = user.cursor ? user.cursor : null;
+      let added = [];
+      let modified = [];
+      let removed = [];
+      let hasMore = true;
+
+      // Invalidate the access token to get a new one for periodic sync
+      const invalidateAccessTokenresponse =
+        await client.itemAccessTokenInvalidate({
+          access_token: ACCESS_TOKEN,
+        });
+      if (invalidateAccessTokenresponse.data.error) {
+        // Sentry.captureException(invalidateAccessTokenresponse.data.error);
+        return res.status(400).send(data.error);
+      }
+      ACCESS_TOKEN = invalidateAccessTokenresponse.data.new_access_token;
+      user.access_token = ACCESS_TOKEN;
+
+      // Sync transactions
+      while (hasMore) {
+        const response = await client.transactionsSync({
+          access_token: ACCESS_TOKEN,
+          cursor: cursor,
+        });
+        const data = response.data;
+        // Add this page of results
+        added = added.concat(data.added);
+        modified = modified.concat(data.modified);
+        removed = removed.concat(data.removed);
+        hasMore = data.has_more;
+        // Update cursor to the next cursor
+        cursor = data.next_cursor;
+      }
+      user.cursor = cursor;
+      await user.save();
+
+      // Create a job to process the transactions
+      transactionQueue
+        .createJob({
+          ACCESS_TOKEN,
+          userId,
+          added,
+          modified,
+          removed,
+        })
+        .on("succeeded", function () {
+          console.log(`Job succeeded`);
+        })
+        .on("failed", function (errorMessage) {
+          console.log(`Job failed with error message: ${errorMessage}`);
+        })
+        .on("retrying", function (err) {
+          console.log(
+            `Job failed with error message: ${err.message}.  It is being retried!`
+          );
+        })
+        .save();
+
+      return res.status(200).send("Job started successfully");
+    } catch (err) {
+      return res.status(500).send("Internal Server error " + err);
     }
-
-    const user = await UsersModel.findOne({ where: { id: userId } });
-    if (!user) {
-      return res.status(400).send("Error getting user");
-    }
-    let ACCESS_TOKEN = user.access_token;
-    if (!ACCESS_TOKEN) {
-      return res
-        .status(400)
-        .send("User not linked to Plaid for user " + userId);
-    }
-
-    let cursor = user.cursor ? user.cursor : null;
-    let added = [];
-    let modified = [];
-    let removed = [];
-    let hasMore = true;
-
-    // Invalidate the access token to get a new one for periodic sync
-    const invalidateAccessTokenresponse =
-      await client.itemAccessTokenInvalidate({
-        access_token: ACCESS_TOKEN,
-      });
-    if (invalidateAccessTokenresponse.data.error) {
-      // Sentry.captureException(invalidateAccessTokenresponse.data.error);
-      return res.status(400).send(data.error);
-    }
-    ACCESS_TOKEN = invalidateAccessTokenresponse.data.new_access_token;
-    user.access_token = ACCESS_TOKEN;
-
-    // Sync transactions
-    while (hasMore) {
-      const response = await client.transactionsSync({
-        access_token: ACCESS_TOKEN,
-        cursor: cursor,
-      });
-      const data = response.data;
-      // Add this page of results
-      added = added.concat(data.added);
-      modified = modified.concat(data.modified);
-      removed = removed.concat(data.removed);
-      hasMore = data.has_more;
-      // Update cursor to the next cursor
-      cursor = data.next_cursor;
-    }
-    user.cursor = cursor;
-    await user.save();
-
-    // Create a job to process the transactions
-    transactionQueue
-      .createJob({
-        ACCESS_TOKEN,
-        userId,
-        added,
-        modified,
-        removed,
-      })
-      .on("succeeded", function () {
-        console.log(`Job succeeded`);
-      })
-      .on("failed", function (errorMessage) {
-        console.log(`Job failed with error message: ${errorMessage}`);
-      })
-      .on("retrying", function (err) {
-        console.log(
-          `Job failed with error message: ${err.message}.  It is being retried!`
-        );
-      })
-      .save();
-
-    return res.status(200).send("Job started successfully");
-  } catch (err) {
-    return res.status(500).send("Internal Server error " + err);
   }
-});
+);
 
 // check if user has linked Plaid: GET /api/plaid/has_linked_plaid?userId=${}
-plaidController.get("/has_linked_plaid", validateAccessToken, isAuthorizedUserId, async (req, res) => {
-  try {
-    const userId = req.query.userId;
-    if (!userId) {
-      return res
-        .status(400)
-        .send("Missing required fields. Must contain [userId]");
+plaidController.get(
+  "/has_linked_plaid",
+  validateAccessToken,
+  isAuthorizedUserId,
+  async (req, res) => {
+    try {
+      const userId = req.query.userId;
+      if (!userId) {
+        return res
+          .status(400)
+          .send("Missing required fields. Must contain [userId]");
+      }
+      const user = await UsersModel.findOne({ where: { id: userId } });
+      if (!user) {
+        return res.status(400).send("Error getting user");
+      }
+      if (user.access_token) {
+        return res.status(200).send("Success");
+      } else {
+        return res.status(400).send("No access token");
+      }
+    } catch (err) {
+      // Sentry.captureException(err);
+      return res.status(500).send("Internal Server error " + err);
     }
-    const user = await UsersModel.findOne({ where: { id: userId } });
-    if (!user) {
-      return res.status(400).send("Error getting user");
-    }
-    if (user.access_token) {
-      return res.status(200).send("Success");
-    } else {
-      return res.status(400).send("No access token");
-    }
-  } catch (err) {
-    // Sentry.captureException(err);
-    return res.status(500).send("Internal Server error " + err);
   }
-});
+);
 async function createPlaidTransactions(added) {
   for (let transaction of added) {
     const plaidAccountId = transaction.account_id;
