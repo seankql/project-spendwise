@@ -2,12 +2,15 @@ import Router from "express";
 import Sentry from "@sentry/node";
 import { AccountsModel } from "../models/accountsModel.js";
 import { TransactionsModel } from "../models/transactionsModel.js";
+import { UsersModel } from "../models/usersModel.js";
+import { validateAccessToken, isAuthorizedUserId } from "../middleware/auth.js";
+import jwt_decode from "jwt-decode";
 
 // Base route: /api/accounts
 export const accountsController = Router();
 
 // Create A new account: POST /api/accounts
-accountsController.post("/", async (req, res) => {
+accountsController.post("/", validateAccessToken, isAuthorizedUserId, async (req, res) => {
   try {
     if (!req.body.userId || !req.body.accountName) {
       return res.status(400).send("Missing required fields");
@@ -28,7 +31,7 @@ accountsController.post("/", async (req, res) => {
 });
 
 // Update an account: PUT /api/accounts/:accountId
-accountsController.put("/:accountId", async (req, res) => {
+accountsController.put("/:accountId", validateAccessToken, isAuthorizedUserId, async (req, res) => {
   try {
     const { accountId } = req.params;
     const data = {
@@ -61,10 +64,20 @@ accountsController.put("/:accountId", async (req, res) => {
 });
 
 // Delete an account: DELETE /api/accounts/:accountId
-accountsController.delete("/:accountId", async (req, res) => {
+accountsController.delete("/:accountId", validateAccessToken, async (req, res) => {
   try {
     const { accountId } = req.params;
     const account = await AccountsModel.findByPk(accountId);
+    // check if authorized to delete this account
+    const accessToken = req.headers.authorization.split(" ")[1];
+    const decoded = jwt_decode(accessToken);
+    const currentAuth0UserId = decoded.sub.split("|")[1];
+    const currentUser = await UsersModel.findOne({
+      where: { auth0UserId: currentAuth0UserId }
+    });
+    if (Number(currentUser.id) !== Number(account.UserId)) {
+      return res.status(403).send("Unauthorized");
+    }
     // delete all transactions assoicated with this account
     const transactions = await TransactionsModel.findAll({
       where: { AccountId: accountId },
@@ -95,7 +108,7 @@ accountsController.delete("/:accountId", async (req, res) => {
 });
 
 // Get all accounts for a user: GET /api/accounts/user/:userId
-accountsController.get("/user/:userId", async (req, res) => {
+accountsController.get("/user/:userId", validateAccessToken, isAuthorizedUserId, async (req, res) => {
   try {
     const { userId } = req.params;
     const accounts = await AccountsModel.findAll({
