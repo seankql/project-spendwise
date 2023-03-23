@@ -39,6 +39,20 @@ app.use(Sentry.Handlers.errorHandler());
 
 app.use("/api", router);
 
+process.on("SIGINT", () => {
+  console.log("Closing database connection...");
+  sequelize
+    .close()
+    .then(() => {
+      console.log("Database connection closed successfully.");
+      process.exit(0);
+    })
+    .catch((err) => {
+      console.error("Error closing database connection:", err);
+      process.exit(1);
+    });
+});
+
 app.listen(PORT, (err) => {
   if (err) {
     console.log(`Something went wrong while starting server on PORT: ${PORT}`);
