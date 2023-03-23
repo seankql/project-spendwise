@@ -153,3 +153,27 @@ export function getExpenseData(data, startDate, endDate) {
   });
   return result;
 }
+
+export function getIncomeExpenseData(data, startDate, endDate) {
+  if (!data) return;
+  let sums = getDefaultData(startDate, endDate);
+  for (let i = 0; i < data.length; i++) {
+    const entry = data[i];
+    const attrValue = entry["transactionDate"];
+    if (attrValue in sums) {
+      if (entry["category"] === "Income")
+        sums[attrValue] += parseInt(entry.amount);
+      else sums[attrValue] -= parseInt(entry.amount);
+    } else {
+      if (entry["category"] === "Income")
+        sums[attrValue] = parseInt(entry.amount);
+      else sums[attrValue] = -parseInt(entry.amount);
+    }
+  }
+  let result = [];
+  Object.keys(sums).forEach((key) => {
+    result.push({ x: key, y: sums[key] });
+  });
+  console.log(result);
+  return result;
+}

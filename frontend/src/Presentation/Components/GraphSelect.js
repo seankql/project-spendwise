@@ -4,6 +4,7 @@ import pie from "../../Media/analytics.png";
 import stack from "../../Media/graph-bar.png";
 import trenddown from "../../Media/trenddown.png";
 import trendup from "../../Media/trendup.png";
+import versus from "../../Media/bar-chart.png";
 
 export default function List({ setGraph }) {
   return (
@@ -41,6 +42,17 @@ export default function List({ setGraph }) {
         >
           <div className="graph-button-text"> Income Chart</div>
           <img src={trendup} className="graph-picture-wrapper" alt="income" />
+        </button>
+        <button
+          className="graph-button-wrapper"
+          onClick={() => setGraph("incomeexpenditure")}
+        >
+          <div className="graph-button-text"> Income VS Expenses</div>
+          <img
+            src={versus}
+            className="graph-picture-wrapper"
+            alt="income VS expense"
+          />
         </button>
       </div>
     </div>

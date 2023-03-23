@@ -3,6 +3,7 @@ import ExpenditureGraph from "./Graphs/ExpenditureGraph";
 import IncomeGraph from "./Graphs/IncomeGraph";
 import CategoryGraph from "./Graphs/CategoryGraph";
 import StackedAreaCategoryGraph from "./Graphs/StackedAreaCategoryGraph";
+import IncomeExpenditureGraph from "./Graphs/IncomeExpenditureGraph";
 
 export default function List({ graph, data, startDate, endDate }) {
   const getGraph = () => {
@@ -25,6 +26,14 @@ export default function List({ graph, data, startDate, endDate }) {
     if (graph === "expense")
       return (
         <ExpenditureGraph data={data} startDate={startDate} endDate={endDate} />
+      );
+    if (graph === "incomeexpenditure")
+      return (
+        <IncomeExpenditureGraph
+          data={data}
+          startDate={startDate}
+          endDate={endDate}
+        />
       );
   };
 
