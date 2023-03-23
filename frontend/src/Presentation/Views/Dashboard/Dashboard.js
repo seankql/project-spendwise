@@ -16,10 +16,11 @@ import { useAuth0 } from "@auth0/auth0-react";
 
 export default function Dashboard() {
   const {
+    getCurrentDate,
+    getDefaultStartDate,
     accounts,
     categoryData,
     transactions,
-    createUser,
     selectedAccount,
     setSelectedAccount,
     navigateToPage,
@@ -101,10 +102,18 @@ export default function Dashboard() {
         </div>
         <div className="page-row-container section-divider">
           <div className="graph-padder sml-graph-img-wrapper">
-            <IncomeGraph data={transactions?.transactions} />
+            <IncomeGraph
+              data={transactions?.transactions}
+              startDate={getDefaultStartDate()}
+              endDate={getCurrentDate()}
+            />
           </div>
           <div className="graph-padder sml-graph-img-wrapper row-right-element">
-            <ExpenditureGraph data={transactions?.transactions} />
+            <ExpenditureGraph
+              data={transactions?.transactions}
+              startDate={getDefaultStartDate()}
+              endDate={getCurrentDate()}
+            />
           </div>
         </div>
         <div

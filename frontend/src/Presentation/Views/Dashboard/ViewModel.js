@@ -31,8 +31,8 @@ export default function DashboardViewModel() {
     return `${year}-${month}-${day}`;
   }
 
-  function getCurrentMonth() {
-    const dateObj = new Date();
+  function getDefaultStartDate() {
+    const dateObj = new Date(new Date() - 1000 * 60 * 60 * 24 * 30);
     const year = dateObj.getFullYear();
     const month = (dateObj.getMonth() + 1).toString().padStart(2, "0");
     const day = "01";
@@ -60,14 +60,14 @@ export default function DashboardViewModel() {
   }
 
   async function getReports(userId) {
-    const startDate = getCurrentMonth();
+    const startDate = getDefaultStartDate();
     const endDate = getCurrentDate();
     const result = await getReportsUseCase(userId, startDate, endDate);
     setTransactions(result);
   }
 
   async function getAccountReports(accountId) {
-    const startDate = getCurrentMonth();
+    const startDate = getDefaultStartDate();
     const endDate = getCurrentDate();
     const result = await getAccountReportsUseCase(
       accountId,
@@ -78,7 +78,7 @@ export default function DashboardViewModel() {
   }
 
   async function getCategoryData(userId) {
-    const startDate = getCurrentMonth();
+    const startDate = getDefaultStartDate();
     const endDate = getCurrentDate();
     const result = await getCategoryReportsUseCase(userId, startDate, endDate);
     setCategoryData(result);
@@ -101,6 +101,8 @@ export default function DashboardViewModel() {
 
   return {
     error,
+    getCurrentDate,
+    getDefaultStartDate,
     accounts,
     getAccounts,
     categoryData,

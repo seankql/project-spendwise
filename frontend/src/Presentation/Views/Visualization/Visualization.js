@@ -73,6 +73,8 @@ export default function Visualization() {
           <VisualizationViewBox
             graph={graph}
             data={transactions?.transactions}
+            startDate={startDate}
+            endDate={endDate}
           />
         </div>
         <div id="Graph Select" className="section-wrapper">

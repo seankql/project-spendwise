@@ -5,68 +5,21 @@ import {
   VisArea,
   VisBulletLegend,
 } from "@unovis/react";
+import {
+  getLegend,
+  getStackedData,
+  convertToDateObject,
+} from "./GraphDataFormatter";
 import { CurveType } from "@unovis/ts";
 import "../../Styles/Components.css";
 
-export default function List({ data }) {
-  function getLegend(json) {
-    if (!json) return [];
-    let labels = [];
-    for (let i = 0; i < json.length; i++) {
-      const entry = json[i];
-      const attrValue = entry["category"];
-      if (!labels.includes(attrValue)) {
-        labels = [...labels, attrValue];
-      }
-    }
-    let labelsDict = [];
-    labels.forEach((val) => {
-      labelsDict = [...labelsDict, { name: val }];
-    });
-    return labelsDict;
-  }
-
-  function sumEntriesByAttribute(json) {
-    if (!json) return;
-    let sums = {};
-    for (let i = 0; i < json.length; i++) {
-      const entry = json[i];
-      const attrValue = entry["transactionDate"];
-      if (attrValue in sums) {
-        if (sums[attrValue][entry.category]) {
-          sums[attrValue][entry.category] += parseInt(entry.amount);
-        } else {
-          sums[attrValue].push(entry.category);
-          sums[attrValue][entry.category] = parseInt(entry.amount);
-        }
-      } else {
-        sums[attrValue] = [];
-        sums[attrValue].push(entry.category);
-        sums[attrValue][entry.category] = parseInt(entry.amount);
-      }
-    }
-    let result = [];
-    Object.keys(sums).forEach((key) => {
-      result.push({ x: key, y: sums[key] });
-    });
-    return result;
-  }
-
-  function convertToDateObject(dateString) {
-    const dateArray = dateString.split("-"); // Split the date string by hyphens
-    const year = parseInt(dateArray[0]);
-    const month = parseInt(dateArray[1]) - 1; // Subtract 1 from month since it's zero-indexed in the Date constructor
-    const day = parseInt(dateArray[2]);
-    const dateObj = new Date(year, month, day);
-    return dateObj;
-  }
-
+export default function List({ data, startDate, endDate }) {
   const dateFormatter = Intl.DateTimeFormat().format;
 
   return (
     <div>
       <VisBulletLegend items={getLegend(data)} />
-      <VisXYContainer data={sumEntriesByAttribute(data)}>
+      <VisXYContainer data={getStackedData(data, startDate, endDate)}>
         <VisArea
           x={useCallback((d) => convertToDateObject(d.x), [])}
           y={[
@@ -79,7 +32,12 @@ export default function List({ data }) {
           ]}
           curveType={CurveType.StepAfter}
         />
-        <VisAxis type="x" label="Date" tickFormat={dateFormatter} />
+        <VisAxis
+          type="x"
+          numTicks={5}
+          label="Date"
+          tickFormat={dateFormatter}
+        />
         <VisAxis type="y" label="Amount" />
       </VisXYContainer>
     </div>

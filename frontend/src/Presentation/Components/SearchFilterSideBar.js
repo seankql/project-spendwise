@@ -8,7 +8,7 @@ import "react-datepicker/dist/react-datepicker.css";
 export default function List({ setFilters }) {
   const [name, setName] = useState("");
   const [startDate, setStartDate] = useState(
-    new Date(new Date() - 1000 * 60 * 60 * 24 * 365)
+    new Date(new Date() - 1000 * 60 * 60 * 24 * 30)
   );
   const [endDate, setEndDate] = useState(new Date());
   const [minValue, setMinValue] = useState(0);
