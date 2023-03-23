@@ -1,3 +1,4 @@
+import React, { useCallback } from "react";
 // This file contains helper functions to format data returned by backend
 // into data that can be used by Unovis graphs
 
@@ -57,7 +58,7 @@ export function getLegend(data) {
   return labelsDict;
 }
 
-export function getCategoryData(data, startDate, endDate) {
+export function getCategoryData(data) {
   if (!data) return;
   let sums = {};
   for (let i = 0; i < data.length; i++) {
@@ -93,6 +94,23 @@ export function getStackedData(data, startDate, endDate) {
   Object.keys(sums).forEach((key) => {
     result.push({ x: key, y: sums[key] });
   });
+  return result;
+}
+
+export function getStackedDataAccessor(data) {
+  if (!data) return [];
+  let accessors = [];
+  for (let i = 0; i < data.length; i++) {
+    const entry = data[i];
+    const attrValue = entry["category"];
+    if (!accessors.includes(attrValue)) {
+      accessors = [...accessors, attrValue];
+    }
+  }
+  let result = [];
+  for (let i = 0; i < accessors.length; i++) {
+    result = [...result, (d) => d.y[accessors[i]]];
+  }
   return result;
 }
 

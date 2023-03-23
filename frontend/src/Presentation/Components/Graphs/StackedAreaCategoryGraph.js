@@ -9,6 +9,7 @@ import {
   getLegend,
   getStackedData,
   convertToDateObject,
+  getStackedDataAccessor,
 } from "./GraphDataFormatter";
 import { CurveType } from "@unovis/ts";
 import "../../Styles/Components.css";
@@ -22,14 +23,7 @@ export default function List({ data, startDate, endDate }) {
       <VisXYContainer data={getStackedData(data, startDate, endDate)}>
         <VisArea
           x={useCallback((d) => convertToDateObject(d.x), [])}
-          y={[
-            useCallback((d) => d.y["Grocery"], []),
-            useCallback((d) => d.y["Gas"], []),
-            useCallback((d) => d.y["Restaurants"], []),
-            useCallback((d) => d.y["Furniture"], []),
-            useCallback((d) => d.y["Groceries"], []),
-            useCallback((d) => d.y["Income"], []),
-          ]}
+          y={getStackedDataAccessor(data)}
           curveType={CurveType.StepAfter}
         />
         <VisAxis
