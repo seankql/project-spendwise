@@ -9,70 +9,80 @@ import { transactionQueue } from "../worker.js";
 export const plaidController = Router();
 
 // Obtain a link_token: GET /api/plaid/link_token?userId=${}
-plaidController.get("/link_token", async (req, res) => {
-  try {
-    const userId = req.query.userId;
-    if (!userId) {
-      return res
-        .status(400)
-        .send("Missing required fields. Must contain [userId]");
+plaidController.get(
+  "/link_token",
+  validateAccessToken,
+  isAuthorizedUserId,
+  async (req, res) => {
+    try {
+      const userId = req.query.userId;
+      if (!userId) {
+        return res
+          .status(400)
+          .send("Missing required fields. Must contain [userId]");
+      }
+      const createTokenResponse = await client.linkTokenCreate({
+        user: {
+          client_user_id: userId,
+        },
+        client_name: "SpendWise",
+        products: ["transactions"],
+        country_codes: ["US"],
+        language: "en",
+      });
+      return res.status(200).send({
+        link_token: createTokenResponse.data.link_token,
+      });
+    } catch (err) {
+      // Sentry.captureException(err);
+      return res.status(500).send("Internal Server error " + err);
     }
-    const createTokenResponse = await client.linkTokenCreate({
-      user: {
-        client_user_id: userId,
-      },
-      client_name: "SpendWise",
-      products: ["transactions"],
-      country_codes: ["US"],
-      language: "en",
-    });
-    return res.status(200).send({
-      link_token: createTokenResponse.data.link_token,
-    });
-  } catch (err) {
-    // Sentry.captureException(err);
-    return res.status(500).send("Internal Server error " + err);
   }
-});
+);
 
 // Exchange the public_token for an access_token and store it in the database: POST /api/plaid/token_exchange
-plaidController.post("/token_exchange", async (req, res) => {
-  try {
-    const public_token = req.body.public_token;
-    const userId = req.body.userId;
+plaidController.post(
+  "/token_exchange",
+  validateAccessToken,
+  isAuthorizedUserId,
+  async (req, res) => {
+    try {
+      const public_token = req.body.public_token;
+      const userId = req.body.userId;
 
-    if (!public_token || !userId) {
-      return res
-        .status(400)
-        .send("Missing required fields. Must contain [publicToken, userId]");
-    }
-    const tokenResponse = await client.itemPublicTokenExchange({
-      public_token: public_token,
-    });
+      if (!public_token || !userId) {
+        return res
+          .status(400)
+          .send("Missing required fields. Must contain [publicToken, userId]");
+      }
+      const tokenResponse = await client.itemPublicTokenExchange({
+        public_token: public_token,
+      });
 
-    let res_access_token = tokenResponse.data.access_token;
-    if (!res_access_token) {
-      return res.status(400).send("Error getting access token");
-    }
+      let res_access_token = tokenResponse.data.access_token;
+      if (!res_access_token) {
+        return res.status(400).send("Error getting access token");
+      }
 
-    // given the userId, update the user's access_token in the database
-    const user = await UsersModel.findOne({ where: { id: userId } });
-    if (!user) {
-      return res.status(400).send("Error getting user");
+      // given the userId, update the user's access_token in the database
+      const user = await UsersModel.findOne({ where: { id: userId } });
+      if (!user) {
+        return res.status(400).send("Error getting user");
+      }
+      const data = {
+        access_token: res_access_token,
+        email: user.email,
+        cursor: null,
+      };
+      await user.update(data);
+      await user.save();
+      return res.status(200).send("Success");
+    } catch (err) {
+      // Sentry.captureException(err);
+      return res.status(500).send("Internal Server error " + err);
     }
-    const data = {
-      access_token: res_access_token,
-      email: user.email,
-      cursor: null,
-    };
-    await user.update(data);
-    await user.save();
-    return res.status(200).send("Success");
-  } catch (err) {
-    // Sentry.captureException(err);
-    return res.status(500).send("Internal Server error " + err);
   }
-});
+);
 
 //Sync transactions given an userId that is linked to plaid: GET /api/plaid/transactions/sync?userId=${}
 plaidController.get("/transactions/sync", async (req, res) => {
