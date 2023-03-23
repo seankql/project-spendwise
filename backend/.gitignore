@@ -4,3 +4,5 @@ Thumbs.db
 
 # node.js
 node_modules/
+# redis
+dump.rdb

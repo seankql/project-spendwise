@@ -21,14 +21,28 @@
    ```
 
 6. Start Redis
+
    ```
    redis-server
    ```
-7. Start the development backend
+
+7. run worker.js
+
+   ```
+   node worker.js
+   ```
+
+8. run cron.js for scheduled jobs
+
+   ```
+   node cron.js
+   ```
+
+9. Start the development backend
    ```
    npm run dev
    ```
-8. The development backend will be running at http://localhost:3001
+10. The development backend will be running at http://localhost:3001
 
 ## Database Design
 
