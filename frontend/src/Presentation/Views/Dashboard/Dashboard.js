@@ -35,12 +35,18 @@ export default function Dashboard() {
     "Category Chart",
   ];
 
-  const { user, isAuthenticated, isLoading } = useAuth0();
+  const { user, isAuthenticated, isLoading, getAccessTokenSilently } =
+    useAuth0();
 
   useEffect(() => {
     if (user && isAuthenticated && !isLoading) {
-      //createUser(user);
-      fetchData(user);
+      getAccessTokenSilently({
+        authorizationParams: {
+          audience: "https://localhost:3001",
+        },
+      }).then((token) => {
+        fetchData(user, token);
+      });
     }
   }, [user, isAuthenticated, isLoading, selectedAccount]);
 

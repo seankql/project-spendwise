@@ -10,6 +10,7 @@ export default function DashboardViewModel() {
   const [selectedAccount, setSelectedAccount] = useState(null);
   const [transactions, setTransactions] = useState(null);
   const [categoryData, setCategoryData] = useState(null);
+  const [bearerToken, setBearerToken] = useState(null);
 
   const {
     getReportsUseCase,
@@ -50,52 +51,58 @@ export default function DashboardViewModel() {
     return result.id;
   }
 
-  async function createUser(user) {
-    await postUserUseCase(getUserId(user), user.email);
+  async function createUser(user, token = bearerToken) {
+    await postUserUseCase(getUserId(user), user.email, token);
   }
 
-  async function getAccounts(userId) {
-    const result = await getAccountsUseCase(userId);
+  async function getAccounts(userId, token = bearerToken) {
+    const result = await getAccountsUseCase(userId, token);
     setAccounts(result);
   }
 
-  async function getReports(userId) {
+  async function getReports(userId, token = bearerToken) {
     const startDate = getDefaultStartDate();
     const endDate = getCurrentDate();
-    const result = await getReportsUseCase(userId, startDate, endDate);
+    const result = await getReportsUseCase(userId, startDate, endDate, token);
     setTransactions(result);
   }
 
-  async function getAccountReports(accountId) {
+  async function getAccountReports(accountId, token = bearerToken) {
     const startDate = getDefaultStartDate();
     const endDate = getCurrentDate();
     const result = await getAccountReportsUseCase(
       accountId,
       startDate,
-      endDate
+      endDate,
+      token
     );
     setTransactions(result);
   }
 
-  async function getCategoryData(userId) {
+  async function getCategoryData(userId, token = bearerToken) {
     const startDate = getDefaultStartDate();
     const endDate = getCurrentDate();
-    const result = await getCategoryReportsUseCase(userId, startDate, endDate);
+    const result = await getCategoryReportsUseCase(
+      userId,
+      startDate,
+      endDate,
+      token
+    );
     setCategoryData(result);
   }
 
-  async function fetchData(user) {
-    const auth0User = user?.sub.split("|")[1];
-    const result = await getUserUseCase(auth0User);
+  async function fetchData(user, token) {
+    setBearerToken(token);
+    const result = await getUserUseCase(user?.sub.split("|")[1], token);
     if (!result) return;
     const userId = result.id;
 
-    getCategoryData(userId);
-    await getAccounts(userId);
+    getCategoryData(userId, token);
+    await getAccounts(userId, token);
     if (!selectedAccount) {
-      getReports(userId);
+      getReports(userId, token);
     } else {
-      getAccountReports(selectedAccount);
+      getAccountReports(selectedAccount, token);
     }
   }
 

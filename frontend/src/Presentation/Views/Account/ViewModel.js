@@ -16,6 +16,7 @@ export default function AccountViewModel() {
   const [accounts, setAccounts] = useState(null);
   const [transactionVisiblity, setTransactionVisiblity] = useState("hidden");
   const [linkToken, setLinkToken] = useState(null);
+  const [bearerToken, setBearerToken] = useState(null);
 
   const navigate = useNavigate();
 
@@ -37,11 +38,6 @@ export default function AccountViewModel() {
 
   function navigateToPage(page = "/") {
     navigate(page);
-  }
-
-  async function getAccounts(uId = userId) {
-    const result = await getAccountsUseCase(uId);
-    setAccounts(result);
   }
 
   function toggleTransactionVisiblity() {
@@ -66,59 +62,64 @@ export default function AccountViewModel() {
     setEmail(user.name);
   }
 
-  async function createAccount(name) {
-    await createAccountsUseCase(userId, name);
-    const result = await getAccountsUseCase(userId);
+  async function getAccounts(uId = userId, token = bearerToken) {
+    const result = await getAccountsUseCase(uId, token);
     setAccounts(result);
   }
 
-  async function updateAccount(name, accountId) {
-    await updateAccountsUseCase(userId, name, accountId);
-    const result = await getAccountsUseCase(userId);
+  async function createAccount(name, token = bearerToken) {
+    await createAccountsUseCase(userId, name, token);
+    const result = await getAccountsUseCase(userId, token);
     setAccounts(result);
   }
 
-  async function deleteAccount(accountId) {
-    await deleteAccountsUseCase(accountId);
-    const result = await getAccountsUseCase(userId);
+  async function updateAccount(name, accountId, token = bearerToken) {
+    await updateAccountsUseCase(userId, name, accountId, token);
+    const result = await getAccountsUseCase(userId, token);
     setAccounts(result);
   }
 
-  async function getPlaidLinkToken(userId) {
-    const result = await getPlaidLinkTokenUseCase(userId);
+  async function deleteAccount(accountId, token = bearerToken) {
+    await deleteAccountsUseCase(accountId, token);
+    const result = await getAccountsUseCase(userId, token);
+    setAccounts(result);
+  }
+
+  async function getPlaidLinkToken(userId, token = bearerToken) {
+    const result = await getPlaidLinkTokenUseCase(userId, token);
     setLinkToken(result.link_token);
   }
 
-  async function exchangePlaidToken(publicToken) {
-    await exchangePlaidTokenUseCase(userId, publicToken);
+  async function exchangePlaidToken(publicToken, token = bearerToken) {
+    await exchangePlaidTokenUseCase(userId, publicToken, token);
   }
 
-  async function syncPlaidTransactions() {
-    await syncPlaidTransactionsUseCase(userId);
+  async function syncPlaidTransactions(token = bearerToken) {
+    await syncPlaidTransactionsUseCase(userId, token);
   }
 
-  async function exchangeAndSync(publicToken) {
-    await exchangePlaidToken(userId, publicToken);
-    await syncPlaidTransactions(userId);
+  async function exchangeAndSync(publicToken, token = bearerToken) {
+    await exchangePlaidToken(userId, publicToken, token);
+    await syncPlaidTransactions(token);
   }
 
-  async function getPlaidLinkedStatus(userId) {
-    const result = await getPlaidLinkedStatusUseCase(userId);
+  async function getPlaidLinkedStatus(userId, token = bearerToken) {
+    const result = await getPlaidLinkedStatusUseCase(userId, token);
     setHasLinkedPlaid(result.status === 200);
   }
 
-  async function fetchData(user) {
+  async function fetchData(user, token) {
     if (!user) return;
     setProfileData(user);
-    const auth0User = user.sub.split("|")[1];
-    const result = await getUserUseCase(auth0User);
+    setBearerToken(token);
+    const result = await getUserUseCase(user.sub.split("|")[1], token);
     if (!result) return;
     const userId = result.id;
 
     setUserId(userId);
-    getAccounts(userId);
-    getPlaidLinkToken(userId);
-    getPlaidLinkedStatus(userId);
+    getAccounts(userId, token);
+    getPlaidLinkToken(userId, token);
+    getPlaidLinkedStatus(userId, token);
   }
 
   return {

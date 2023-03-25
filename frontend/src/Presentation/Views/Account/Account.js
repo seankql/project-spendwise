@@ -38,7 +38,8 @@ export default function Account() {
 
   const sectionList = ["Profile & Alerts", "Accounts", "Create New Account"];
 
-  const { user, isAuthenticated, isLoading } = useAuth0();
+  const { user, isAuthenticated, isLoading, getAccessTokenSilently } =
+    useAuth0();
 
   const { open, ready } = usePlaidLink({
     token: linkToken,
@@ -49,7 +50,13 @@ export default function Account() {
 
   useEffect(() => {
     if (user && isAuthenticated && !isLoading) {
-      fetchData(user);
+      getAccessTokenSilently({
+        authorizationParams: {
+          audience: "https://localhost:3001",
+        },
+      }).then((token) => {
+        fetchData(user, token);
+      });
     }
   }, [user, isAuthenticated, isLoading]);
 

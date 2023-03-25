@@ -1,5 +1,5 @@
 export default function TransactionsController() {
-  async function getTransactionsUseCase(userId, page, pageSize) {
+  async function getTransactionsUseCase(userId, page, pageSize, token) {
     return fetch(
       "http://localhost:3001/api/transactions?" +
         new URLSearchParams({
@@ -9,6 +9,10 @@ export default function TransactionsController() {
         }),
       {
         method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
       }
     ).then((res) => res.json());
   }
@@ -18,12 +22,14 @@ export default function TransactionsController() {
     category,
     amount,
     accountId,
-    date
+    date,
+    token
   ) {
     return fetch("http://localhost:3001/api/transactions", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify({
         accountId: accountId,
@@ -41,12 +47,14 @@ export default function TransactionsController() {
     amount,
     accountId,
     date,
-    transactionId
+    transactionId,
+    token
   ) {
     return fetch("http://localhost:3001/api/transactions/" + transactionId, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify({
         accountId: accountId,
@@ -58,9 +66,13 @@ export default function TransactionsController() {
     }).then((res) => res.json());
   }
 
-  async function deleteTransactionsUseCase(transactionId) {
+  async function deleteTransactionsUseCase(transactionId, token) {
     return fetch("http://localhost:3001/api/transactions/" + transactionId, {
       method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
     }).then((res) => res.json());
   }
 
@@ -74,7 +86,8 @@ export default function TransactionsController() {
     endDate,
     minAmount,
     maxAmount,
-    categories
+    categories,
+    token
   ) {
     let searchParams = new URLSearchParams({
       limit: limit,
@@ -94,6 +107,10 @@ export default function TransactionsController() {
         searchParams,
       {
         method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
       }
     ).then((res) => res.json());
   }

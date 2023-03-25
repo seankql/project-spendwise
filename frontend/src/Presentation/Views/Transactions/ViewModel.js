@@ -20,6 +20,7 @@ export default function TransactionsViewModel() {
   const [minValue, setMinValue] = useState(null);
   const [maxValue, setMaxValue] = useState(null);
   const [categories, setCategories] = useState(null);
+  const [bearerToken, setBearerToken] = useState(null);
 
   const {
     createTransactionsUseCase,
@@ -96,20 +97,26 @@ export default function TransactionsViewModel() {
     setCategories(filters.categories);
   }
 
-  async function getAccounts(uid = userId) {
-    const result = await getAccountsUseCase(uid);
+  async function getAccounts(uid = userId, token = bearerToken) {
+    const result = await getAccountsUseCase(uid, token);
     setAccounts(result);
   }
 
-  async function createTransaction(name, category, amount) {
+  async function createTransaction(
+    name,
+    category,
+    amount,
+    token = bearerToken
+  ) {
     await createTransactionsUseCase(
       name,
       category,
       amount,
       selectedAccount,
-      getCurrentDate()
+      getCurrentDate(),
+      token
     );
-    getFilterReports(userId, 9, page);
+    getFilterReports(userId, 9, page, token);
   }
 
   async function updateTransaction(
@@ -118,7 +125,8 @@ export default function TransactionsViewModel() {
     amount,
     date,
     transactionId,
-    accountId
+    accountId,
+    token = bearerToken
   ) {
     await updateTransactionsUseCase(
       name,
@@ -126,17 +134,23 @@ export default function TransactionsViewModel() {
       amount,
       accountId,
       date,
-      transactionId
+      transactionId,
+      token
     );
-    getFilterReports(userId, 9, page);
+    getFilterReports(userId, 9, page, token);
   }
 
-  async function deleteTransaction(transactionId) {
-    const result = await deleteTransactionsUseCase(transactionId);
-    getFilterReports(userId, 9, page);
+  async function deleteTransaction(transactionId, token = bearerToken) {
+    const result = await deleteTransactionsUseCase(transactionId, token);
+    getFilterReports(userId, 9, page, token);
   }
 
-  async function getFilterReports(uid = userId, limit, offset) {
+  async function getFilterReports(
+    uid = userId,
+    limit,
+    offset,
+    token = bearerToken
+  ) {
     const result = await getFilterTransactionsUseCase(
       uid,
       limit,
@@ -147,24 +161,25 @@ export default function TransactionsViewModel() {
       endDate,
       minValue,
       maxValue,
-      categories
+      categories,
+      token
     );
     if (result.transactions.length === 0 && page > 0) {
-      getFilterReports(userId, limit, offset - 1);
+      getFilterReports(userId, limit, offset - 1, token);
       setPage(page - 1);
     } else {
       setTransactions(result);
     }
   }
 
-  async function fetchData(user) {
-    const auth0User = user?.sub.split("|")[1];
-    const result = await getUserUseCase(auth0User);
+  async function fetchData(user, token) {
+    setBearerToken(token);
+    const result = await getUserUseCase(user?.sub.split("|")[1], token);
     if (!result) return;
     const userId = result.id;
 
-    getAccounts(userId);
-    getFilterReports(userId, 9, page);
+    getAccounts(userId, token);
+    getFilterReports(userId, 9, page, token);
     setUserId(userId);
   }
 

@@ -16,6 +16,7 @@ export default function VisualizationViewModel() {
   const [minValue, setMinValue] = useState(null);
   const [maxValue, setMaxValue] = useState(null);
   const [categories, setCategories] = useState(null);
+  const [bearerToken, setBearerToken] = useState(null);
 
   const navigate = useNavigate();
 
@@ -39,12 +40,12 @@ export default function VisualizationViewModel() {
     setCategories(filters.categories);
   }
 
-  async function getAccounts(userId) {
-    const result = await getAccountsUseCase(userId);
+  async function getAccounts(userId, token = bearerToken) {
+    const result = await getAccountsUseCase(userId, token);
     setAccounts(result);
   }
 
-  async function getFilterReports(userId) {
+  async function getFilterReports(userId, token = bearerToken) {
     const result = await getFilterTransactionsUseCase(
       userId,
       Number.MAX_SAFE_INTEGER,
@@ -55,19 +56,20 @@ export default function VisualizationViewModel() {
       endDate,
       minValue,
       maxValue,
-      categories
+      categories,
+      token
     );
     setTransactions(result);
   }
 
-  async function fetchData(user) {
-    const auth0User = user?.sub.split("|")[1];
-    const result = await getUserUseCase(auth0User);
+  async function fetchData(user, token) {
+    setBearerToken(token);
+    const result = await getUserUseCase(user?.sub.split("|")[1], token);
     if (!result) return;
     const userId = result.id;
 
-    getAccounts(userId);
-    getFilterReports(userId);
+    getAccounts(userId, token);
+    getFilterReports(userId, token);
   }
 
   return {

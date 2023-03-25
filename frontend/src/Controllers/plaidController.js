@@ -1,5 +1,5 @@
 export default function PlaidController() {
-  async function getPlaidLinkTokenUseCase(userId) {
+  async function getPlaidLinkTokenUseCase(userId, token) {
     return fetch(
       "http://localhost:3001/api/plaid/link_token?" +
         new URLSearchParams({
@@ -7,11 +7,15 @@ export default function PlaidController() {
         }),
       {
         method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
       }
     ).then((res) => res.json());
   }
 
-  async function syncPlaidTransactionsUseCase(userId) {
+  async function syncPlaidTransactionsUseCase(userId, token) {
     return fetch(
       "http://localhost:3001/api/plaid/transactions/sync?" +
         new URLSearchParams({
@@ -19,11 +23,15 @@ export default function PlaidController() {
         }),
       {
         method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
       }
     ).then((res) => res.json());
   }
 
-  async function getPlaidLinkedStatusUseCase(userId) {
+  async function getPlaidLinkedStatusUseCase(userId, token) {
     return fetch(
       "http://localhost:3001/api/plaid/has_linked_plaid?" +
         new URLSearchParams({
@@ -31,15 +39,20 @@ export default function PlaidController() {
         }),
       {
         method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
       }
     ).then((res) => res);
   }
 
-  async function exchangePlaidTokenUseCase(userId, public_token) {
+  async function exchangePlaidTokenUseCase(userId, public_token, token) {
     return fetch("http://localhost:3001/api/plaid/token_exchange", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify({
         userId: userId,

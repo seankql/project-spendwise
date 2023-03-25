@@ -39,11 +39,18 @@ export default function Transactions() {
 
   const sectionList = ["Add Transaction", "View Transactions"];
 
-  const { user, isAuthenticated, isLoading } = useAuth0();
+  const { user, isAuthenticated, isLoading, getAccessTokenSilently } =
+    useAuth0();
 
   useEffect(() => {
     if (user && isAuthenticated && !isLoading) {
-      fetchData(user);
+      getAccessTokenSilently({
+        authorizationParams: {
+          audience: "https://localhost:3001",
+        },
+      }).then((token) => {
+        fetchData(user, token);
+      });
     }
   }, [
     user,
