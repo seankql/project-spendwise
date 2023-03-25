@@ -27,3 +27,5 @@ https://blog.logrocket.com/customize-reusable-react-dropdown-menu-component/#:~:
 <a href="https://www.flaticon.com/free-icons/pie-chart" title="pie chart icons">Pie chart icons created by itim2101 - Flaticon</a>
 
 <a href="https://www.flaticon.com/free-icons/business-and-finance" title="business and finance icons">Business and finance icons created by Nuion - Flaticon</a>
+
+<a href="https://www.flaticon.com/free-icons/graph" title="graph icons">Graph icons created by Freepik - Flaticon</a>

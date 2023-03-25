@@ -5,19 +5,23 @@ import {
   VisStackedBar,
   VisBulletLegend,
 } from "@unovis/react";
-import { getExpenseData, convertToDateObject } from "./GraphDataFormatter";
+import {
+  getIncomeExpenseData,
+  convertToDateObject,
+} from "./GraphDataFormatter";
 import "../../Styles/Components.css";
 
 export default function List({ data, startDate, endDate }) {
   const dateFormatter = Intl.DateTimeFormat().format;
+  const color = (d) => (d.y > 0 ? "#8bc53f" : "#FF0000");
 
   return (
     <div>
-      <VisXYContainer data={getExpenseData(data, startDate, endDate)}>
+      <VisXYContainer data={getIncomeExpenseData(data, startDate, endDate)}>
         <VisStackedBar
           x={useCallback((d) => convertToDateObject(d.x), [])}
-          y={useCallback((d) => d.y, [])}
-          color={"#FF0000"}
+          y={useCallback((d) => Math.abs(d.y), [])}
+          color={color}
         ></VisStackedBar>
         <VisAxis
           type="x"

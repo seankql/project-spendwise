@@ -5,50 +5,27 @@ import {
   VisStackedBar,
   VisBulletLegend,
 } from "@unovis/react";
+import { getIncomeData, convertToDateObject } from "./GraphDataFormatter";
 import "../../Styles/Components.css";
 
-export default function List({ data }) {
-  function sumEntriesByAttribute(json) {
-    if (!json) return;
-    let sums = {};
-    for (let i = 0; i < json.length; i++) {
-      const entry = json[i];
-      const attrValue = entry["transactionDate"];
-      if (entry["category"] !== "Income") continue;
-      if (attrValue in sums) {
-        sums[attrValue] += parseInt(entry.amount);
-      } else {
-        sums[attrValue] = parseInt(entry.amount);
-      }
-    }
-    let result = [];
-    Object.keys(sums).forEach((key) => {
-      result.push({ x: key, y: sums[key] });
-    });
-    return result;
-  }
-
-  function convertToDateObject(dateString) {
-    const dateArray = dateString.split("-"); // Split the date string by hyphens
-    const year = parseInt(dateArray[0]);
-    const month = parseInt(dateArray[1]) - 1; // Subtract 1 from month since it's zero-indexed in the Date constructor
-    const day = parseInt(dateArray[2]);
-    const dateObj = new Date(year, month, day);
-    return dateObj;
-  }
-
+export default function List({ data, startDate, endDate }) {
   const dateFormatter = Intl.DateTimeFormat().format;
 
   return (
     <div>
-      <VisXYContainer data={sumEntriesByAttribute(data)}>
+      <VisXYContainer data={getIncomeData(data, startDate, endDate)}>
         <VisStackedBar
           x={useCallback((d) => convertToDateObject(d.x), [])}
           y={useCallback((d) => d.y, [])}
           color={"#8bc53f"}
         ></VisStackedBar>
-        <VisAxis type="x" tickFormat={dateFormatter}></VisAxis>
-        <VisAxis type="y"></VisAxis>
+        <VisAxis
+          type="x"
+          label="Date"
+          numTicks={5}
+          tickFormat={dateFormatter}
+        ></VisAxis>
+        <VisAxis type="y" label="Amount"></VisAxis>
       </VisXYContainer>
     </div>
   );

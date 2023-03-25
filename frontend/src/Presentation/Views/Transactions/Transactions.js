@@ -22,7 +22,7 @@ export default function Transactions() {
     incrementPage,
     decrementPage,
     selectedAccount,
-    setSelectedAccount,
+    setSelectedAccountFunction,
     createTransaction,
     getCreateTransactionVisibility,
     setFilters,
@@ -69,7 +69,7 @@ export default function Transactions() {
         <div className="page-header-text page-row-container">
           Transactions
           <div className="row-right-element">
-            <AccountSelect data={accounts} set={setSelectedAccount} />
+            <AccountSelect data={accounts} set={setSelectedAccountFunction} />
           </div>
         </div>
         <div className={"section-divider " + getCreateTransactionVisibility()}>
