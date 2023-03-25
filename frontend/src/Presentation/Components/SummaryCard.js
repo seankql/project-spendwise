@@ -28,9 +28,9 @@ export default function List({
     if (isIncome) {
       return aggregatedData;
     } else {
-      return data['expense'][category]?.amount.toFixed(2);
+      return data["expense"][category]?.amount.toFixed(2);
     }
-  }
+  };
 
   const createNewRowElement = (category, isIncome) => {
     return (
@@ -49,10 +49,9 @@ export default function List({
     if (!data) return;
     let elements = [];
     if (isIncome) {
-      elements.push(createNewRowElement('income', true));
-    }
-    else {
-      for (let category in data['expense']) {
+      elements.push(createNewRowElement("income", true));
+    } else {
+      for (let category in data["expense"]) {
         elements.push(createNewRowElement(category, false));
       }
     }
