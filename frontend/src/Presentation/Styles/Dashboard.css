@@ -36,3 +36,7 @@
   border-bottom: 1px #e0e0e0 solid;
   padding-bottom: 10px;
 }
+
+.graph-padder {
+  margin-top: 12px;
+}

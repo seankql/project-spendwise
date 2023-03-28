@@ -2,24 +2,33 @@ import React, { useEffect } from "react";
 import useViewModel from "./ViewModel";
 import Banner from "../../Components/Banner";
 import ScrollBanner from "../../Components/ScrollBanner";
-import InfoCard from "../../Components/InfoCard";
+import ProfileCard from "../../Components/ProfileCard";
 import AlertCard from "../../Components/AlertCard";
 import AccountCardGenerator from "../../Components/AccountCardGenerator";
 import AccountForm from "../../Components/AccountForm";
+import { usePlaidLink } from "react-plaid-link";
 import "../../Styles/Common.css";
 import "../../Styles/Account.css";
 import "../../Styles/Main.css";
+import { useAuth0 } from "@auth0/auth0-react";
 
 export default function Account() {
   const {
+    email,
+    dateCreated,
+    nickname,
     getArrow,
-    basicInfo,
-    getBasicInfo,
     accounts,
     getAccounts,
     transactionVisiblity,
     toggleTransactionVisiblity,
     createAccount,
+    updateAccount,
+    deleteAccount,
+    fetchData,
+    linkToken,
+    exchangeAndSync,
+    hasLinkedPlaid,
   } = useViewModel();
 
   // TODO: Show different "Bank Information" form depending on whether or not
@@ -29,10 +38,27 @@ export default function Account() {
 
   const sectionList = ["Profile & Alerts", "Accounts", "Create New Account"];
 
+  const { user, isAuthenticated, isLoading, getAccessTokenSilently } =
+    useAuth0();
+
+  const { open, ready } = usePlaidLink({
+    token: linkToken,
+    onSuccess: (public_token, metadata) => {
+      exchangeAndSync((public_token = public_token));
+    },
+  });
+
   useEffect(() => {
-    getBasicInfo();
-    getAccounts(1);
-  }, []);
+    if (user && isAuthenticated && !isLoading) {
+      getAccessTokenSilently({
+        authorizationParams: {
+          audience: "https://localhost:3001",
+        },
+      }).then((token) => {
+        fetchData(user, token);
+      });
+    }
+  }, [user, isAuthenticated, isLoading]);
 
   return (
     <div className="body-wrapper">
@@ -48,13 +74,27 @@ export default function Account() {
             Profile & Alerts
           </div>
           <div className="section-wrapper page-row-container section-divider">
-            <InfoCard
-              data={basicInfo}
-              title={"Basic Information"}
+            <ProfileCard
+              email={email}
+              nickname={nickname}
+              dateCreated={dateCreated}
               classes={"basic-info-card"}
             />
             <div className="page-col-container row-right-element">
-              <AlertCard title={"Alerts"} classes={"alert-card "} />
+              <div className="section-wrapper ">
+                {hasLinkedPlaid ? (
+                  ""
+                ) : (
+                  <button
+                    type="button"
+                    onClick={() => open()}
+                    disabled={!ready}
+                    className={"btn btn-sml account-btns-left"}
+                  >
+                    Connect a bank account
+                  </button>
+                )}
+              </div>
             </div>
           </div>
         </div>
@@ -62,7 +102,11 @@ export default function Account() {
           {" "}
           Accounts{" "}
         </div>
-        <AccountCardGenerator data={accounts} />
+        <AccountCardGenerator
+          data={accounts}
+          editSubmit={updateAccount}
+          deleteFunction={deleteAccount}
+        />
         <div className="section-divider">
           <div
             id="Create New Account"
@@ -82,7 +126,8 @@ export default function Account() {
           </div>
           <div
             className={
-              "section-wrapper page-row-container " + transactionVisiblity
+              "section-wrapper page-row-container bottom-elem-padder " +
+              transactionVisiblity
             }
           >
             <AccountForm submit={createAccount} />

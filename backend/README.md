@@ -14,20 +14,44 @@
 
 4. Start/Create PostgreSQL locally by creating a database. Make sure the Database name and password match what is written in `.env`
 
-5. Start the development backend
+5. Install Redis if not already installed
+
+   ```
+   brew install redis
+   ```
+
+6. Start Redis
+
+   ```
+   redis-server
+   ```
+
+7. run worker.js
+
+   ```
+   node worker.js
+   ```
+
+8. run cron.js for scheduled jobs
+
+   ```
+   node cron.js
+   ```
+
+9. Start the development backend
    ```
    npm run dev
    ```
-6. The development backend will be running at http://localhost:3001
+10. The development backend will be running at http://localhost:3001
 
 ## Database Design
 
 1. Users Table
    - This table would contain information about the user such as
      - id (primary key)
-     - username
-     - hashedPassword
      - email
+     - access_token
+     - cursor
 2. Accounts Table
    - This table would contain information about the financial accounts that each user has.
    - Contains fields such as
@@ -45,6 +69,7 @@
      - amount
      - accountId (foregin key)
      - category
+     - plaidTransactionId
    - Each transaction must be associated with one account & one category.
 
 ## Deployment

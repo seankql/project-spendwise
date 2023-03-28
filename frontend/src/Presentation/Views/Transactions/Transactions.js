@@ -2,15 +2,14 @@ import React, { useEffect } from "react";
 import useViewModel from "./ViewModel";
 import Banner from "../../Components/Banner";
 import ScrollBanner from "../../Components/ScrollBanner";
-import TransactionViewToggle from "../../Components/TransactionViewToggle";
-import TransactionListTable from "../../Components/TransactionListTable";
 import TransactionForm from "../../Components/TransactionForm";
-import ListScroller from "../../Components/ListScroller";
 import SearchFilterSideBar from "../../Components/SearchFilterSideBar";
 import AccountSelect from "../../Components/AccountSelect";
+import TransactionViewBox from "../../Components/TransactionViewBox";
 import "../../Styles/Common.css";
 import "../../Styles/Main.css";
 import "../../Styles/Transactions.css";
+import { useAuth0 } from "@auth0/auth0-react";
 
 export default function Transactions() {
   const {
@@ -18,18 +17,56 @@ export default function Transactions() {
     transactionVisiblity,
     toggleTransactionVisiblity,
     accounts,
-    getAccounts,
     transactions,
-    getTransactions,
+    page,
+    incrementPage,
+    decrementPage,
+    selectedAccount,
+    setSelectedAccountFunction,
     createTransaction,
+    getCreateTransactionVisibility,
+    setFilters,
+    updateTransaction,
+    deleteTransaction,
+    name,
+    startDate,
+    endDate,
+    minValue,
+    maxValue,
+    categories,
+    fetchData,
   } = useViewModel();
 
   const sectionList = ["Add Transaction", "View Transactions"];
 
+  const { user, isAuthenticated, isLoading, getAccessTokenSilently } =
+    useAuth0();
+
   useEffect(() => {
-    getAccounts(1);
-    getTransactions(1, 0, 16);
-  }, []);
+    if (user && isAuthenticated && !isLoading) {
+      getAccessTokenSilently({
+        authorizationParams: {
+          audience: "https://localhost:3001",
+        },
+      }).then((token) => {
+        fetchData(user, token);
+      });
+    }
+  }, [
+    user,
+    isAuthenticated,
+    isLoading,
+    isAuthenticated,
+    isLoading,
+    page,
+    selectedAccount,
+    name,
+    startDate,
+    endDate,
+    minValue,
+    maxValue,
+    categories,
+  ]);
 
   return (
     <div className="body-wrapper">
@@ -39,10 +76,10 @@ export default function Transactions() {
         <div className="page-header-text page-row-container">
           Transactions
           <div className="row-right-element">
-            <AccountSelect data={accounts} />
+            <AccountSelect data={accounts} set={setSelectedAccountFunction} />
           </div>
         </div>
-        <div className="section-divider">
+        <div className={"section-divider " + getCreateTransactionVisibility()}>
           <div
             id="Add Transaction"
             className="section-wrapper page-row-container section-header-text"
@@ -66,19 +103,17 @@ export default function Transactions() {
         </div>
         <div
           id="View Transactions"
-          className="section-wrapper page-row-container"
+          className="section-wrapper page-row-container bottom-elem-padder"
         >
-          <SearchFilterSideBar />
-          <div className="transactions-col">
-            <div className="page-row-container">
-              <div className="section-header-text">Transaction List</div>
-              <div className="row-right-element">
-                <TransactionViewToggle />
-              </div>
-            </div>
-            <TransactionListTable data={transactions} />
-            <ListScroller />
-          </div>
+          <SearchFilterSideBar setFilters={setFilters} />
+          <TransactionViewBox
+            transactions={transactions}
+            page={page}
+            inc={incrementPage}
+            dec={decrementPage}
+            editSubmit={updateTransaction}
+            deleteFunction={deleteTransaction}
+          />
         </div>
       </div>
       <footer />

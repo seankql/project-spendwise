@@ -1,5 +1,6 @@
 import express from "express";
 import bodyParser from "body-parser";
+import cors from "cors";
 import { router } from "./routers/router.js";
 import * as Sentry from "@sentry/node";
 import { config } from "./config/config.js";
@@ -8,8 +9,10 @@ import { sequelize } from "./database/database.js";
 const PORT = 3001;
 
 export const app = express();
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(express.static("static"));
+app.use(cors());
 
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
@@ -35,6 +38,20 @@ app.use(Sentry.Handlers.requestHandler());
 app.use(Sentry.Handlers.errorHandler());
 
 app.use("/api", router);
+
+process.on("SIGINT", () => {
+  console.log("Closing database connection...");
+  sequelize
+    .close()
+    .then(() => {
+      console.log("Database connection closed successfully.");
+      process.exit(0);
+    })
+    .catch((err) => {
+      console.error("Error closing database connection:", err);
+      process.exit(1);
+    });
+});
 
 app.listen(PORT, (err) => {
   if (err) {

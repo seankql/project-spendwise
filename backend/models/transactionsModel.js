@@ -9,6 +9,7 @@ CREATE TABLE IF NOT EXISTS Transactions (
   amount DECIMAL(10, 2) NOT NULL,
   accountId INTEGER NOT NULL REFERENCES Accounts(accountId),
   category VARCHAR(255) NOT NULL
+  plaidTransactionId VARCHAR(255)
 );
 */
 
@@ -28,6 +29,10 @@ export const TransactionsModel = sequelize.define("Transactions", {
   category: {
     type: DataTypes.STRING(255),
     allowNull: false,
+  },
+  plaidTransactionId: {
+    type: DataTypes.STRING(255),
+    allowNull: true,
   },
 });
 AccountsModel.hasMany(TransactionsModel);
