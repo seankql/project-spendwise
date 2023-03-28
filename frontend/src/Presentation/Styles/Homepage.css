@@ -26,5 +26,69 @@
 
 .image-banner {
   width: 100%;
+  margin-top: 0px;
+  margin-bottom: -6px;
   mask-image: linear-gradient(to left, rgba(0, 0, 0, 1) 30%, transparent 80%);
+}
+
+.section {
+  position: relative;
+}
+
+.home-section-wrapper {
+  display: flex;
+  padding-top: 100px;
+  padding-bottom: 100px;
+  max-width: 1024px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.home-section-block {
+  display: flex;
+  margin-right: auto;
+  margin-left: auto;
+  flex-direction: row;
+}
+
+.part {
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  width: 45%;
+}
+
+.white {
+  background-color: #fff;
+}
+
+.off-white {
+  background-color: #f8f8f8;
+}
+
+.background-circle {
+  display: flex;
+  width: 450px;
+  height: 450px;
+  align-items: center;
+  border-radius: 100%;
+  background-image: linear-gradient(145deg, #8bc53f, #5d9943 80%);
+}
+
+.section-img {
+  margin: auto;
+}
+
+.section-header-text {
+  color: black;
+  font-size: 32px;
+  font-weight: bold;
+  line-height: 100%;
+  margin-bottom: 10px;
+}
+
+.section-paragraph-text {
+  color: #545453;
+  font-size: 20px;
+  line-height: 150%;
 }
