@@ -34,13 +34,13 @@ export default function Homepage() {
             {" "}
             Track your spending a wiser way{" "}
           </div>
-          <p>
+          <div className="section-paragraph-text">
             {" "}
             With SpendWise, you can track your income and expenses all in one
             place. Whether you choose to enter your transactions manually or
             automatically import them from your bank account, we're here to
             help.
-          </p>
+          </div>
         </div>
       </div>
       <div id="about">
