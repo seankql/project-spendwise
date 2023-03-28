@@ -173,6 +173,5 @@ export function getIncomeExpenseData(data, startDate, endDate) {
   Object.keys(sums).forEach((key) => {
     result.push({ x: key, y: sums[key] });
   });
-  console.log(result);
   return result;
 }

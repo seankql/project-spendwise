@@ -84,7 +84,7 @@ export default function Visualization() {
             endDate={endDate}
           />
         </div>
-        <div id="Graph Select" className="section-wrapper">
+        <div id="Graph Select" className="section-wrapper bottom-elem-padder">
           <GraphSelect setGraph={setGraph} />
         </div>
       </div>

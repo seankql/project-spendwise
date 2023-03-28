@@ -126,7 +126,8 @@ export default function Account() {
           </div>
           <div
             className={
-              "section-wrapper page-row-container " + transactionVisiblity
+              "section-wrapper page-row-container bottom-elem-padder " +
+              transactionVisiblity
             }
           >
             <AccountForm submit={createAccount} />
