@@ -1,4 +1,3 @@
-import React, { useCallback } from "react";
 // This file contains helper functions to format data returned by backend
 // into data that can be used by Unovis graphs
 
@@ -174,6 +173,5 @@ export function getIncomeExpenseData(data, startDate, endDate) {
   Object.keys(sums).forEach((key) => {
     result.push({ x: key, y: sums[key] });
   });
-  console.log(result);
   return result;
 }

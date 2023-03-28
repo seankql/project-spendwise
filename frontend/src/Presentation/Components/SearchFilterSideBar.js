@@ -12,7 +12,7 @@ export default function List({ setFilters }) {
   );
   const [endDate, setEndDate] = useState(new Date());
   const [minValue, setMinValue] = useState(0);
-  const [maxValue, setMaxValue] = useState(2000);
+  const [maxValue, setMaxValue] = useState(5000);
   const [categories, setCategories] = useState([]);
 
   function dateFormatter(date) {
@@ -86,7 +86,7 @@ export default function List({ setFilters }) {
         <>
           <Slider
             min={0}
-            max={2000}
+            max={5000}
             defaultValue={minValue}
             onAfterChange={(value) => setMinValue(value)}
             trackStyle={{ backgroundColor: "#8bc53f" }}
@@ -100,7 +100,7 @@ export default function List({ setFilters }) {
         <>
           <Slider
             min={0}
-            max={2000}
+            max={5000}
             defaultValue={maxValue}
             onAfterChange={(value) => setMaxValue(value)}
             trackStyle={{ backgroundColor: "#8bc53f" }}

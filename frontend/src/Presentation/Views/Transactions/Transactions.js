@@ -103,7 +103,7 @@ export default function Transactions() {
         </div>
         <div
           id="View Transactions"
-          className="section-wrapper page-row-container"
+          className="section-wrapper page-row-container bottom-elem-padder"
         >
           <SearchFilterSideBar setFilters={setFilters} />
           <TransactionViewBox

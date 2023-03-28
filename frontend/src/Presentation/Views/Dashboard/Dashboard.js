@@ -128,7 +128,7 @@ export default function Dashboard() {
         >
           Category Chart
         </div>
-        <div className="graph-padder">
+        <div className="graph-padder bottom-elem-padder">
           <CategoryGraph data={transactions?.transactions} />
         </div>
       </div>

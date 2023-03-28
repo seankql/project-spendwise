@@ -99,8 +99,8 @@ export default function AccountViewModel() {
   }
 
   async function exchangeAndSync(publicToken, token = bearerToken) {
-    await exchangePlaidToken(userId, publicToken, token);
-    await syncPlaidTransactions(token);
+    exchangePlaidToken(publicToken, token);
+    syncPlaidTransactions(token);
   }
 
   async function getPlaidLinkedStatus(userId, token = bearerToken) {

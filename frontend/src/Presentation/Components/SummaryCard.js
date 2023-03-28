@@ -24,14 +24,22 @@ export default function List({
     }
   };
 
-  const createNewRowElement = (category) => {
+  const getAmount = (category, isIncome) => {
+    if (isIncome) {
+      return aggregatedData;
+    } else {
+      return data["expense"][category]?.amount.toFixed(2);
+    }
+  };
+
+  const createNewRowElement = (category, isIncome) => {
     return (
       <div key={category} className="page-row-container">
         <div className="component-subheader-text card-sml-padding-wrapper">
           {category}
         </div>
         <div className="row-right-element card-sml-padding-wrapper">
-          {data[category]?.amount.toFixed(2)}
+          {getAmount(category, isIncome)}
         </div>
       </div>
     );
@@ -40,10 +48,12 @@ export default function List({
   const getRows = () => {
     if (!data) return;
     let elements = [];
-    for (let category in data) {
-      if (isIncome && category !== "Income") continue;
-      if (!isIncome && category === "Income") continue;
-      elements.push(createNewRowElement(category));
+    if (isIncome) {
+      elements.push(createNewRowElement("income", true));
+    } else {
+      for (let category in data["expense"]) {
+        elements.push(createNewRowElement(category, false));
+      }
     }
     return elements;
   };

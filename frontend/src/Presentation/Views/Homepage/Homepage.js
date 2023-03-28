@@ -1,68 +1,32 @@
 import logo from "../../../Media/logo-no-background.png";
-import imageBanner from "../../../Media/homepage-banner.png";
+import imageBanner from "../../../Media/pexels-andrea-piacquadio.jpg";
+import aboutPicture from "../../../Media/pexels-mikhail-nilov.jpg";
+import featurePicture from "../../../Media/pexels-photo-4386433.webp";
 import { Link } from "react-scroll";
+import ScrollBanner from "../../Components/ScrollBanner";
+import SigninSignupButton from "../../Components/SigninSignupButton";
+import HomepageSection from "../../Components/HomepageSection";
 import "../../Styles/Common.css";
 import "../../Styles/Main.css";
 import "../../Styles/Homepage.css";
-import SigninSignupButton from "../../Components/SigninSignupButton";
 
 export default function Homepage() {
+  const AboutDescription =
+    "SpendWise's user-friendly interface provides you with a clear overview of your financial situation. You can analyze your transactions and monitor your progress towards your financial goals using our advanced reporting features and visualization tools. Whether you're a student, professional, or entrepreneur, SpendWise is a powerful tool that can help you manage your finances more effectively. With SpendWise, you can track your spending a wiser way and take control of your financial future.";
+
+  const sectionList = ["home", "about", "features", "contact"];
+
   return (
     <div className="body-wrapper">
       <div className="banner">
         <div className="banner-wrapper">
           <img className="banner-img-container" src={logo} alt="logo" />
-          <div className="links-container">
-            <div className="btn-alt btn-sml banner-link-component-container">
-              <Link
-                activeClass="active"
-                to="home"
-                spy={true}
-                smooth={true}
-                offset={-128}
-              >
-                Home
-              </Link>
-            </div>
-            <div className="btn-alt btn-sml banner-link-component-container">
-              <Link
-                activeClass="active"
-                to="about"
-                spy={true}
-                smooth={true}
-                offset={-128}
-              >
-                About Us
-              </Link>
-            </div>
-            <div className="btn-alt btn-sml banner-link-component-container">
-              <Link
-                activeClass="active"
-                to="features"
-                spy={true}
-                smooth={true}
-                offset={-128}
-              >
-                Features
-              </Link>
-            </div>
-            <div className="btn-alt btn-sml banner-link-component-container">
-              <Link
-                activeClass="active"
-                to="contact"
-                spy={true}
-                smooth={true}
-                offset={-128}
-              >
-                Contact
-              </Link>
-            </div>
-          </div>
           <div className="auth-container">
             <SigninSignupButton />
           </div>
         </div>
       </div>
+      <ScrollBanner data={sectionList} />
       <div id="home" className="image-banner-wrapper">
         <img className="image-banner" src={imageBanner} alt="banner" />
         <div className="image-banner-text-container">
@@ -70,36 +34,40 @@ export default function Homepage() {
             {" "}
             Track your spending a wiser way{" "}
           </div>
-          <p>
+          <div className="section-paragraph-text">
             {" "}
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus
-            tempor molestie lorem laoreet vehicula. Integer pellentesque mattis
-            eros nec porttitor. Aenean sagittis elit at maximus imperdiet. Etiam
-            maximus tortor vitae est lacinia semper. In hac habitasse platea
-            dictumst. Nulla vehicula fringilla mi eu commodo. Pellentesque ac
-            tellus dolor.
-          </p>
+            With SpendWise, you can track your income and expenses all in one
+            place. Whether you choose to enter your transactions manually or
+            automatically import them from your bank account, we're here to
+            help.
+          </div>
         </div>
       </div>
-      <div className="page-content-container">
-        <div id="about" style={{ height: 500 }}>
-          <h1>This is About section</h1>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Id,
-          repellendus. Totam nihil similique a repellat minus dolor amet quasi.
-          Corporis nulla quaerat iste, sed quasi ab dolorem maxime minima animi.
-        </div>
-        <div id="features" style={{ height: 500 }}>
-          <h1>This is Features section</h1>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Id,
-          repellendus. Totam nihil similique a repellat minus dolor amet quasi.
-          Corporis nulla quaerat iste, sed quasi ab dolorem maxime minima animi.
-        </div>
-        <div id="contact" style={{ height: 500 }}>
-          <h1>This is Contacts section</h1>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Id,
-          repellendus. Totam nihil similique a repellat minus dolor amet quasi.
-          Corporis nulla quaerat iste, sed quasi ab dolorem maxime minima animi.
-        </div>
+      <div id="about">
+        <HomepageSection
+          header="About Us"
+          description={AboutDescription}
+          image={aboutPicture}
+          background={"off-white"}
+        />
+      </div>
+      <div id="features">
+        <HomepageSection
+          header="Features"
+          description={AboutDescription}
+          image={featurePicture}
+          background={"white"}
+          direction="right"
+        />
+      </div>
+      <div id="contact">
+        <HomepageSection
+          header="contact"
+          description={AboutDescription}
+          image={aboutPicture}
+          background={"off-white"}
+          direction="left"
+        />
       </div>
       <footer />
     </div>
