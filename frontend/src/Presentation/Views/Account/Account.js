@@ -44,7 +44,7 @@ export default function Account() {
   const { open, ready } = usePlaidLink({
     token: linkToken,
     onSuccess: (public_token, metadata) => {
-      exchangeAndSync(public_token);
+      exchangeAndSync((public_token = public_token));
     },
   });
 
@@ -81,7 +81,6 @@ export default function Account() {
               classes={"basic-info-card"}
             />
             <div className="page-col-container row-right-element">
-              <AlertCard title={"Alerts"} classes={"alert-card "} />
               <div className="section-wrapper ">
                 {hasLinkedPlaid ? (
                   ""
