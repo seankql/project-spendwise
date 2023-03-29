@@ -98,7 +98,8 @@ export default function DashboardViewModel() {
     if (result.status !== 200) {
       await createUser(user, token);
     }
-    const userId = result.id;
+    const resultJson = await result.json();
+    const userId = resultJson.id;
 
     getCategoryData(userId, token);
     await getAccounts(userId, token);
