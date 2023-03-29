@@ -14,23 +14,6 @@ export default function PlaidController() {
       }
     ).then((res) => res.json());
   }
-
-  async function syncPlaidTransactionsUseCase(userId, token) {
-    return fetch(
-      "http://localhost:3001/api/plaid/transactions/sync?" +
-        new URLSearchParams({
-          userId: userId,
-        }),
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    ).then((res) => res.json());
-  }
-
   async function getPlaidLinkedStatusUseCase(userId, token) {
     return fetch(
       "http://localhost:3001/api/plaid/has_linked_plaid?" +
@@ -58,12 +41,24 @@ export default function PlaidController() {
         userId: userId,
         public_token: public_token,
       }),
-    }).then((res) => res.json());
+    }).then((res) => {
+      fetch(
+        "http://localhost:3001/api/plaid/transactions/sync?" +
+          new URLSearchParams({
+            userId: userId,
+          }),
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      ).then((res) => res.json());
+    });
   }
 
   return {
     getPlaidLinkTokenUseCase,
-    syncPlaidTransactionsUseCase,
     getPlaidLinkedStatusUseCase,
     exchangePlaidTokenUseCase,
   };

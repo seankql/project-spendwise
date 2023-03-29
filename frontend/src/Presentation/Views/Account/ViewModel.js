@@ -29,7 +29,6 @@ export default function AccountViewModel() {
 
   const {
     getPlaidLinkTokenUseCase,
-    syncPlaidTransactionsUseCase,
     exchangePlaidTokenUseCase,
     getPlaidLinkedStatusUseCase,
   } = PlaidController();
@@ -90,17 +89,8 @@ export default function AccountViewModel() {
     setLinkToken(result.link_token);
   }
 
-  async function exchangePlaidToken(publicToken, token = bearerToken) {
-    await exchangePlaidTokenUseCase(userId, publicToken, token);
-  }
-
-  async function syncPlaidTransactions(token = bearerToken) {
-    await syncPlaidTransactionsUseCase(userId, token);
-  }
-
   async function exchangeAndSync(publicToken, token = bearerToken) {
-    exchangePlaidToken(publicToken, token);
-    syncPlaidTransactions(token);
+    await exchangePlaidTokenUseCase(userId, publicToken, token);
   }
 
   async function getPlaidLinkedStatus(userId, token = bearerToken) {

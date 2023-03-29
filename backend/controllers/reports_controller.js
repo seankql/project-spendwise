@@ -46,6 +46,14 @@ reportsController.get(
           order: [["transactionDate", "DESC"]],
         });
 
+      if (count === 0) {
+        return res.status(200).send({
+          totalCount: count,
+          transactions: [],
+          income: 0,
+          expense: 0,
+        });
+      }
       if (resultReport) {
         const filteredResultReport = resultReport.map((transaction) => ({
           id: transaction.id,
@@ -123,7 +131,14 @@ reportsController.get("/accounts", validateAccessToken, async (req, res) => {
         },
         order: [["transactionDate", "DESC"]],
       });
-
+    if (count === 0) {
+      return res.status(200).send({
+        totalCount: count,
+        transactions: [],
+        income: 0,
+        expense: 0,
+      });
+    }
     if (resultReport) {
       const result = resultReport.reduce(
         (acc, transaction) => {
@@ -192,7 +207,14 @@ reportsController.get(
           },
           order: [["transactionDate", "DESC"]],
         });
-
+      if (count === 0) {
+        return res.status(200).send({
+          totalCount: count,
+          transactions: [],
+          income: 0,
+          expense: 0,
+        });
+      }
       if (resultReport) {
         const filteredResultReport = resultReport.map((transaction) => ({
           id: transaction.id,

@@ -41,6 +41,9 @@ transactionsController.get(
           order: [["transactionDate", "DESC"]],
         });
 
+      if (count === 0) {
+        return res.status(200).send({ totalCount: count, transactions: [] });
+      }
       if (resultTransactions) {
         const filteredTransactions = resultTransactions.map((transaction) => ({
           id: transaction.id,
@@ -302,7 +305,10 @@ transactionsController.get(
           transactions: filteredResultTrans,
         });
       } else {
-        return res.status(400).send("Error getting transactions");
+        return res.status(200).send({
+          totalCount: 0,
+          transactions: [],
+        });
       }
     } catch (err) {
       //   Sentry.captureException(err);
