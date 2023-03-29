@@ -6,7 +6,7 @@ import Button from "./Button";
 
 export default function List({ classes = "", submit }) {
   const [name, setName] = useState("");
-  const [category, setCategory] = useState("Grocery");
+  const [category, setCategory] = useState("Bank Fees");
   const [amount, setAmount] = useState("");
 
   const handleSubmit = (event) => {
@@ -74,7 +74,7 @@ export default function List({ classes = "", submit }) {
           </label>
           <input
             className="row-right-element account-create-input"
-            type="text"
+            type="number"
             value={amount}
             required
             onChange={(e) => setAmount(e.target.value)}
