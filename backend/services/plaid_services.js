@@ -11,7 +11,7 @@ export async function invalidateAccessToken(accessToken) {
       });
     return invalidateAccessTokenresponse.data.new_access_token;
   } catch (err) {
-    // Sentry.captureException(err + " in invalidateAccessToken");
+    Sentry.captureException(err + " in invalidateAccessToken");
     console.log(err + " in invalidateAccessToken");
   }
 }
@@ -47,7 +47,7 @@ export async function getTransactionsFromPlaid(new_access_token, user_cursor) {
     };
   } catch (err) {
     console.log(err + " in getTransactionsFromPlaid");
-    // Sentry.captureException(err + " in getTransactionsFromPlaid");
+    Sentry.captureException(err + " in getTransactionsFromPlaid");
   }
 }
 
@@ -75,7 +75,7 @@ export async function createPlaidTransactions(added) {
       }
     }
   } catch (err) {
-    // Sentry.captureException(err + " in createPlaidTransactions");
+    Sentry.captureException(err + " in createPlaidTransactions");
     console.log(err + " in createPlaidTransactions");
   }
 }
@@ -111,7 +111,7 @@ export async function updatePlaidTransactions(modified) {
       }
     }
   } catch (err) {
-    // Sentry.captureException(err + " in updatePlaidTransactions");
+    Sentry.captureException(err + " in updatePlaidTransactions");
     console.log(err + " in updatePlaidTransactions");
   }
 }
@@ -127,7 +127,7 @@ export async function deletePlaidTransactions(removed) {
     }
   } catch (err) {
     console.log(err);
-    // Sentry.captureException(err + " in deletePlaidTransactions");
+    Sentry.captureException(err + " in deletePlaidTransactions");
   }
 }
 export async function updatePlaidAccounts(access_token, userId) {
@@ -161,6 +161,6 @@ export async function updatePlaidAccounts(access_token, userId) {
     }
   } catch (err) {
     console.log(err);
-    // Sentry.captureException(err + " in updatePlaidAccounts");
+    Sentry.captureException(err + " in updatePlaidAccounts");
   }
 }

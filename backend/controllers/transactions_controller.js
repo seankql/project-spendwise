@@ -63,7 +63,7 @@ transactionsController.get(
         return res.status(400).send("Error getting transactions");
       }
     } catch (err) {
-      // Sentry.captureException(err);
+      Sentry.captureException(err);
       return res.status(500).send("Internal Server error " + err);
     }
   }
@@ -111,7 +111,7 @@ transactionsController.post("/", validateAccessToken, async (req, res) => {
       return res.status(400).send("Error creating transaction");
     }
   } catch (err) {
-    // Sentry.captureException(err);
+    Sentry.captureException(err);
     return res.status(500).send("Internal Server error " + err);
   }
 });
@@ -183,7 +183,7 @@ transactionsController.put(
           );
       }
     } catch (err) {
-      // Sentry.captureException(err);
+      Sentry.captureException(err);
       return res.status(500).send("Internal Server error " + err);
     }
   }
@@ -228,7 +228,7 @@ transactionsController.delete(
           );
       }
     } catch (err) {
-      // Sentry.captureException(err);
+      Sentry.captureException(err);
       return res.status(500).send("Internal Server error " + err);
     }
   }
@@ -311,7 +311,7 @@ transactionsController.get(
         });
       }
     } catch (err) {
-      //   Sentry.captureException(err);
+      Sentry.captureException(err);
       return res.status(500).send("Internal Server error " + err);
     }
   }

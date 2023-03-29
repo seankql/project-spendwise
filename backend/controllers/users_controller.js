@@ -50,7 +50,7 @@ usersController.post(
       }
       return res.status(409).send("User already exists");
     } catch (err) {
-      // Sentry.captureException(err);
+      Sentry.captureException(err);
       return res.status(500).send("Internal Server error" + err);
     }
   }
@@ -75,7 +75,7 @@ usersController.delete(
       }
       return res.status(204).send();
     } catch (err) {
-      // Sentry.captureException(err);
+      Sentry.captureException(err);
       return res.status(500).send("Internal Server error" + err);
     }
   }
@@ -109,7 +109,7 @@ usersController.get(
 
       return res.status(200).send(newUser);
     } catch (err) {
-      // Sentry.captureException(err);
+      Sentry.captureException(err);
       return res.status(500).send("Internal Server error" + err);
     }
   }

@@ -11,6 +11,7 @@ import {
 import { UsersModel } from "./models/usersModel.js";
 import { Op } from "sequelize";
 import axios from "axios";
+import Sentry from "@sentry/node";
 
 const redisClient = redis.createClient({
   host: "localhost",
@@ -55,7 +56,7 @@ transactionQueue.process(async (job) => {
     }
   } catch (err) {
     console.log(err);
-    // Sentry.captureException(err + " in cron job transactionQueue");
+    Sentry.captureException(err + " in cron job transactionQueue");
   }
 });
 
@@ -69,7 +70,7 @@ syncQueue.process(async () => {
     }
   } catch (err) {
     console.log(err);
-    // Sentry.captureException(err + " in cron job syncQueue");
+    Sentry.captureException(err + " in cron job syncQueue");
   }
 });
 
@@ -81,6 +82,6 @@ async function callSyncTransactions(userId) {
     console.log(response.data);
   } catch (err) {
     console.log(err);
-    // Sentry.captureException(err + " in cron job callSyncTransactions");
+    Sentry.captureException(err + " in cron job callSyncTransactions");
   }
 }
