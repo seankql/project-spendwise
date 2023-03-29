@@ -8,7 +8,7 @@ import PlaidController from "../../../Controllers/plaidController";
 
 export default function AccountViewModel() {
   const [error, setError] = useState("");
-  const [hasLinkedPlaid, setHasLinkedPlaid] = useState(false);
+  const [hasLinkedPlaid, setHasLinkedPlaid] = useState(true);
   const [userId, setUserId] = useState(null);
   const [nickname, setNickname] = useState("");
   const [email, setEmail] = useState("");
@@ -129,5 +129,6 @@ export default function AccountViewModel() {
     linkToken,
     exchangeAndSync,
     hasLinkedPlaid,
+    setHasLinkedPlaid,
   };
 }

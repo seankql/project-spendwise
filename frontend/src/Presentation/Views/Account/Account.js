@@ -29,6 +29,7 @@ export default function Account() {
     linkToken,
     exchangeAndSync,
     hasLinkedPlaid,
+    setHasLinkedPlaid,
   } = useViewModel();
 
   const sectionList = ["Profile & Alerts", "Accounts", "Create New Account"];
@@ -40,6 +41,7 @@ export default function Account() {
     token: linkToken,
     onSuccess: (public_token, metadata) => {
       exchangeAndSync((public_token = public_token));
+      setHasLinkedPlaid(true);
     },
   });
 
