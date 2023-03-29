@@ -15,10 +15,12 @@ export default function TransactionsViewModel() {
   const [selectedAccount, setSelectedAccount] = useState(null);
   const [page, setPage] = useState(0);
   const [name, setName] = useState(null);
-  const [startDate, setStartDate] = useState(null);
-  const [endDate, setEndDate] = useState(null);
-  const [minValue, setMinValue] = useState(null);
-  const [maxValue, setMaxValue] = useState(null);
+  const [startDate, setStartDate] = useState(
+    new Date(new Date() - 1000 * 60 * 60 * 24 * 30)
+  );
+  const [endDate, setEndDate] = useState(new Date());
+  const [minValue, setMinValue] = useState(0);
+  const [maxValue, setMaxValue] = useState(5000);
   const [categories, setCategories] = useState(null);
   const [bearerToken, setBearerToken] = useState(null);
 
@@ -106,6 +108,7 @@ export default function TransactionsViewModel() {
     name,
     category,
     amount,
+    date,
     token = bearerToken
   ) {
     await createTransactionsUseCase(
@@ -113,7 +116,7 @@ export default function TransactionsViewModel() {
       category,
       amount,
       selectedAccount,
-      getCurrentDate(),
+      date,
       token
     );
     getFilterReports(userId, 9, page, token);

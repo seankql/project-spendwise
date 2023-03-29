@@ -11,10 +11,12 @@ export default function VisualizationViewModel() {
   const [accounts, setAccounts] = useState(null);
   const [selectedAccount, setSelectedAccount] = useState(null);
   const [name, setName] = useState(null);
-  const [startDate, setStartDate] = useState(null);
-  const [endDate, setEndDate] = useState(null);
-  const [minValue, setMinValue] = useState(null);
-  const [maxValue, setMaxValue] = useState(null);
+  const [startDate, setStartDate] = useState(
+    new Date(new Date() - 1000 * 60 * 60 * 24 * 30)
+  );
+  const [endDate, setEndDate] = useState(new Date());
+  const [minValue, setMinValue] = useState(0);
+  const [maxValue, setMaxValue] = useState(5000);
   const [categories, setCategories] = useState(null);
   const [bearerToken, setBearerToken] = useState(null);
 
