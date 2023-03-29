@@ -53,10 +53,19 @@ export default function List({ classes = "", submit }) {
             value={category}
             onChange={(e) => setCategory(e.target.value)}
           >
-            <option value={"Grocery"}> Grocery </option>
-            <option value={"Furniture"}> Furniture </option>
-            <option value={"Restaurants"}> Restaurants </option>
-            <option value={"Gas"}> Gas </option>
+            <option value={"Bank Fees"}> Bank Fees </option>
+            <option value={"Cash Advance"}> Cash Advance </option>
+            <option value={"Community"}> Community </option>
+            <option value={"Food and Drink"}> Food and Drink </option>
+            <option value={"Healthcare"}> Healthcare </option>
+            <option value={"Interest"}> Interest </option>
+            <option value={"Payment"}> Payment </option>
+            <option value={"Recreation"}> Recreation </option>
+            <option value={"Service"}> Service </option>
+            <option value={"Shops"}> Shops </option>
+            <option value={"Tax"}> Tax </option>
+            <option value={"Transfer"}> Transfer </option>
+            <option value={"Travel"}> Travel </option>
           </select>
         </div>
         <div className="page-row-container">
