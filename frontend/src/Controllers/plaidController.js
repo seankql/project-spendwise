@@ -1,3 +1,11 @@
+function handleResult(res) {
+  if (!res.ok) {
+    return;
+  } else {
+    return res.json();
+  }
+}
+
 export default function PlaidController() {
   async function getPlaidLinkTokenUseCase(userId, token) {
     return fetch(
@@ -12,7 +20,7 @@ export default function PlaidController() {
           Authorization: `Bearer ${token}`,
         },
       }
-    ).then((res) => res.json());
+    ).then((res) => handleResult(res));
   }
   async function getPlaidLinkedStatusUseCase(userId, token) {
     return fetch(
@@ -53,7 +61,7 @@ export default function PlaidController() {
             "Content-Type": "application/json",
           },
         }
-      ).then((res) => res.json());
+      ).then((res) => res);
     });
   }
 

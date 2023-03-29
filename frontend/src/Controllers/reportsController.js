@@ -1,3 +1,11 @@
+function handleResult(res) {
+  if (!res.ok) {
+    return;
+  } else {
+    return res.json();
+  }
+}
+
 export default function ReportsController() {
   async function getReportsUseCase(userId, token) {
     return fetch("http://localhost:3001/api/Reports/user/" + userId, {
@@ -6,7 +14,7 @@ export default function ReportsController() {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
-    }).then((res) => res.json());
+    }).then((res) => handleResult(res));
   }
 
   async function getReportsUseCase(userId, startDate, endDate, token) {
@@ -24,7 +32,7 @@ export default function ReportsController() {
           Authorization: `Bearer ${token}`,
         },
       }
-    ).then((res) => res.json());
+    ).then((res) => handleResult(res));
   }
 
   async function getAccountReportsUseCase(
@@ -47,7 +55,7 @@ export default function ReportsController() {
           Authorization: `Bearer ${token}`,
         },
       }
-    ).then((res) => res.json());
+    ).then((res) => handleResult(res));
   }
 
   async function getCategoryReportsUseCase(userId, startDate, endDate, token) {
@@ -65,7 +73,7 @@ export default function ReportsController() {
           Authorization: `Bearer ${token}`,
         },
       }
-    ).then((res) => res.json());
+    ).then((res) => handleResult(res));
   }
 
   return {

@@ -1,3 +1,11 @@
+function handleResult(res) {
+  if (!res.ok) {
+    return;
+  } else {
+    return res.json();
+  }
+}
+
 export default function TransactionsController() {
   async function getTransactionsUseCase(userId, page, pageSize, token) {
     return fetch(
@@ -14,7 +22,7 @@ export default function TransactionsController() {
           Authorization: `Bearer ${token}`,
         },
       }
-    ).then((res) => res.json());
+    ).then((res) => handleResult(res));
   }
 
   async function createTransactionsUseCase(
@@ -38,7 +46,7 @@ export default function TransactionsController() {
         amount: amount,
         transactionDate: date,
       }),
-    }).then((res) => res.json());
+    }).then((res) => handleResult(res));
   }
 
   async function updateTransactionsUseCase(
@@ -63,7 +71,7 @@ export default function TransactionsController() {
         amount: amount,
         transactionDate: date,
       }),
-    }).then((res) => res.json());
+    }).then((res) => handleResult(res));
   }
 
   async function deleteTransactionsUseCase(transactionId, token) {
@@ -73,7 +81,7 @@ export default function TransactionsController() {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
-    }).then((res) => res.json());
+    }).then((res) => handleResult(res));
   }
 
   async function getFilterTransactionsUseCase(
@@ -112,7 +120,7 @@ export default function TransactionsController() {
           Authorization: `Bearer ${token}`,
         },
       }
-    ).then((res) => res.json());
+    ).then((res) => handleResult(res));
   }
 
   return {

@@ -95,7 +95,11 @@ export default function AccountViewModel() {
 
   async function getPlaidLinkedStatus(userId, token = bearerToken) {
     const result = await getPlaidLinkedStatusUseCase(userId, token);
-    setHasLinkedPlaid(result.status === 200);
+    if (!result.ok) {
+      setHasLinkedPlaid(false);
+    } else {
+      setHasLinkedPlaid(true);
+    }
   }
 
   async function fetchData(user, token) {
@@ -103,8 +107,7 @@ export default function AccountViewModel() {
     setProfileData(user);
     setBearerToken(token);
     const result = await getUserUseCase(user.sub.split("|")[1], token);
-    const resultJson = await result.json();
-    const userId = resultJson.id;
+    const userId = result.id;
 
     setUserId(userId);
     getAccounts(userId, token);

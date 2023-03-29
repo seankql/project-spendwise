@@ -1,3 +1,11 @@
+function handleResult(res) {
+  if (!res.ok) {
+    return;
+  } else {
+    return res.json();
+  }
+}
+
 export default function AccountsController() {
   async function getAccountsUseCase(userId, token) {
     return fetch("http://localhost:3001/api/accounts/user/" + userId, {
@@ -5,7 +13,7 @@ export default function AccountsController() {
       headers: {
         Authorization: `Bearer ${token}`,
       },
-    }).then((res) => res.json());
+    }).then((res) => handleResult(res));
   }
 
   async function createAccountsUseCase(userId, accountName, token) {
@@ -19,7 +27,7 @@ export default function AccountsController() {
         userId: userId,
         accountName: accountName,
       }),
-    }).then((res) => res.json());
+    }).then((res) => handleResult(res));
   }
 
   async function updateAccountsUseCase(userId, accountName, accountId, token) {
@@ -33,7 +41,7 @@ export default function AccountsController() {
         userId: userId,
         accountName: accountName,
       }),
-    }).then((res) => res.json());
+    }).then((res) => handleResult(res));
   }
 
   async function deleteAccountsUseCase(accountId, token) {
@@ -43,7 +51,7 @@ export default function AccountsController() {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
-    }).then((res) => res.json());
+    }).then((res) => handleResult(res));
   }
 
   return {

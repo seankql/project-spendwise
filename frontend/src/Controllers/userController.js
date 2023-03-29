@@ -1,3 +1,11 @@
+function handleResult(res) {
+  if (!res.ok) {
+    return;
+  } else {
+    return res.json();
+  }
+}
+
 export default function UserController() {
   async function postUserUseCase(auth0UserId, email, token) {
     return fetch("http://localhost:3001/api/users", {
@@ -10,7 +18,7 @@ export default function UserController() {
         auth0UserId: auth0UserId,
         email: email,
       }),
-    }).then((res) => res);
+    }).then((res) => handleResult(res));
   }
 
   async function getUserUseCase(auth0UserId, token) {
@@ -20,7 +28,7 @@ export default function UserController() {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
-    }).then((res) => res);
+    }).then((res) => handleResult(res));
   }
 
   async function deleteUserUseCase(auth0UserId, token) {
@@ -30,7 +38,7 @@ export default function UserController() {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
-    }).then((res) => res.json());
+    }).then((res) => handleResult(res));
   }
 
   return {

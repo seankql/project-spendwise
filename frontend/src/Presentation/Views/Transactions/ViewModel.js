@@ -179,8 +179,7 @@ export default function TransactionsViewModel() {
     setBearerToken(token);
     const result = await getUserUseCase(user?.sub.split("|")[1], token);
     if (!result) return;
-    const resultJson = await result.json();
-    const userId = resultJson.id;
+    const userId = result.id;
 
     getAccounts(userId, token);
     getFilterReports(userId, 9, page, token);
