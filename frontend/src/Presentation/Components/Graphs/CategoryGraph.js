@@ -10,7 +10,7 @@ export default function List({ data }) {
       <VisSingleContainer data={getCategoryData(data)}>
         <VisDonut
           arcWidth={40}
-          value={useCallback((d) => d.y, [])}
+          value={useCallback((d) =>  Math.abs(d.y), [])}
           centralLabel="Category Breakdown"
         />
       </VisSingleContainer>

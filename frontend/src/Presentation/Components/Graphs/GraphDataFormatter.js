@@ -108,7 +108,7 @@ export function getStackedDataAccessor(data) {
   }
   let result = [];
   for (let i = 0; i < accessors.length; i++) {
-    result = [...result, (d) => d.y[accessors[i]]];
+    result = [...result, (d) => Math.abs(d.y[accessors[i]])];
   }
   return result;
 }
@@ -119,7 +119,7 @@ export function getIncomeData(data, startDate, endDate) {
   for (let i = 0; i < data.length; i++) {
     const entry = data[i];
     const attrValue = entry["transactionDate"];
-    if (entry["category"] !== "Income") continue;
+    if (entry["amount"] > 0) continue;
     if (attrValue in sums) {
       sums[attrValue] += parseInt(entry.amount);
     } else {
@@ -139,7 +139,7 @@ export function getExpenseData(data, startDate, endDate) {
   for (let i = 0; i < data.length; i++) {
     const entry = data[i];
     const attrValue = entry["transactionDate"];
-    if (entry["category"] === "Income") continue;
+    if (entry["amount"] < 0) continue;
     if (attrValue in sums) {
       sums[attrValue] += parseInt(entry.amount);
     } else {
@@ -160,13 +160,13 @@ export function getIncomeExpenseData(data, startDate, endDate) {
     const entry = data[i];
     const attrValue = entry["transactionDate"];
     if (attrValue in sums) {
-      if (entry["category"] === "Income")
+      if (entry["amount"] < 0)
         sums[attrValue] += parseInt(entry.amount);
-      else sums[attrValue] -= parseInt(entry.amount);
+      else sums[attrValue] += parseInt(entry.amount);
     } else {
-      if (entry["category"] === "Income")
+      if (entry["amount"] < 0)
         sums[attrValue] = parseInt(entry.amount);
-      else sums[attrValue] = -parseInt(entry.amount);
+      else sums[attrValue] = parseInt(entry.amount);
     }
   }
   let result = [];
