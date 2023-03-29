@@ -33,17 +33,18 @@ usersController.post(
         });
         // Send welcome to spendwise email if new user
         sgMail.setApiKey(config.SENDGRID_API_KEY);
-        const directory = 'sendgrid_emails';
-        const htmlFilePath = path.join(directory, 'RegistrationEmail.html');
-        const htmlString = fs.readFileSync(htmlFilePath, 'utf-8');
+        const directory = "sendgrid_emails";
+        const htmlFilePath = path.join(directory, "RegistrationEmail.html");
+        const htmlString = fs.readFileSync(htmlFilePath, "utf-8");
         const msg = {
           to: email,
-          from: 'spendwise.site@gmail.com',
-          subject: 'Welcome to Spendwise!',
-          html: htmlString
+          from: "spendwise.site@gmail.com",
+          subject: "Welcome to Spendwise!",
+          html: htmlString,
         };
-        sgMail.send(msg)
-          .then(() => console.log('Registration email sent'))
+        sgMail
+          .send(msg)
+          .then(() => console.log("Registration email sent"))
           .catch((error) => console.error(error));
         return res.status(201).send(newUser);
       }
