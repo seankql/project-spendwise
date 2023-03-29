@@ -160,12 +160,10 @@ export function getIncomeExpenseData(data, startDate, endDate) {
     const entry = data[i];
     const attrValue = entry["transactionDate"];
     if (attrValue in sums) {
-      if (entry["amount"] < 0)
-        sums[attrValue] += parseInt(entry.amount);
+      if (entry["amount"] < 0) sums[attrValue] += parseInt(entry.amount);
       else sums[attrValue] += parseInt(entry.amount);
     } else {
-      if (entry["amount"] < 0)
-        sums[attrValue] = parseInt(entry.amount);
+      if (entry["amount"] < 0) sums[attrValue] = parseInt(entry.amount);
       else sums[attrValue] = parseInt(entry.amount);
     }
   }
