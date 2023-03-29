@@ -93,11 +93,11 @@ export default function DashboardViewModel() {
 
   async function fetchData(user, token) {
     setBearerToken(token);
-    
+
     const result = await getUserUseCase(user?.sub.split("|")[1], token);
-    if (result.status !== 200){
+    if (result.status !== 200) {
       await createUser(user, token);
-    };
+    }
     const userId = result.id;
 
     getCategoryData(userId, token);
