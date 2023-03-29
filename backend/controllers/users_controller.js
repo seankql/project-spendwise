@@ -46,7 +46,7 @@ usersController.post(
           .send(msg)
           .then(() => console.log("Registration email sent"))
           .catch((error) => console.error(error));
-        return res.status(201).send(newUser);
+        return res.status(200).send(newUser);
       }
       return res.status(409).send("User already exists");
     } catch (err) {

@@ -10,7 +10,7 @@ export default function UserController() {
         auth0UserId: auth0UserId,
         email: email,
       }),
-    }).then((res) => res.json());
+    }).then((res) => res);
   }
 
   async function getUserUseCase(auth0UserId, token) {
@@ -20,7 +20,7 @@ export default function UserController() {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
-    }).then((res) => res.json());
+    }).then((res) => res);
   }
 
   async function deleteUserUseCase(auth0UserId, token) {
