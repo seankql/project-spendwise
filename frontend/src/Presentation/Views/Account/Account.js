@@ -31,11 +31,6 @@ export default function Account() {
     hasLinkedPlaid,
   } = useViewModel();
 
-  // TODO: Show different "Bank Information" form depending on whether or not
-  // User has linked it to a bank account or not. If not, users should be prompted
-  // to link their account to a bank account, otherwise, just show the current
-  // information and have an option to unlink
-
   const sectionList = ["Profile & Alerts", "Accounts", "Create New Account"];
 
   const { user, isAuthenticated, isLoading, getAccessTokenSilently } =
