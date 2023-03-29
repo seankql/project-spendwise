@@ -43,7 +43,7 @@ export default function List({ data = null, editSubmit, deleteFunction }) {
             >
               Edit Account
             </button>
-            {data.plaidAccountId ? (
+            {!data.plaidAccountId ? (
               <button
                 type="button"
                 onClick={() => deleteFunction(accountData.id)}
