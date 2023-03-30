@@ -19,6 +19,8 @@
   display: flex;
   margin-left: auto;
   margin-right: auto;
+  flex-wrap: wrap;
+  padding: 24px;
 }
 
 .banner-container {
@@ -26,7 +28,8 @@
 }
 
 .banner-img-container {
-  height: 54px;
+  height: 40px;
+  margin: auto;
 }
 
 .banner-auth-component-container {
@@ -62,7 +65,7 @@
 }
 
 .auth-container {
-  padding: 24px;
+  margin: auto;
 }
 
 .links-container {

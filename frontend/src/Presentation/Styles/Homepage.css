@@ -11,9 +11,10 @@
 
 .image-banner-text-container {
   position: absolute;
-  left: 450px;
+  left: 20%;
   top: 30%;
-  max-width: 512px;
+  max-width: 25%;
+  z-index: 2;
 }
 
 .image-banner-header {
@@ -22,6 +23,22 @@
   font-weight: bold;
   line-height: 100%;
   margin-bottom: 10px;
+}
+
+@media only screen and (max-width: 1569px) {
+  .image-banner-header {
+    color: #5d9943;
+    font-size: 24px;
+    font-weight: bold;
+    line-height: 100%;
+    margin-bottom: 10px;
+  }
+}
+
+@media only screen and (max-width: 800px) {
+  .image-banner-header {
+    display: none;
+  }
 }
 
 .image-banner {
@@ -51,11 +68,31 @@
   flex-direction: row;
 }
 
+@media only screen and (max-width: 1200px) {
+  .home-section-block {
+    display: flex;
+    margin-right: auto;
+    margin-left: auto;
+    flex-wrap: wrap;
+    overflow: hidden;
+  }
+}
+
 .part {
   display: flex;
   flex-direction: column;
   margin: auto;
   width: 45%;
+}
+
+@media only screen and (max-width: 1200px) {
+  .part {
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    padding: 20px;
+    width: 100%;
+  }
 }
 
 .white {
@@ -75,6 +112,30 @@
   background-image: linear-gradient(145deg, #8bc53f, #5d9943 80%);
 }
 
+@media only screen and (max-width: 1200px) {
+  .background-circle {
+    display: flex;
+    width: 400px;
+    height: 400px;
+    margin: auto;
+    align-items: center;
+    border-radius: 100%;
+    background-image: linear-gradient(145deg, #8bc53f, #5d9943 80%);
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .background-circle {
+    display: flex;
+    width: 300px;
+    height: 300px;
+    margin: auto;
+    align-items: center;
+    border-radius: 100%;
+    background-image: linear-gradient(145deg, #8bc53f, #5d9943 80%);
+  }
+}
+
 .section-img {
   margin: auto;
 }
@@ -91,6 +152,42 @@
   color: #545453;
   font-size: 20px;
   line-height: 150%;
+}
+
+@media only screen and (max-width: 1569px) {
+  .section-paragraph-text {
+    color: #545453;
+    font-size: 16px;
+    line-height: 150%;
+  }
+}
+
+@media only screen and (max-width: 800px) {
+  .section-paragraph-text {
+    color: #545453;
+    font-size: 16px;
+    line-height: 150%;
+  }
+}
+
+.banner-paragraph-text {
+  color: #545453;
+  font-size: 20px;
+  line-height: 150%;
+}
+
+@media only screen and (max-width: 1569px) {
+  .banner-paragraph-text {
+    color: #545453;
+    font-size: 16px;
+    line-height: 150%;
+  }
+}
+
+@media only screen and (max-width: 800px) {
+  .banner-paragraph-text {
+    display: none;
+  }
 }
 
 .display-linebreak {

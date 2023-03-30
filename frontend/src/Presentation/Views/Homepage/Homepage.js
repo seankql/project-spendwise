@@ -44,7 +44,7 @@ export default function Homepage() {
             {" "}
             Track your spending a wiser way{" "}
           </div>
-          <div className="section-paragraph-text">
+          <div className="banner-paragraph-text">
             {" "}
             With SpendWise, you can track your income and expenses all in one
             place. Whether you choose to enter your transactions manually or
