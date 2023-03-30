@@ -2,6 +2,7 @@ import Slider from "rc-slider";
 import DatePicker from "react-datepicker";
 import React, { useState, useEffect } from "react";
 import "../Styles/Components.css";
+import "../Styles/Common.css";
 import "rc-slider/assets/index.css";
 import "react-datepicker/dist/react-datepicker.css";
 

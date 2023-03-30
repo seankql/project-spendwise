@@ -70,29 +70,24 @@ export default function Account() {
           >
             Profile & Alerts
           </div>
-          <div className="section-wrapper page-row-container section-divider">
+          {hasLinkedPlaid ? (
+            ""
+          ) : (
+            <button
+              type="button"
+              onClick={() => open()}
+              disabled={!ready}
+              className={"btn btn-sml account-btns-left"}
+            >
+              Connect a bank account
+            </button>
+          )}
+          <div className="section-wrapper section-divider">
             <ProfileCard
               email={email}
               nickname={nickname}
               dateCreated={dateCreated}
-              classes={"basic-info-card"}
             />
-            <div className="page-col-container row-right-element">
-              <div className="section-wrapper ">
-                {hasLinkedPlaid ? (
-                  ""
-                ) : (
-                  <button
-                    type="button"
-                    onClick={() => open()}
-                    disabled={!ready}
-                    className={"btn btn-sml account-btns-left"}
-                  >
-                    Connect a bank account
-                  </button>
-                )}
-              </div>
-            </div>
           </div>
         </div>
         <div id="Accounts" className="section-wrapper section-header-text">

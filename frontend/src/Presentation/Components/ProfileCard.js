@@ -2,9 +2,9 @@ import "../Styles/Components.css";
 import "../Styles/Common.css";
 import "../Styles/Account.css";
 
-export default function List({ email, nickname, dateCreated, classes = "" }) {
+export default function List({ email, nickname, dateCreated }) {
   return (
-    <div className={"card-wrapper " + classes}>
+    <div className={"card-wrapper create-form-card"}>
       <div className="page-row-container">
         <div className="card-padding-wrapper component-header-text">
           Profile Data

@@ -126,3 +126,167 @@ footer {
   overflow: hidden;
   white-space: nowrap;
 }
+
+@media only screen and (max-width: 1200px) {
+  .page-content-container {
+    padding-top: 36px;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 800px;
+  }
+
+  .card-wrapper {
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    width: 350px;
+    border: 1px solid #e0e0e0;
+    border-radius: 16px;
+  }
+
+  .sml-graph-img-wrapper {
+    width: 400px;
+  }
+
+  .grid-table-grid {
+    border: 1px solid #5d9943;
+    border-radius: 12px;
+    height: 180px;
+    width: 150px;
+    margin: 4px auto 4px auto;
+  }
+}
+
+@media only screen and (max-width: 992px) {
+  .page-content-container {
+    padding-top: 36px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    padding: 8px;
+  }
+
+  .card-wrapper {
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #e0e0e0;
+    border-radius: 16px;
+    margin: auto;
+    width: 300px;
+    margin-bottom: 8px;
+  }
+
+  .page-row-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .row-right-element {
+    margin: auto;
+  }
+
+  .list-transaction-container {
+    display: flex;
+    flex-direction: row;
+    height: -moz-fit-content;
+    height: fit-content;
+    margin: auto;
+    margin-top: 8px;
+    width: 100%;
+    border: 1px solid #5d9943;
+    border-radius: 16px;
+  }
+
+  .sml-graph-img-wrapper {
+    display: flex;
+    margin: auto;
+  }
+
+  .search-filter-col {
+    width: 80% !important;
+    margin: auto !important;
+    border: 1px solid #e0e0e0;
+    padding: 8px;
+    margin-bottom: 8px !important;
+  }
+
+  .transactions-col {
+    width: 80% !important;
+    margin: auto !important;
+    padding-left: 20px;
+    border: none !important;
+    border-left: none;
+    padding: 8px;
+  }
+
+  .grid-table-grid {
+    border: 1px solid #5d9943;
+    border-radius: 12px;
+    height: 200px;
+    width: 200px;
+  }
+
+  .create-form-card {
+    width: 300px !important;
+  }
+
+  .width-padder {
+    display: none !important;
+  }
+
+  .account-btns-left {
+    margin: auto !important;
+  }
+
+  .account-btns-right {
+    margin: auto !important;
+  }
+
+  .authenticated-user-container {
+    display: none;
+  }
+
+  .banner {
+    display: flex;
+    padding: 0px;
+    padding-left: 6px;
+    padding-right: 6px;
+    margin: auto;
+    width: 100%;
+  }
+
+  .banner-wrapper {
+    display: flex;
+    flex-direction: column;
+    margin-left: auto;
+    margin-right: auto;
+    flex-wrap: wrap;
+    padding: 0px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+  }
+
+  .links-container {
+    padding: 0px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    flex-wrap: wrap;
+  }
+
+  .banner-link-component-container {
+    margin: auto;
+    margin-top: 4px;
+    margin-bottom: 4px;
+  }
+
+  .scroll-banner-wrapper {
+    display: flex;
+    padding: 16px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    overflow: auto;
+  }
+}
