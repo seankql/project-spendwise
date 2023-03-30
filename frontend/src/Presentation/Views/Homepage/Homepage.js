@@ -1,8 +1,8 @@
 import logo from "../../../Media/logo-no-background.png";
-import imageBanner from "../../../Media/pexels-andrea-piacquadio.jpg";
-import aboutPicture from "../../../Media/pexels-mikhail-nilov.jpg";
+import imageBanner from "../../../Media/pexels-andrea-piacquadio.webp";
+import aboutPicture from "../../../Media/pexels-mikhail-nilov.webp";
 import featurePicture from "../../../Media/pexels-photo-4386433.webp";
-import contactPicture from "../../../Media/pexels-cottonbro-studio-3202235.jpg";
+import contactPicture from "../../../Media/pexels-cottonbro-studio-3202235.webp";
 import { Link } from "react-scroll";
 import ScrollBanner from "../../Components/ScrollBanner";
 import SigninSignupButton from "../../Components/SigninSignupButton";
@@ -37,7 +37,7 @@ export default function Homepage() {
         </div>
       </div>
       <ScrollBanner data={sectionList} />
-      <div id="home" className="image-banner-wrapper">
+      <div id="Home" className="image-banner-wrapper">
         <img className="image-banner" src={imageBanner} alt="banner" />
         <div className="image-banner-text-container">
           <div className="image-banner-header">
@@ -53,7 +53,7 @@ export default function Homepage() {
           </div>
         </div>
       </div>
-      <div id="about">
+      <div id="About">
         <HomepageSection
           header="About Us"
           description={AboutDescription}
@@ -61,7 +61,7 @@ export default function Homepage() {
           background={"off-white"}
         />
       </div>
-      <div id="features">
+      <div id="Features">
         <HomepageSection
           header="Features"
           description={FeatureDescription}
@@ -70,7 +70,7 @@ export default function Homepage() {
           direction="right"
         />
       </div>
-      <div id="contact">
+      <div id="Contact">
         <HomepageSection
           header="Contact"
           description={ContactDescription}
