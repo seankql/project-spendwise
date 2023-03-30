@@ -111,3 +111,15 @@ footer {
 .bottom-elem-padder {
   margin-bottom: 16px;
 }
+
+.error-message {
+  color: #cc0033;
+  display: inline-block;
+  font-size: 12px;
+  line-height: 15px;
+}
+
+.overflow {
+  overflow: hidden;
+  white-space: nowrap;
+}

@@ -16,6 +16,7 @@ export default function List({
   const [date, setDate] = useState(null);
   const [category, setCategory] = useState(null);
   const [amount, setAmount] = useState(null);
+  const [error, setError] = useState(false);
 
   function isDateFormat(str) {
     const dateRegex = /^\d{4}-\d{2}-\d{2}$/; // Regex pattern for "YYYY-MM-DD"
@@ -29,7 +30,7 @@ export default function List({
   const handleSubmit = (event) => {
     event.preventDefault();
     if (!isDateFormat(date)) {
-      alert("invalid date string");
+      setError(true);
       return;
     }
     editSubmit(name, category, amount, date, data.id, data.AccountId);
@@ -45,6 +46,7 @@ export default function List({
       setEditState(true);
     } else {
       setEditState(false);
+      setError(false);
     }
   };
 
@@ -60,26 +62,26 @@ export default function List({
         <div key={id} className="grid-table-grid">
           <div className="grid-container">
             <div className="grid-inner-divider page-row-container">
-              <div className="component-subheader-text">Date:</div>
-              <div className="list-transaction-font row-right-element">
+              <div className="component-subheader-text">Date: </div>
+              <div className="list-transaction-font row-right-element overflow">
                 {transactionDate}
               </div>
             </div>
             <div className="grid-inner-divider page-row-container">
               <div className="component-subheader-text">Name:</div>
-              <div className="list-transaction-font row-right-element">
+              <div className="list-transaction-font row-right-element overflow">
                 {transactionName}
               </div>
             </div>
             <div className="grid-inner-divider page-row-container">
               <div className="component-subheader-text">Category:</div>
-              <div className="list-transaction-font row-right-element">
+              <div className="list-transaction-font row-right-element overflow">
                 {transactionCategory}
               </div>
             </div>
             <div className="grid-inner-divider page-row-container">
               <div className="component-subheader-text">amount:</div>
-              <div className="list-transaction-font row-right-element">
+              <div className="list-transaction-font row-right-element overflow">
                 {transactionAmount}
               </div>
             </div>
@@ -124,6 +126,11 @@ export default function List({
                   required
                   onChange={(e) => setDate(e.target.value)}
                 />
+                {!error ? (
+                  ""
+                ) : (
+                  <div className="error-message">Invalid date</div>
+                )}
               </div>
             </div>
             <div className="grid-inner-divider page-row-container">

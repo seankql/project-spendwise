@@ -17,6 +17,7 @@ export default function List({
   const [date, setDate] = useState(null);
   const [category, setCategory] = useState(null);
   const [amount, setAmount] = useState(null);
+  const [error, setError] = useState(false);
 
   function isDateFormat(str) {
     const dateRegex = /^\d{4}-\d{2}-\d{2}$/; // Regex pattern for "YYYY-MM-DD"
@@ -30,7 +31,7 @@ export default function List({
   const handleSubmit = (event) => {
     event.preventDefault();
     if (!isDateFormat(date)) {
-      alert("invalid date string");
+      setError(true);
       return;
     }
     editSubmit(name, category, amount, date, data.id, data.AccountId);
@@ -46,6 +47,7 @@ export default function List({
       setEditState(true);
     } else {
       setEditState(false);
+      setError(false);
     }
   };
 
@@ -53,16 +55,16 @@ export default function List({
     if (!editState) {
       return (
         <div className="list-transaction-container">
-          <div className="transaction-col-container list-transaction-font">
+          <div className="transaction-col-container list-transaction-font  overflow">
             <div>{data?.transactionDate}</div>
           </div>
-          <div className="transaction-col-container list-transaction-font">
+          <div className="transaction-col-container list-transaction-font  overflow">
             <div>{data?.descriptions}</div>
           </div>
-          <div className="transaction-col-container list-transaction-font">
+          <div className="transaction-col-container list-transaction-font overflow">
             {data?.category}
           </div>
-          <div className="transaction-col-container list-transaction-font">
+          <div className="transaction-col-container list-transaction-font  overflow">
             {data?.amount}
           </div>
           {viewOnly ? (
@@ -88,13 +90,16 @@ export default function List({
     } else {
       return (
         <form onSubmit={handleSubmit} className="list-transaction-container">
-          <input
-            className="transaction-col-container list-transaction-font"
-            type="text"
-            value={date}
-            required
-            onChange={(e) => setDate(e.target.value)}
-          />
+          <div className="transaction-col-container">
+            <input
+              className=" list-transaction-font"
+              type="text"
+              value={date}
+              required
+              onChange={(e) => setDate(e.target.value)}
+            />
+            {!error ? "" : <div className="error-message">Invalid date</div>}
+          </div>
           <input
             className="transaction-col-container list-transaction-font"
             type="text"
