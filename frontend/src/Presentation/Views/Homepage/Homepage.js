@@ -19,7 +19,10 @@ export default function Homepage() {
     "SpendWise offers powerful features that make managing your finances easier than ever before. With automatic or manual tracking of income and expenses, you can stay on top of your finances and make informed decisions. SpendWise's data visualization tools provide easy-to-read graphs and charts that help you analyze your spending habits and identify areas where you can save money. The app also includes search features that allow you to find and analyze expenses quickly and efficiently. With SpendWise, you have all the tools you need to take control of your finances and achieve your financial goals.";
 
   const ContactDescription =
-    "SpendWise was developed by a three-man development team. You can reach out to us with the following options: ";
+    "SpendWise was developed by a three-man development team. You can reach out to us by email for inquiries: \n\n\
+    Chongmin-Bai \n jonathan.bai@mail.utoronto.ca \n \n \
+    Matthew Melchior \n  matthew.melchior@mail.utoronto.ca \n \n \
+    Sean Lau Kuang Qi \n sean.lau@mail.utoronto.ca";
 
   const sectionList = ["Home", "About", "Features", "Contact"];
 

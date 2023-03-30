@@ -92,3 +92,7 @@
   font-size: 20px;
   line-height: 150%;
 }
+
+.display-linebreak {
+  white-space: pre-line;
+}

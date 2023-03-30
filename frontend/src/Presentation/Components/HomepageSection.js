@@ -15,7 +15,10 @@ export default function List({
         <div className="home-section-block">
           <div className="part">
             <div className="section-header-text "> {header} </div>
-            <div className="section-paragraph-text"> {description} </div>
+            <div className="section-paragraph-text display-linebreak">
+              {" "}
+              {description}{" "}
+            </div>
           </div>
           <div className="part">
             <div className="background-circle">
