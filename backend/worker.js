@@ -12,17 +12,25 @@ import { UsersModel } from "./models/usersModel.js";
 import { Op } from "sequelize";
 import axios from "axios";
 import Sentry from "@sentry/node";
+import { config } from "./config/config.js";
 
-const redisClient = redis.createClient({
-  host: "localhost",
-  port: 6379,
-});
+const sharedConfig = {
+  redis: redis.createClient({
+    url: `redis://${config.REDIS_HOST}:${config.REDIS_PORT}`,
+  }),
+};
 
 export const transactionQueue = new Queue("transactions", {
-  redis: redisClient,
+  redis: {
+    host: config.REDIS_HOST,
+    port: config.REDIS_PORT,
+  },
 });
 export const syncQueue = new Queue("sync", {
-  redis: redisClient,
+  redis: {
+    host: config.REDIS_HOST,
+    port: config.REDIS_PORT,
+  },
 });
 
 transactionQueue.process(async (job) => {
@@ -77,7 +85,8 @@ syncQueue.process(async () => {
 async function callSyncTransactions(userId) {
   try {
     const response = await axios.get(
-      "http://localhost:3001/api/plaid/transactions/sync?userId=" + userId
+      "https://jbai.cscc09.rocks:3001/api/plaid/transactions/sync?userId=" +
+        userId
     );
     console.log(response.data);
   } catch (err) {

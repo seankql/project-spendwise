@@ -1,0 +1,122 @@
+version: "3.7"
+
+services:
+  nginx-proxy:
+    image: jwilder/nginx-proxy
+    container_name: nginx-proxy
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+      - ./certs:/etc/nginx/certs
+      - ./vhost:/etc/nginx/vhost.d
+      - ./html:/usr/share/nginx/html
+    labels:
+      com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy: "true"
+  nginx-proxy-acme:
+    image: nginxproxy/acme-companion
+    container_name: nginx-proxy-acme
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./certs:/etc/nginx/certs
+      - ./vhost:/etc/nginx/vhost.d
+      - ./html:/usr/share/nginx/html
+      - ./acme:/etc/acme.sh
+    environment:
+      - DEFAULT_EMAIL=sean.lau@mail.utoronto.ca
+      - NGINX_PROXY_CONTAINER=nginx-proxy
+    volumes_from:
+      - nginx-proxy
+  redis:
+    image: redis:5-alpine
+    container_name: redis
+    command: ["redis-server", "--bind", "redis", "--port", "6379"]
+    expose:
+      - 6379
+
+  postgres:
+    restart: always
+    image: postgres:12
+    container_name: postgres
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=bhy88326960
+      - POSTGRES_DB=postgres
+    volumes:
+      - ./db:/docker-entrypoint-initdb.d/
+    ports:
+      - 5432
+
+  frontend:
+    image: spendwise-frontend
+    container_name: frontend
+    build: ./frontend
+    depends_on:
+      - backend
+    restart: always
+    environment:
+      - VIRTUAL_HOST=jbai.cscc09.rocks
+      - LETSENCRYPT_HOST=jbai.cscc09.rocks
+      - REACT_APP_AUTH0_DOMAIN=dev-6br7dpu563xzmpla.us.auth0.com
+      - REACT_APP_AUTH0_CLIENT_ID=UcER1F5Rrvddug5ybY4FZYkzR0EkJYNl
+      - REACT_APP_AUTH0_AUDIENCE=https://dev-6br7dpu563xzmpla.us.auth0.com/api/v2/
+      - REACT_APP_AUTH0_SCOPE=read:current_user update:current_user_metadata
+    expose:
+      - 80
+  backend:
+    image: spendwise-backend
+    container_name: backend
+    build: ./backend
+    depends_on:
+      - redis
+      - postgres
+    environment:
+      - DB_USER=postgres
+      - DB_PASS=bhy88326960
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_NAME=postgres
+      - SENTRY_DSN=https://7899121b651748e8b106502507f37aed@o4504771031269376.ingest.sentry.io/4504771041230848
+      - PLAID_CLIENT_ID=640263678c94f8001353ba94
+      - PLAID_SECRET=11a75859dbaac6757011ea897f212d
+      - PLAID_ENV=sandbox
+      - REACT_APP_AUTH0_DOMAIN=dev-6br7dpu563xzmpla.us.auth0.com
+      - REACT_APP_AUTH0_AUDIENCE=https://dev-6br7dpu563xzmpla.us.auth0.com/api/v2/
+      - SENDGRID_API_KEY=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
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - VIRTUAL_HOST=api.jbai.cscc09.rocks
+      - LETSENCRYPT_HOST=api.jbai.cscc09.rocks
+    restart: always
+    expose:
+      - 3001
+  worker:
+    image: spendwise-worker
+    build:
+      context: ./backend
+      dockerfile: worker.Dockerfile
+    container_name: worker
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+    depends_on:
+      - redis
+      - postgres
+    restart: always
+  cron:
+    image: spendwise-cron
+    build:
+      context: ./backend
+      dockerfile: cron.Dockerfile
+    container_name: cron
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+    depends_on:
+      - redis
+      - postgres
+      - worker
+    restart: always
+volumes:
+  postgres-volume:
