@@ -3,10 +3,10 @@ import useViewModel from "./ViewModel";
 import Banner from "../../Components/Banner";
 import ScrollBanner from "../../Components/ScrollBanner";
 import ProfileCard from "../../Components/ProfileCard";
-import AlertCard from "../../Components/AlertCard";
 import AccountCardGenerator from "../../Components/AccountCardGenerator";
 import AccountForm from "../../Components/AccountForm";
 import { usePlaidLink } from "react-plaid-link";
+import FooterLink from "../../Components/FooterLink";
 import "../../Styles/Common.css";
 import "../../Styles/Account.css";
 import "../../Styles/Main.css";
@@ -126,7 +126,9 @@ export default function Account() {
           </div>
         </div>
       </div>
-      <footer />
+      <footer>
+        <FooterLink />
+      </footer>
     </div>
   );
 }

@@ -3,10 +3,10 @@ import imageBanner from "../../../Media/pexels-andrea-piacquadio.webp";
 import aboutPicture from "../../../Media/pexels-mikhail-nilov.webp";
 import featurePicture from "../../../Media/pexels-photo-4386433.webp";
 import contactPicture from "../../../Media/pexels-cottonbro-studio-3202235.webp";
-import { Link } from "react-scroll";
 import ScrollBanner from "../../Components/ScrollBanner";
 import SigninSignupButton from "../../Components/SigninSignupButton";
 import HomepageSection from "../../Components/HomepageSection";
+import FooterLink from "../../Components/FooterLink";
 import "../../Styles/Common.css";
 import "../../Styles/Main.css";
 import "../../Styles/Homepage.css";
@@ -79,7 +79,9 @@ export default function Homepage() {
           direction="left"
         />
       </div>
-      <footer />
+      <footer>
+        <FooterLink />
+      </footer>
     </div>
   );
 }

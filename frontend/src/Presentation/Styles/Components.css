@@ -394,3 +394,15 @@
 .graph-button-text {
   margin: auto;
 }
+
+.footer-link {
+  display: flex;
+  color: #fff;
+  margin: auto;
+}
+
+.footer-link:hover {
+  display: flex;
+  color: #8bc53f;
+  margin: auto;
+}

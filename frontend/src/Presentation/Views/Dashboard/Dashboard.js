@@ -9,6 +9,7 @@ import AccountSelect from "../../Components/AccountSelect";
 import ExpenditureGraph from "../../Components//Graphs/ExpenditureGraph";
 import IncomeGraph from "../../Components/Graphs/IncomeGraph";
 import CategoryGraph from "../../Components//Graphs/CategoryGraph";
+import FooterLink from "../../Components/FooterLink";
 import "../../Styles/Common.css";
 import "../../Styles/Dashboard.css";
 import "../../Styles/Main.css";
@@ -132,7 +133,9 @@ export default function Dashboard() {
           <CategoryGraph data={transactions?.transactions} />
         </div>
       </div>
-      <footer />
+      <footer>
+        <FooterLink />
+      </footer>
     </div>
   );
 }

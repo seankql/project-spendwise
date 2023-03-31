@@ -6,6 +6,7 @@ import TransactionForm from "../../Components/TransactionForm";
 import SearchFilterSideBar from "../../Components/SearchFilterSideBar";
 import AccountSelect from "../../Components/AccountSelect";
 import TransactionViewBox from "../../Components/TransactionViewBox";
+import FooterLink from "../../Components/FooterLink";
 import "../../Styles/Common.css";
 import "../../Styles/Main.css";
 import "../../Styles/Transactions.css";
@@ -118,7 +119,9 @@ export default function Transactions() {
           />
         </div>
       </div>
-      <footer />
+      <footer>
+        <FooterLink />
+      </footer>
     </div>
   );
 }
