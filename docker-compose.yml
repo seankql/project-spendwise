@@ -17,6 +17,8 @@ services:
   nginx-proxy-acme:
     image: nginxproxy/acme-companion
     container_name: nginx-proxy-acme
+    depends_on:
+      - nginx-proxy
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - ./certs:/etc/nginx/certs
@@ -24,7 +26,7 @@ services:
       - ./html:/usr/share/nginx/html
       - ./acme:/etc/acme.sh
     environment:
-      - DEFAULT_EMAIL=sean.lau@mail.utoronto.ca
+      - DEFAULT_EMAIL=jonathan.bai@mail.utoronto.ca
       - NGINX_PROXY_CONTAINER=nginx-proxy
     volumes_from:
       - nginx-proxy
@@ -49,15 +51,15 @@ services:
       - 5432
 
   frontend:
-    image: spendwise-frontend
+    image: ghcr.io/uoft-utsc-cs-sandbox/spendwise-frontend
     container_name: frontend
     build: ./frontend
     depends_on:
       - backend
     restart: always
     environment:
-      - VIRTUAL_HOST=jbai.cscc09.rocks
-      - LETSENCRYPT_HOST=jbai.cscc09.rocks
+      - VIRTUAL_HOST=sw.cscc09.rocks
+      - LETSENCRYPT_HOST=sw.cscc09.rocks
       - REACT_APP_AUTH0_DOMAIN=dev-6br7dpu563xzmpla.us.auth0.com
       - REACT_APP_AUTH0_CLIENT_ID=UcER1F5Rrvddug5ybY4FZYkzR0EkJYNl
       - REACT_APP_AUTH0_AUDIENCE=https://dev-6br7dpu563xzmpla.us.auth0.com/api/v2/
@@ -65,7 +67,7 @@ services:
     expose:
       - 80
   backend:
-    image: spendwise-backend
+    image: ghcr.io/uoft-utsc-cs-sandbox/spendwise-backend
     container_name: backend
     build: ./backend
     depends_on:
@@ -86,8 +88,8 @@ services:
       - SENDGRID_API_KEY=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
       - REDIS_HOST=redis
       - REDIS_PORT=6379
-      - VIRTUAL_HOST=api.jbai.cscc09.rocks
-      - LETSENCRYPT_HOST=api.jbai.cscc09.rocks
+      - VIRTUAL_HOST=api.sw.cscc09.rocks
+      - LETSENCRYPT_HOST=api.sw.cscc09.rocks
     restart: always
     expose:
       - 3001

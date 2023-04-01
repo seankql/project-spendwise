@@ -1,17 +1,8 @@
 name: Publish Backend
 
-on:
-  push:
-    # Only run this workflow if it is a commit to main.
-    branches:
-      - main
-    # Only run this workflow if the commit has modified files from backend
-    paths:
-      - backend/**
-  workflow_dispatch:
-
+on: [push]
 env:
-  IMAGE_NAME: backend-sean1228
+  IMAGE_NAME: spendwise-backend
 
 jobs:
   # Push image to GitHub Packages.

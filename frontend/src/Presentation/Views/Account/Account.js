@@ -49,7 +49,7 @@ export default function Account() {
     if (user && isAuthenticated && !isLoading) {
       getAccessTokenSilently({
         authorizationParams: {
-          audience: "https://localhost:3001",
+          audience: "https://api.sw.cscc09.rocks:3001",
         },
       }).then((token) => {
         fetchData(user, token);

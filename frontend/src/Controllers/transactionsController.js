@@ -9,7 +9,7 @@ function handleResult(res) {
 export default function TransactionsController() {
   async function getTransactionsUseCase(userId, page, pageSize, token) {
     return fetch(
-      "http://localhost:3001/api/transactions?" +
+      "https://api.sw.cscc09.rocks:3001/api/transactions?" +
         new URLSearchParams({
           userId: userId,
           page: page,
@@ -33,7 +33,7 @@ export default function TransactionsController() {
     date,
     token
   ) {
-    return fetch("http://localhost:3001/api/transactions", {
+    return fetch("https://api.sw.cscc09.rocks:3001/api/transactions", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -58,30 +58,36 @@ export default function TransactionsController() {
     transactionId,
     token
   ) {
-    return fetch("http://localhost:3001/api/transactions/" + transactionId, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({
-        accountId: accountId,
-        descriptions: name,
-        category: category,
-        amount: amount,
-        transactionDate: date,
-      }),
-    }).then((res) => handleResult(res));
+    return fetch(
+      "https://api.sw.cscc09.rocks:3001/api/transactions/" + transactionId,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          accountId: accountId,
+          descriptions: name,
+          category: category,
+          amount: amount,
+          transactionDate: date,
+        }),
+      }
+    ).then((res) => handleResult(res));
   }
 
   async function deleteTransactionsUseCase(transactionId, token) {
-    return fetch("http://localhost:3001/api/transactions/" + transactionId, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    }).then((res) => handleResult(res));
+    return fetch(
+      "https://api.sw.cscc09.rocks:3001/api/transactions/" + transactionId,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    ).then((res) => handleResult(res));
   }
 
   async function getFilterTransactionsUseCase(
@@ -109,7 +115,7 @@ export default function TransactionsController() {
     if (maxAmount) searchParams.set("maxAmount", maxAmount);
     if (categories) searchParams.set("categories", categories);
     return fetch(
-      "http://localhost:3001/api/transactions/filters/" +
+      "https://api.sw.cscc09.rocks:3001/api/transactions/filters/" +
         userId +
         "/transactions?" +
         searchParams,

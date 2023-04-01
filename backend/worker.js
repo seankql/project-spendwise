@@ -85,7 +85,7 @@ syncQueue.process(async () => {
 async function callSyncTransactions(userId) {
   try {
     const response = await axios.get(
-      "https://jbai.cscc09.rocks:3001/api/plaid/transactions/sync?userId=" +
+      "https://api.sw.cscc09.rocks:3001/api/plaid/transactions/sync?userId=" +
         userId
     );
     console.log(response.data);
