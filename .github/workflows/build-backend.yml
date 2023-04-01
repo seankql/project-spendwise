@@ -2,7 +2,7 @@ name: Publish Backend
 
 on: [push]
 env:
-  IMAGE_NAME: spendwise-backend
+  IMAGE_NAME: backend-baichon1
 
 jobs:
   # Push image to GitHub Packages.
