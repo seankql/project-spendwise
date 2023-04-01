@@ -12,7 +12,7 @@ on:
       - docker-compose.yml
 
 env:
-  IMAGE_NAME: frontend-jonathan0137
+  IMAGE_NAME: frontend-baichon1
 
 jobs:
   # Push image to GitHub Packages.
