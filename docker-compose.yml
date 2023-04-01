@@ -53,7 +53,6 @@ services:
   frontend:
     image: ghcr.io/uoft-utsc-cs-sandbox/spendwise-frontend
     container_name: frontend
-    build: ./frontend
     depends_on:
       - backend
     restart: always
@@ -69,7 +68,6 @@ services:
   backend:
     image: ghcr.io/uoft-utsc-cs-sandbox/spendwise-backend
     container_name: backend
-    build: ./backend
     depends_on:
       - redis
       - postgres
