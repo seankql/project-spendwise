@@ -51,8 +51,8 @@ services:
       - 5432
 
   frontend:
-    image: ghcr.io/uoft-utsc-cs-sandbox/frontend-baichon1
     container_name: frontend
+    build: ./frontend
     depends_on:
       - backend
     restart: always
@@ -66,8 +66,8 @@ services:
     expose:
       - 80
   backend:
-    image: ghcr.io/uoft-utsc-cs-sandbox/backend-baichon1
     container_name: backend
+    build: ./backend
     depends_on:
       - redis
       - postgres
