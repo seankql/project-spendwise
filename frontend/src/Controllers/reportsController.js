@@ -9,7 +9,7 @@ function handleResult(res) {
 export default function ReportsController() {
   async function getReportsUseCase(userId, token) {
     return fetch(
-      "https://api.sw.cscc09.rocks:3001/api/Reports/user/" + userId,
+      "https://api.swx.cscc09.rocks:3001/api/Reports/user/" + userId,
       {
         method: "GET",
         headers: {
@@ -22,7 +22,7 @@ export default function ReportsController() {
 
   async function getReportsUseCase(userId, startDate, endDate, token) {
     return fetch(
-      "https://api.sw.cscc09.rocks:3001/api/reports?" +
+      "https://api.swx.cscc09.rocks:3001/api/reports?" +
         new URLSearchParams({
           userId: userId,
           startDate: startDate,
@@ -45,7 +45,7 @@ export default function ReportsController() {
     token
   ) {
     return fetch(
-      "https://api.sw.cscc09.rocks:3001/api/reports/accounts?" +
+      "https://api.swx.cscc09.rocks:3001/api/reports/accounts?" +
         new URLSearchParams({
           accountId: accountId,
           startDate: startDate,
@@ -63,7 +63,7 @@ export default function ReportsController() {
 
   async function getCategoryReportsUseCase(userId, startDate, endDate, token) {
     return fetch(
-      "https://api.sw.cscc09.rocks:3001/api/reports/categories?" +
+      "https://api.swx.cscc09.rocks:3001/api/reports/categories?" +
         new URLSearchParams({
           userId: userId,
           startDate: startDate,
