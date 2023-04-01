@@ -1,15 +1,26 @@
-name: Publish Backend
+name: Publish backend Skeleton to GHCR
 
-on: [push]
+on:
+  push:
+    # Only run this workflow if it is a commit to main.
+    branches:
+      - main
+      - Deployment-Jonathan
+    # Only run this workflow if the commit has modified files from backend
+    paths:
+      - backend/**
+      - docker-compose.yml
+
+
 env:
-  IMAGE_NAME: backend-baichon1
+  IMAGE_NAME: backend-spendwise
 
 jobs:
   # Push image to GitHub Packages.
   # See also https://docs.docker.com/docker-hub/builds/
   push:
     runs-on: ubuntu-latest
-    if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
+    if: github.event_name == 'push'
     defaults:
       run:
         working-directory: backend
