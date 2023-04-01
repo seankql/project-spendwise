@@ -14,9 +14,9 @@ app.use(bodyParser.json());
 app.use(express.static("static"));
 
 var corsOptions = {
-  origin: ['https://sw.cscc09.rocks', 'https://api.sw.cscc09.rocks'],
+  origin: ["https://sw.cscc09.rocks", "https://api.sw.cscc09.rocks"],
   credentials: true,
-}
+};
 app.use(cors(corsOptions));
 
 Sentry.init({
