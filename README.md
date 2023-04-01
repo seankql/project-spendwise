@@ -33,6 +33,10 @@
 - DB: Postgresql
 - Error Tracking: Sentry
 - Task Queue: Bee-Queue
+- Deployment: Docker
+- DNS & VM:
+    - DigitalOcean
+    - Name.com
 ```
 
 ### Task Queue WorkFlow
@@ -102,7 +106,7 @@
 - Sentry Error logging (1 point)
   - https://sentry.io/welcome/
 
-### Challenge Factor
+### Challenge Factor (Not Complete)
 
 - OpenAI for categorization and tips box (1 point)
   - No personal identifiable information
@@ -112,7 +116,7 @@
 
 ### Chongmin-Bai:
 
-Student Number: 1004986599. Responsible for general backend-end development, including backend logic for manual entry of transactions, automatic entry of transaction of Plaid API, Setting up Bee-Queue for async jobs and Setting up Sentry for Error Logging.
+Student Number: 1004986599. Responsible for general backend-end development, including backend logic for manual entry of transactions, automatic entry of transaction of Plaid API, Setting up Bee-Queue for async jobs, deployment and Setting up Sentry for Error Logging.
 
 ### Matthew Melchior
 
