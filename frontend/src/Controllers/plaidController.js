@@ -9,7 +9,7 @@ function handleResult(res) {
 export default function PlaidController() {
   async function getPlaidLinkTokenUseCase(userId, token) {
     return fetch(
-      "https://api.swx.cscc09.rocks:3001/api/plaid/link_token?" +
+      "https://api.swx.cscc09.rocks/api/plaid/link_token?" +
         new URLSearchParams({
           userId: userId,
         }),
@@ -24,7 +24,7 @@ export default function PlaidController() {
   }
   async function getPlaidLinkedStatusUseCase(userId, token) {
     return fetch(
-      "https://api.swx.cscc09.rocks:3001/api/plaid/has_linked_plaid?" +
+      "https://api.swx.cscc09.rocks/api/plaid/has_linked_plaid?" +
         new URLSearchParams({
           userId: userId,
         }),
@@ -39,7 +39,7 @@ export default function PlaidController() {
   }
 
   async function exchangePlaidTokenUseCase(userId, public_token, token) {
-    return fetch("https://api.swx.cscc09.rocks:3001/api/plaid/token_exchange", {
+    return fetch("https://api.swx.cscc09.rocks/api/plaid/token_exchange", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -51,7 +51,7 @@ export default function PlaidController() {
       }),
     }).then((res) => {
       fetch(
-        "https://api.swx.cscc09.rocks:3001/api/plaid/transactions/sync?" +
+        "https://api.swx.cscc09.rocks/api/plaid/transactions/sync?" +
           new URLSearchParams({
             userId: userId,
           }),

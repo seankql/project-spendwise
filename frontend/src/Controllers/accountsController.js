@@ -8,19 +8,16 @@ function handleResult(res) {
 
 export default function AccountsController() {
   async function getAccountsUseCase(userId, token) {
-    return fetch(
-      "https://api.swx.cscc09.rocks:3001/api/accounts/user/" + userId,
-      {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    ).then((res) => handleResult(res));
+    return fetch("https://api.swx.cscc09.rocks/api/accounts/user/" + userId, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }).then((res) => handleResult(res));
   }
 
   async function createAccountsUseCase(userId, accountName, token) {
-    return fetch("https://api.swx.cscc09.rocks:3001/api/accounts/", {
+    return fetch("https://api.swx.cscc09.rocks/api/accounts/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -34,7 +31,7 @@ export default function AccountsController() {
   }
 
   async function updateAccountsUseCase(userId, accountName, accountId, token) {
-    return fetch("https://api.swx.cscc09.rocks:3001/api/accounts/" + accountId, {
+    return fetch("https://api.swx.cscc09.rocks/api/accounts/" + accountId, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -48,7 +45,7 @@ export default function AccountsController() {
   }
 
   async function deleteAccountsUseCase(accountId, token) {
-    return fetch("https://api.swx.cscc09.rocks:3001/api/accounts/" + accountId, {
+    return fetch("https://api.swx.cscc09.rocks/api/accounts/" + accountId, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",

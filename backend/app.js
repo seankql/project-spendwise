@@ -11,7 +11,6 @@ const PORT = 3001;
 export const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.use(express.static("static"));
 
 var corsOptions = {
   origin: ["https://swx.cscc09.rocks", "https://api.swx.cscc09.rocks"],

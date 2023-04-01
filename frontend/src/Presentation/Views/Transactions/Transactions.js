@@ -48,7 +48,7 @@ export default function Transactions() {
     if (user && isAuthenticated && !isLoading) {
       getAccessTokenSilently({
         authorizationParams: {
-          audience: "https://api.swx.cscc09.rocks:3001",
+          audience: "https://api.swx.cscc09.rocks",
         },
       }).then((token) => {
         fetchData(user, token);

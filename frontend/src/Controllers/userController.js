@@ -8,7 +8,7 @@ function handleResult(res) {
 
 export default function UserController() {
   async function postUserUseCase(auth0UserId, email, token) {
-    return fetch("http://api.swx.cscc09.rocks:3001/api/users", {
+    return fetch("https://api.swx.cscc09.rocks/api/users", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -22,7 +22,7 @@ export default function UserController() {
   }
 
   async function getUserUseCase(auth0UserId, token) {
-    return fetch("https://api.swx.cscc09.rocks:3001/api/users/" + auth0UserId, {
+    return fetch("https://api.swx.cscc09.rocks/api/users/" + auth0UserId, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -32,7 +32,7 @@ export default function UserController() {
   }
 
   async function deleteUserUseCase(auth0UserId, token) {
-    return fetch("https://api.swx.cscc09.rocks:3001/api/users/" + auth0UserId, {
+    return fetch("https://api.swx.cscc09.rocks/api/users/" + auth0UserId, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
