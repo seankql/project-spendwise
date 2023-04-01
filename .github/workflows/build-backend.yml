@@ -11,9 +11,8 @@ on:
       - backend/**
       - docker-compose.yml
 
-
 env:
-  IMAGE_NAME: backend-spendwise
+  IMAGE_NAME: backend-Jonathan0137
 
 jobs:
   # Push image to GitHub Packages.
