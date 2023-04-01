@@ -37,7 +37,9 @@ export default function Transactions() {
     fetchData,
   } = useViewModel();
 
-  const sectionList = ["Add Transaction", "View Transactions"];
+  const sectionList = selectedAccount
+    ? ["Add Transaction", "View Transactions"]
+    : ["View Transactions"];
 
   const { user, isAuthenticated, isLoading, getAccessTokenSilently } =
     useAuth0();
@@ -46,7 +48,7 @@ export default function Transactions() {
     if (user && isAuthenticated && !isLoading) {
       getAccessTokenSilently({
         authorizationParams: {
-          audience: "https://localhost:3001",
+          audience: "https://api.swx.cscc09.rocks",
         },
       }).then((token) => {
         fetchData(user, token);

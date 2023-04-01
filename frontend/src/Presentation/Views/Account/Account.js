@@ -29,12 +29,8 @@ export default function Account() {
     linkToken,
     exchangeAndSync,
     hasLinkedPlaid,
+    setHasLinkedPlaid,
   } = useViewModel();
-
-  // TODO: Show different "Bank Information" form depending on whether or not
-  // User has linked it to a bank account or not. If not, users should be prompted
-  // to link their account to a bank account, otherwise, just show the current
-  // information and have an option to unlink
 
   const sectionList = ["Profile & Alerts", "Accounts", "Create New Account"];
 
@@ -45,6 +41,7 @@ export default function Account() {
     token: linkToken,
     onSuccess: (public_token, metadata) => {
       exchangeAndSync((public_token = public_token));
+      setHasLinkedPlaid(true);
     },
   });
 
@@ -52,7 +49,7 @@ export default function Account() {
     if (user && isAuthenticated && !isLoading) {
       getAccessTokenSilently({
         authorizationParams: {
-          audience: "https://localhost:3001",
+          audience: "https://api.swx.cscc09.rocks",
         },
       }).then((token) => {
         fetchData(user, token);

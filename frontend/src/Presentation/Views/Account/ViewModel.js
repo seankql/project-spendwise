@@ -8,7 +8,7 @@ import PlaidController from "../../../Controllers/plaidController";
 
 export default function AccountViewModel() {
   const [error, setError] = useState("");
-  const [hasLinkedPlaid, setHasLinkedPlaid] = useState(false);
+  const [hasLinkedPlaid, setHasLinkedPlaid] = useState(true);
   const [userId, setUserId] = useState(null);
   const [nickname, setNickname] = useState("");
   const [email, setEmail] = useState("");
@@ -29,7 +29,6 @@ export default function AccountViewModel() {
 
   const {
     getPlaidLinkTokenUseCase,
-    syncPlaidTransactionsUseCase,
     exchangePlaidTokenUseCase,
     getPlaidLinkedStatusUseCase,
   } = PlaidController();
@@ -90,22 +89,17 @@ export default function AccountViewModel() {
     setLinkToken(result.link_token);
   }
 
-  async function exchangePlaidToken(publicToken, token = bearerToken) {
-    await exchangePlaidTokenUseCase(userId, publicToken, token);
-  }
-
-  async function syncPlaidTransactions(token = bearerToken) {
-    await syncPlaidTransactionsUseCase(userId, token);
-  }
-
   async function exchangeAndSync(publicToken, token = bearerToken) {
-    exchangePlaidToken(publicToken, token);
-    syncPlaidTransactions(token);
+    await exchangePlaidTokenUseCase(userId, publicToken, token);
   }
 
   async function getPlaidLinkedStatus(userId, token = bearerToken) {
     const result = await getPlaidLinkedStatusUseCase(userId, token);
-    setHasLinkedPlaid(result.status === 200);
+    if (!result.ok) {
+      setHasLinkedPlaid(false);
+    } else {
+      setHasLinkedPlaid(true);
+    }
   }
 
   async function fetchData(user, token) {
@@ -113,7 +107,6 @@ export default function AccountViewModel() {
     setProfileData(user);
     setBearerToken(token);
     const result = await getUserUseCase(user.sub.split("|")[1], token);
-    if (!result) return;
     const userId = result.id;
 
     setUserId(userId);
@@ -139,5 +132,6 @@ export default function AccountViewModel() {
     linkToken,
     exchangeAndSync,
     hasLinkedPlaid,
+    setHasLinkedPlaid,
   };
 }

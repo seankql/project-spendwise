@@ -46,6 +46,14 @@ reportsController.get(
           order: [["transactionDate", "DESC"]],
         });
 
+      if (count === 0) {
+        return res.status(200).send({
+          totalCount: count,
+          transactions: [],
+          income: 0,
+          expense: 0,
+        });
+      }
       if (resultReport) {
         const filteredResultReport = resultReport.map((transaction) => ({
           id: transaction.id,
@@ -85,7 +93,7 @@ reportsController.get(
         return res.status(400).send("Error getting report");
       }
     } catch (err) {
-      // Sentry.captureException(err);
+      Sentry.captureException(err);
       return res.status(500).send("Internal Server error " + err);
     }
   }
@@ -123,7 +131,14 @@ reportsController.get("/accounts", validateAccessToken, async (req, res) => {
         },
         order: [["transactionDate", "DESC"]],
       });
-
+    if (count === 0) {
+      return res.status(200).send({
+        totalCount: count,
+        transactions: [],
+        income: 0,
+        expense: 0,
+      });
+    }
     if (resultReport) {
       const result = resultReport.reduce(
         (acc, transaction) => {
@@ -151,7 +166,7 @@ reportsController.get("/accounts", validateAccessToken, async (req, res) => {
       return res.status(400).send("Error getting report");
     }
   } catch (err) {
-    // Sentry.captureException(err);
+    Sentry.captureException(err);
     return res.status(500).send("Internal Server error " + err);
   }
 });
@@ -192,7 +207,14 @@ reportsController.get(
           },
           order: [["transactionDate", "DESC"]],
         });
-
+      if (count === 0) {
+        return res.status(200).send({
+          totalCount: count,
+          transactions: [],
+          income: 0,
+          expense: 0,
+        });
+      }
       if (resultReport) {
         const filteredResultReport = resultReport.map((transaction) => ({
           id: transaction.id,
@@ -250,7 +272,7 @@ reportsController.get(
         return res.status(400).send("Error getting report");
       }
     } catch (err) {
-      // Sentry.captureException(err);
+      Sentry.captureException(err);
       return res.status(500).send("Internal Server error " + err);
     }
   }

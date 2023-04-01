@@ -32,10 +32,6 @@ export default function List({
       alert("invalid date string");
       return;
     }
-    if (parseFloat(amount) !== amount) {
-      alert("invalid amount");
-      return;
-    }
     editSubmit(name, category, amount, date, data.id, data.AccountId);
     changeEditState();
   };
@@ -145,13 +141,25 @@ export default function List({
             <div className="grid-inner-divider page-row-container">
               <div className="component-subheader-text">Category:</div>
               <div className="list-transaction-font row-right-element grid-seal-wrapper">
-                <input
+                <select
                   className="list-transaction-font grid-input-container"
-                  type="text"
                   value={category}
-                  required
                   onChange={(e) => setCategory(e.target.value)}
-                />
+                >
+                  <option value={"Bank Fees"}> Bank Fees </option>
+                  <option value={"Cash Advance"}> Cash Advance </option>
+                  <option value={"Community"}> Community </option>
+                  <option value={"Food and Drink"}> Food and Drink </option>
+                  <option value={"Healthcare"}> Healthcare </option>
+                  <option value={"Interest"}> Interest </option>
+                  <option value={"Payment"}> Payment </option>
+                  <option value={"Recreation"}> Recreation </option>
+                  <option value={"Service"}> Service </option>
+                  <option value={"Shops"}> Shops </option>
+                  <option value={"Tax"}> Tax </option>
+                  <option value={"Transfer"}> Transfer </option>
+                  <option value={"Travel"}> Travel </option>
+                </select>
               </div>
             </div>
             <div className="grid-inner-divider page-row-container">
@@ -159,7 +167,7 @@ export default function List({
               <div className="list-transaction-font row-right-element grid-seal-wrapper">
                 <input
                   className="list-transaction-font grid-input-container"
-                  type="text"
+                  type="number"
                   value={amount}
                   required
                   onChange={(e) => setAmount(e.target.value)}

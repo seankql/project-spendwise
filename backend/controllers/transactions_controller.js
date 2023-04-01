@@ -41,6 +41,9 @@ transactionsController.get(
           order: [["transactionDate", "DESC"]],
         });
 
+      if (count === 0) {
+        return res.status(200).send({ totalCount: count, transactions: [] });
+      }
       if (resultTransactions) {
         const filteredTransactions = resultTransactions.map((transaction) => ({
           id: transaction.id,
@@ -60,7 +63,7 @@ transactionsController.get(
         return res.status(400).send("Error getting transactions");
       }
     } catch (err) {
-      // Sentry.captureException(err);
+      Sentry.captureException(err);
       return res.status(500).send("Internal Server error " + err);
     }
   }
@@ -108,7 +111,7 @@ transactionsController.post("/", validateAccessToken, async (req, res) => {
       return res.status(400).send("Error creating transaction");
     }
   } catch (err) {
-    // Sentry.captureException(err);
+    Sentry.captureException(err);
     return res.status(500).send("Internal Server error " + err);
   }
 });
@@ -180,7 +183,7 @@ transactionsController.put(
           );
       }
     } catch (err) {
-      // Sentry.captureException(err);
+      Sentry.captureException(err);
       return res.status(500).send("Internal Server error " + err);
     }
   }
@@ -225,7 +228,7 @@ transactionsController.delete(
           );
       }
     } catch (err) {
-      // Sentry.captureException(err);
+      Sentry.captureException(err);
       return res.status(500).send("Internal Server error " + err);
     }
   }
@@ -302,10 +305,13 @@ transactionsController.get(
           transactions: filteredResultTrans,
         });
       } else {
-        return res.status(400).send("Error getting transactions");
+        return res.status(200).send({
+          totalCount: 0,
+          transactions: [],
+        });
       }
     } catch (err) {
-      //   Sentry.captureException(err);
+      Sentry.captureException(err);
       return res.status(500).send("Internal Server error " + err);
     }
   }

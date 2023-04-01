@@ -5,7 +5,10 @@ import {
   validateAccessToken,
   isAuthorizedAuth0UserId,
 } from "../middleware/auth.js";
-
+import sgMail from "@sendgrid/mail";
+import fs from "fs";
+import path from "path";
+import { config } from "../config/config.js";
 // Base route: /api/users
 export const usersController = Router();
 
@@ -28,10 +31,26 @@ usersController.post(
           auth0UserId: auth0UserId,
           email: email,
         });
-        return res.status(201).send(newUser);
+        // Send welcome to spendwise email if new user
+        sgMail.setApiKey(config.SENDGRID_API_KEY);
+        const directory = "sendgrid_emails";
+        const htmlFilePath = path.join(directory, "RegistrationEmail.html");
+        const htmlString = fs.readFileSync(htmlFilePath, "utf-8");
+        const msg = {
+          to: email,
+          from: "spendwise.site@gmail.com",
+          subject: "Welcome to Spendwise!",
+          html: htmlString,
+        };
+        sgMail
+          .send(msg)
+          .then(() => console.log("Registration email sent"))
+          .catch((error) => console.error(error));
+        return res.status(200).send(newUser);
       }
+      return res.status(409).send("User already exists");
     } catch (err) {
-      // Sentry.captureException(err);
+      Sentry.captureException(err);
       return res.status(500).send("Internal Server error" + err);
     }
   }
@@ -56,7 +75,7 @@ usersController.delete(
       }
       return res.status(204).send();
     } catch (err) {
-      // Sentry.captureException(err);
+      Sentry.captureException(err);
       return res.status(500).send("Internal Server error" + err);
     }
   }
@@ -90,7 +109,7 @@ usersController.get(
 
       return res.status(200).send(newUser);
     } catch (err) {
-      // Sentry.captureException(err);
+      Sentry.captureException(err);
       return res.status(500).send("Internal Server error" + err);
     }
   }

@@ -1,6 +1,14 @@
+function handleResult(res) {
+  if (!res.ok) {
+    return;
+  } else {
+    return res.json();
+  }
+}
+
 export default function UserController() {
   async function postUserUseCase(auth0UserId, email, token) {
-    return fetch("http://localhost:3001/api/users", {
+    return fetch("https://api.swx.cscc09.rocks/api/users", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -10,27 +18,27 @@ export default function UserController() {
         auth0UserId: auth0UserId,
         email: email,
       }),
-    }).then((res) => res.json());
+    }).then((res) => handleResult(res));
   }
 
   async function getUserUseCase(auth0UserId, token) {
-    return fetch("http://localhost:3001/api/users/" + auth0UserId, {
+    return fetch("https://api.swx.cscc09.rocks/api/users/" + auth0UserId, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
-    }).then((res) => res.json());
+    }).then((res) => handleResult(res));
   }
 
   async function deleteUserUseCase(auth0UserId, token) {
-    return fetch("http://localhost:3001/api/users/" + auth0UserId, {
+    return fetch("https://api.swx.cscc09.rocks/api/users/" + auth0UserId, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
-    }).then((res) => res.json());
+    }).then((res) => handleResult(res));
   }
 
   return {

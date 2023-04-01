@@ -11,17 +11,26 @@ import {
 import { UsersModel } from "./models/usersModel.js";
 import { Op } from "sequelize";
 import axios from "axios";
+import Sentry from "@sentry/node";
+import { config } from "./config/config.js";
 
-const redisClient = redis.createClient({
-  host: "localhost",
-  port: 6379,
-});
+const sharedConfig = {
+  redis: redis.createClient({
+    url: `redis://${config.REDIS_HOST}:${config.REDIS_PORT}`,
+  }),
+};
 
 export const transactionQueue = new Queue("transactions", {
-  redis: redisClient,
+  redis: {
+    host: config.REDIS_HOST,
+    port: config.REDIS_PORT,
+  },
 });
 export const syncQueue = new Queue("sync", {
-  redis: redisClient,
+  redis: {
+    host: config.REDIS_HOST,
+    port: config.REDIS_PORT,
+  },
 });
 
 transactionQueue.process(async (job) => {
@@ -55,7 +64,7 @@ transactionQueue.process(async (job) => {
     }
   } catch (err) {
     console.log(err);
-    // Sentry.captureException(err + " in cron job transactionQueue");
+    Sentry.captureException(err + " in cron job transactionQueue");
   }
 });
 
@@ -69,18 +78,19 @@ syncQueue.process(async () => {
     }
   } catch (err) {
     console.log(err);
-    // Sentry.captureException(err + " in cron job syncQueue");
+    Sentry.captureException(err + " in cron job syncQueue");
   }
 });
 
 async function callSyncTransactions(userId) {
   try {
     const response = await axios.get(
-      "http://localhost:3001/api/plaid/transactions/sync?userId=" + userId
+      "https://api.swx.cscc09.rocks/api/plaid/transactions/sync?userId=" +
+        userId
     );
     console.log(response.data);
   } catch (err) {
     console.log(err);
-    // Sentry.captureException(err + " in cron job callSyncTransactions");
+    Sentry.captureException(err + " in cron job callSyncTransactions");
   }
 }

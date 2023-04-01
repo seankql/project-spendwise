@@ -2,6 +2,7 @@ import logo from "../../../Media/logo-no-background.png";
 import imageBanner from "../../../Media/pexels-andrea-piacquadio.jpg";
 import aboutPicture from "../../../Media/pexels-mikhail-nilov.jpg";
 import featurePicture from "../../../Media/pexels-photo-4386433.webp";
+import contactPicture from "../../../Media/pexels-cottonbro-studio-3202235.jpg";
 import { Link } from "react-scroll";
 import ScrollBanner from "../../Components/ScrollBanner";
 import SigninSignupButton from "../../Components/SigninSignupButton";
@@ -14,7 +15,13 @@ export default function Homepage() {
   const AboutDescription =
     "SpendWise's user-friendly interface provides you with a clear overview of your financial situation. You can analyze your transactions and monitor your progress towards your financial goals using our advanced reporting features and visualization tools. Whether you're a student, professional, or entrepreneur, SpendWise is a powerful tool that can help you manage your finances more effectively. With SpendWise, you can track your spending a wiser way and take control of your financial future.";
 
-  const sectionList = ["home", "about", "features", "contact"];
+  const FeatureDescription =
+    "SpendWise offers powerful features that make managing your finances easier than ever before. With automatic or manual tracking of income and expenses, you can stay on top of your finances and make informed decisions. SpendWise's data visualization tools provide easy-to-read graphs and charts that help you analyze your spending habits and identify areas where you can save money. The app also includes search features that allow you to find and analyze expenses quickly and efficiently. With SpendWise, you have all the tools you need to take control of your finances and achieve your financial goals.";
+
+  const ContactDescription =
+    "SpendWise was developed by a three-man development team. You can reach out to us with the following options: ";
+
+  const sectionList = ["Home", "About", "Features", "Contact"];
 
   return (
     <div className="body-wrapper">
@@ -54,7 +61,7 @@ export default function Homepage() {
       <div id="features">
         <HomepageSection
           header="Features"
-          description={AboutDescription}
+          description={FeatureDescription}
           image={featurePicture}
           background={"white"}
           direction="right"
@@ -62,9 +69,9 @@ export default function Homepage() {
       </div>
       <div id="contact">
         <HomepageSection
-          header="contact"
-          description={AboutDescription}
-          image={aboutPicture}
+          header="Contact"
+          description={ContactDescription}
+          image={contactPicture}
           background={"off-white"}
           direction="left"
         />

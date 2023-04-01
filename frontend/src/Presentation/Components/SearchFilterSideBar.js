@@ -114,30 +114,93 @@ export default function List({ setFilters }) {
         <label className="subsection-wrapper">
           <input
             type="checkbox"
-            onChange={(e) => check("Grocery", e.target.checked)}
+            onChange={(e) => check("Bank Fees", e.target.checked)}
           />
-          Grocery
+          Bank Fees
         </label>
         <label>
           <input
             type="checkbox"
-            onChange={(e) => check("Furniture", e.target.checked)}
+            onChange={(e) => check("Cash Advance", e.target.checked)}
           />
-          Furniture
+          Cash Advance
         </label>
         <label>
           <input
             type="checkbox"
-            onChange={(e) => check("Restaurants", e.target.checked)}
+            onChange={(e) => check("Community", e.target.checked)}
           />
-          Restaurants
+          Community
         </label>
         <label>
           <input
             type="checkbox"
-            onChange={(e) => check("Gas", e.target.checked)}
+            onChange={(e) => check("Food and Drink", e.target.checked)}
           />
-          Gas
+          Food and Drink
+        </label>
+        <label>
+          <input
+            type="checkbox"
+            onChange={(e) => check("Healthcare", e.target.checked)}
+          />
+          Healthcare
+        </label>
+        <label>
+          <input
+            type="checkbox"
+            onChange={(e) => check("Interest", e.target.checked)}
+          />
+          Interest
+        </label>
+        <label>
+          <input
+            type="checkbox"
+            onChange={(e) => check("Payment", e.target.checked)}
+          />
+          Payment
+        </label>
+        <label>
+          <input
+            type="checkbox"
+            onChange={(e) => check("Recreation", e.target.checked)}
+          />
+          Recreation
+        </label>
+        <label>
+          <input
+            type="checkbox"
+            onChange={(e) => check("Service", e.target.checked)}
+          />
+          Service
+        </label>
+        <label>
+          <input
+            type="checkbox"
+            onChange={(e) => check("Shops", e.target.checked)}
+          />
+          Shops
+        </label>
+        <label>
+          <input
+            type="checkbox"
+            onChange={(e) => check("Tax", e.target.checked)}
+          />
+          Tax
+        </label>
+        <label>
+          <input
+            type="checkbox"
+            onChange={(e) => check("Transfer", e.target.checked)}
+          />
+          Transfer
+        </label>
+        <label>
+          <input
+            type="checkbox"
+            onChange={(e) => check("Travel", e.target.checked)}
+          />
+          Travel
         </label>
       </div>
     </div>

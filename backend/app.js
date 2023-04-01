@@ -11,17 +11,13 @@ const PORT = 3001;
 export const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.use(express.static("static"));
-app.use(cors());
 
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept"
-  );
-  next();
-});
+var corsOptions = {
+  origin: ["https://swx.cscc09.rocks", "https://api.swx.cscc09.rocks"],
+  credentials: true,
+};
+app.use(cors(corsOptions));
+
 Sentry.init({
   dsn: config.SENTRY_DSN,
 });

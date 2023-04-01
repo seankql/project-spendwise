@@ -29,7 +29,7 @@ accountsController.post(
         return res.status(400).send("Error creating account");
       }
     } catch (err) {
-      // Sentry.captureException(err);
+      Sentry.captureException(err);
       return res.status(500).send("Internal Server error " + err);
     }
   }
@@ -67,7 +67,7 @@ accountsController.put(
           .send("Error finding account for account id: " + accountId);
       }
     } catch (err) {
-      // Sentry.captureException(err);
+      Sentry.captureException(err);
       return res.status(500).send("Internal Server error " + err);
     }
   }
@@ -115,7 +115,7 @@ accountsController.delete(
           .send("Error finding account for account id: " + accountId);
       }
     } catch (err) {
-      // Sentry.captureException(err);
+      Sentry.captureException(err);
       return res.status(500).send("Internal Server error " + err);
     }
   }
@@ -140,7 +140,7 @@ accountsController.get(
           .send("Error fetching accounts for user id: " + userId);
       }
     } catch (err) {
-      // Sentry.captureException(err);
+      Sentry.captureException(err);
       return res.status(500).send("Internal Server error " + err);
     }
   }

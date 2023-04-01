@@ -33,6 +33,10 @@
 - DB: Postgresql
 - Error Tracking: Sentry
 - Task Queue: Bee-Queue
+- Deployment: Docker
+- DNS & VM:
+    - DigitalOcean
+    - Name.com
 ```
 
 ### Task Queue WorkFlow
@@ -41,24 +45,24 @@
 
 ## Features
 
-- [ ] Spending Visualisation
+- [x] Spending Visualisation
   - Visualise spending based on time & category
   - Graphs, charts and big sections that contain total spends/income this month etc.
   - Done Using [Unovis](https://unovis.dev/gallery)
-- [ ] Link your bank account to [Plaid API](https://plaid.com/) for automatic entry
+- [x] Link your bank account to [Plaid API](https://plaid.com/) for automatic entry
   - Once you link your account, we will fetch all the transactions for this month
   - get user Transactions in Task Queue using [Bee-Queue](https://github.com/bee-queue/bee-queue)
-- [ ] Grid of All Transaction (frontend)
+- [x] Grid of All Transaction (frontend)
   - List of all transactions will be displayed in a grid
   - sort in time
   - Pagination
   - With multiple buttons
-- [ ] Create, Read, Update, Delete, of Spend/Income record (Backend)
+- [x] Create, Read, Update, Delete, of Spend/Income record (Backend)
   - Enter amount, title, date, category, etc and
   - See each spend record
   - Update each record
   - Delete by clicking on a record. (sends API request to the backend etc)
-- [ ] Login/Register
+- [x] Login/Register
   - Password Reset
   - Personal Information Page
   - Authentication using [Auth0](https://auth0.com/docs/secure/multi-factor-authentication/multi-factor-authentication-developer-resources/mfa-api)
@@ -102,7 +106,7 @@
 - Sentry Error logging (1 point)
   - https://sentry.io/welcome/
 
-### Challenge Factor
+### Challenge Factor (Not Complete)
 
 - OpenAI for categorization and tips box (1 point)
   - No personal identifiable information
@@ -112,7 +116,7 @@
 
 ### Chongmin-Bai:
 
-Student Number: 1004986599. Responsible for general backend-end development, including backend logic for manual entry of transactions, automatic entry of transaction of Plaid API, Setting up Bee-Queue for async jobs and Setting up Sentry for Error Logging.
+Student Number: 1004986599. Responsible for general backend-end development, including backend logic for manual entry of transactions, automatic entry of transaction of Plaid API, Setting up Bee-Queue for async jobs, deployment and Setting up Sentry for Error Logging.
 
 ### Matthew Melchior
 
@@ -125,3 +129,7 @@ Student Number: 1005463464. Responsible for full-stack development of register, 
 ## Video Demo
 
 The video demo is available on youtube at: https://youtu.be/1c4MM_-Up1Q
+
+## Deployed Website
+
+The website is available at https://swx.cscc09.rocks/

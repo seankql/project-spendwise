@@ -12,4 +12,7 @@ export const config = {
   PLAID_ENV: process.env.PLAID_ENV || "sandbox",
   REACT_APP_AUTH0_DOMAIN: process.env.REACT_APP_AUTH0_DOMAIN,
   REACT_APP_AUTH0_AUDIENCE: process.env.REACT_APP_AUTH0_AUDIENCE,
+  SENDGRID_API_KEY: process.env.SENDGRID_API_KEY,
+  REDIS_HOST: process.env.REDIS_HOST,
+  REDIS_PORT: process.env.REDIS_PORT,
 };

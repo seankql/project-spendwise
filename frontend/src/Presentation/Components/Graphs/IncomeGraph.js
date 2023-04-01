@@ -16,7 +16,7 @@ export default function List({ data, startDate, endDate }) {
       <VisXYContainer data={getIncomeData(data, startDate, endDate)}>
         <VisStackedBar
           x={useCallback((d) => convertToDateObject(d.x), [])}
-          y={useCallback((d) => d.y, [])}
+          y={useCallback((d) => Math.abs(d.y), [])}
           color={"#8bc53f"}
         ></VisStackedBar>
         <VisAxis

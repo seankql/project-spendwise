@@ -1,17 +1,25 @@
+function handleResult(res) {
+  if (!res.ok) {
+    return;
+  } else {
+    return res.json();
+  }
+}
+
 export default function ReportsController() {
   async function getReportsUseCase(userId, token) {
-    return fetch("http://localhost:3001/api/Reports/user/" + userId, {
+    return fetch("https://api.swx.cscc09.rocks/api/Reports/user/" + userId, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
-    }).then((res) => res.json());
+    }).then((res) => handleResult(res));
   }
 
   async function getReportsUseCase(userId, startDate, endDate, token) {
     return fetch(
-      "http://localhost:3001/api/reports?" +
+      "https://api.swx.cscc09.rocks/api/reports?" +
         new URLSearchParams({
           userId: userId,
           startDate: startDate,
@@ -24,7 +32,7 @@ export default function ReportsController() {
           Authorization: `Bearer ${token}`,
         },
       }
-    ).then((res) => res.json());
+    ).then((res) => handleResult(res));
   }
 
   async function getAccountReportsUseCase(
@@ -34,7 +42,7 @@ export default function ReportsController() {
     token
   ) {
     return fetch(
-      "http://localhost:3001/api/reports/accounts?" +
+      "https://api.swx.cscc09.rocks/api/reports/accounts?" +
         new URLSearchParams({
           accountId: accountId,
           startDate: startDate,
@@ -47,12 +55,12 @@ export default function ReportsController() {
           Authorization: `Bearer ${token}`,
         },
       }
-    ).then((res) => res.json());
+    ).then((res) => handleResult(res));
   }
 
   async function getCategoryReportsUseCase(userId, startDate, endDate, token) {
     return fetch(
-      "http://localhost:3001/api/reports/categories?" +
+      "https://api.swx.cscc09.rocks/api/reports/categories?" +
         new URLSearchParams({
           userId: userId,
           startDate: startDate,
@@ -65,7 +73,7 @@ export default function ReportsController() {
           Authorization: `Bearer ${token}`,
         },
       }
-    ).then((res) => res.json());
+    ).then((res) => handleResult(res));
   }
 
   return {

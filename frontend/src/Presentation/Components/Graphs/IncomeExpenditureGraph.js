@@ -13,7 +13,7 @@ import "../../Styles/Components.css";
 
 export default function List({ data, startDate, endDate }) {
   const dateFormatter = Intl.DateTimeFormat().format;
-  const color = (d) => (d.y > 0 ? "#8bc53f" : "#FF0000");
+  const color = (d) => (d.y > 0 ? "#FF0000" : "#8bc53f");
 
   return (
     <div>

@@ -9,6 +9,6 @@ cron.schedule("0 0 * * *", async () => {
     syncQueue.createJob().save();
   } catch (err) {
     console.log(err);
-    // Sentry.captureException(err + " in cron job"");
+    Sentry.captureException(err + " in cron job");
   }
 });

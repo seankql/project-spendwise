@@ -43,13 +43,17 @@ export default function List({ data = null, editSubmit, deleteFunction }) {
             >
               Edit Account
             </button>
-            <button
-              type="button"
-              onClick={() => deleteFunction(accountData.id)}
-              className={"btn btn-sml account-btns-left"}
-            >
-              Delete Account
-            </button>
+            {!data.plaidAccountId ? (
+              <button
+                type="button"
+                onClick={() => deleteFunction(accountData.id)}
+                className={"btn btn-sml account-btns-left"}
+              >
+                Delete Account
+              </button>
+            ) : (
+              ""
+            )}
           </div>
         </div>
       );

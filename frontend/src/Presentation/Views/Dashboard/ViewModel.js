@@ -52,7 +52,7 @@ export default function DashboardViewModel() {
   }
 
   async function createUser(user, token = bearerToken) {
-    await postUserUseCase(getUserId(user), user.email, token);
+    return await postUserUseCase(user?.sub.split("|")[1], user.email, token);
   }
 
   async function getAccounts(userId, token = bearerToken) {
@@ -93,14 +93,15 @@ export default function DashboardViewModel() {
 
   async function fetchData(user, token) {
     setBearerToken(token);
-    const result = await getUserUseCase(user?.sub.split("|")[1], token);
-    if (!result) return;
-    const userId = result.id;
 
-    getCategoryData(userId, token);
-    await getAccounts(userId, token);
+    let result = await getUserUseCase(user?.sub.split("|")[1], token);
+    if (!result) {
+      result = await createUser(user, token);
+    }
+    await getCategoryData(result.id, token);
+    await getAccounts(result.id, token);
     if (!selectedAccount) {
-      getReports(userId, token);
+      getReports(result.id, token);
     } else {
       getAccountReports(selectedAccount, token);
     }
