@@ -17,6 +17,8 @@
     - [Chongmin Bai](#chongmin-bai)
     - [Matthew Melchior](#matthew-melchior)
     - [Sean Lau Kuang Qi](#sean-lau-kuang-qi)
+  - [Video Demo](#video-demo)
+  - [Deployment](#deployed-website)
 
 ## Project Description
 
