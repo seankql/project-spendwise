@@ -10,8 +10,6 @@ https://paulallies.medium.com/clean-mvvm-with-react-and-react-hooks-ebc37b22542f
 
 https://medium.com/how-to-react/scroll-to-an-element-on-click-in-react-js-8424e478bb9
 
-https://blog.logrocket.com/customize-reusable-react-dropdown-menu-component/#:~:text=A%20dropdown%20menu%20consists%20of,list%20wrapping%2C%20and%20list%20items.
-
 <a href="https://www.flaticon.com/free-icons/delete" title="delete icons">Delete icons created by Kiranshastry - Flaticon</a>
 
 <a href="https://www.flaticon.com/free-icons/edit" title="edit icons">Edit icons created by Kiranshastry - Flaticon</a>

@@ -5,6 +5,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Account from "./Presentation/Views/Account/Account";
 import Visualization from "./Presentation/Views/Visualization/Visualization";
 import Transactions from "./Presentation/Views/Transactions/Transactions";
+import Credits from "./Presentation/Views/Credits/Credits";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Route path="/account" element={<Account />} />
           <Route path="/visualization" element={<Visualization />} />
           <Route path="/transactions" element={<Transactions />} />
+          <Route path="/credits" element={<Credits />} />
         </Routes>
       </div>
     </BrowserRouter>

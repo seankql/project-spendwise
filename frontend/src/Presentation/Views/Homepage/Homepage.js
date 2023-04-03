@@ -1,12 +1,12 @@
 import logo from "../../../Media/logo-no-background.png";
-import imageBanner from "../../../Media/pexels-andrea-piacquadio.jpg";
-import aboutPicture from "../../../Media/pexels-mikhail-nilov.jpg";
+import imageBanner from "../../../Media/pexels-andrea-piacquadio.webp";
+import aboutPicture from "../../../Media/pexels-mikhail-nilov.webp";
 import featurePicture from "../../../Media/pexels-photo-4386433.webp";
-import contactPicture from "../../../Media/pexels-cottonbro-studio-3202235.jpg";
-import { Link } from "react-scroll";
+import contactPicture from "../../../Media/pexels-cottonbro-studio-3202235.webp";
 import ScrollBanner from "../../Components/ScrollBanner";
 import SigninSignupButton from "../../Components/SigninSignupButton";
 import HomepageSection from "../../Components/HomepageSection";
+import FooterLink from "../../Components/FooterLink";
 import "../../Styles/Common.css";
 import "../../Styles/Main.css";
 import "../../Styles/Homepage.css";
@@ -19,7 +19,10 @@ export default function Homepage() {
     "SpendWise offers powerful features that make managing your finances easier than ever before. With automatic or manual tracking of income and expenses, you can stay on top of your finances and make informed decisions. SpendWise's data visualization tools provide easy-to-read graphs and charts that help you analyze your spending habits and identify areas where you can save money. The app also includes search features that allow you to find and analyze expenses quickly and efficiently. With SpendWise, you have all the tools you need to take control of your finances and achieve your financial goals.";
 
   const ContactDescription =
-    "SpendWise was developed by a three-man development team. You can reach out to us with the following options: ";
+    "SpendWise was developed by a three-man development team. You can reach out to us by email for inquiries: \n\n\
+    Chongmin-Bai \n jonathan.bai@mail.utoronto.ca \n \n \
+    Matthew Melchior \n  matthew.melchior@mail.utoronto.ca \n \n \
+    Sean Lau Kuang Qi \n sean.lau@mail.utoronto.ca";
 
   const sectionList = ["Home", "About", "Features", "Contact"];
 
@@ -34,14 +37,14 @@ export default function Homepage() {
         </div>
       </div>
       <ScrollBanner data={sectionList} />
-      <div id="home" className="image-banner-wrapper">
+      <div id="Home" className="image-banner-wrapper">
         <img className="image-banner" src={imageBanner} alt="banner" />
         <div className="image-banner-text-container">
           <div className="image-banner-header">
             {" "}
             Track your spending a wiser way{" "}
           </div>
-          <div className="section-paragraph-text">
+          <div className="banner-paragraph-text">
             {" "}
             With SpendWise, you can track your income and expenses all in one
             place. Whether you choose to enter your transactions manually or
@@ -50,7 +53,7 @@ export default function Homepage() {
           </div>
         </div>
       </div>
-      <div id="about">
+      <div id="About">
         <HomepageSection
           header="About Us"
           description={AboutDescription}
@@ -58,7 +61,7 @@ export default function Homepage() {
           background={"off-white"}
         />
       </div>
-      <div id="features">
+      <div id="Features">
         <HomepageSection
           header="Features"
           description={FeatureDescription}
@@ -67,7 +70,7 @@ export default function Homepage() {
           direction="right"
         />
       </div>
-      <div id="contact">
+      <div id="Contact">
         <HomepageSection
           header="Contact"
           description={ContactDescription}
@@ -76,7 +79,9 @@ export default function Homepage() {
           direction="left"
         />
       </div>
-      <footer />
+      <footer>
+        <FooterLink />
+      </footer>
     </div>
   );
 }

@@ -3,10 +3,10 @@ import useViewModel from "./ViewModel";
 import Banner from "../../Components/Banner";
 import ScrollBanner from "../../Components/ScrollBanner";
 import ProfileCard from "../../Components/ProfileCard";
-import AlertCard from "../../Components/AlertCard";
 import AccountCardGenerator from "../../Components/AccountCardGenerator";
 import AccountForm from "../../Components/AccountForm";
 import { usePlaidLink } from "react-plaid-link";
+import FooterLink from "../../Components/FooterLink";
 import "../../Styles/Common.css";
 import "../../Styles/Account.css";
 import "../../Styles/Main.css";
@@ -70,29 +70,24 @@ export default function Account() {
           >
             Profile & Alerts
           </div>
-          <div className="section-wrapper page-row-container section-divider">
+          {hasLinkedPlaid ? (
+            ""
+          ) : (
+            <button
+              type="button"
+              onClick={() => open()}
+              disabled={!ready}
+              className={"btn btn-sml account-btns-left"}
+            >
+              Connect a bank account
+            </button>
+          )}
+          <div className="section-wrapper section-divider">
             <ProfileCard
               email={email}
               nickname={nickname}
               dateCreated={dateCreated}
-              classes={"basic-info-card"}
             />
-            <div className="page-col-container row-right-element">
-              <div className="section-wrapper ">
-                {hasLinkedPlaid ? (
-                  ""
-                ) : (
-                  <button
-                    type="button"
-                    onClick={() => open()}
-                    disabled={!ready}
-                    className={"btn btn-sml account-btns-left"}
-                  >
-                    Connect a bank account
-                  </button>
-                )}
-              </div>
-            </div>
           </div>
         </div>
         <div id="Accounts" className="section-wrapper section-header-text">
@@ -131,7 +126,9 @@ export default function Account() {
           </div>
         </div>
       </div>
-      <footer />
+      <footer>
+        <FooterLink />
+      </footer>
     </div>
   );
 }

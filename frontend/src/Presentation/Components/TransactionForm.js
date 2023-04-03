@@ -9,6 +9,7 @@ export default function List({ classes = "", submit }) {
   const [category, setCategory] = useState("Bank Fees");
   const [amount, setAmount] = useState("");
   const [date, setDate] = useState(getCurrentDate());
+  const [error, setError] = useState(false);
 
   function getCurrentDate() {
     const dateObj = new Date();
@@ -30,7 +31,7 @@ export default function List({ classes = "", submit }) {
   const handleSubmit = (event) => {
     event.preventDefault();
     if (!isDateFormat(date)) {
-      // TODO raise error in UI
+      setError(true);
       return;
     }
     submit(name, category, amount, date);
@@ -42,6 +43,7 @@ export default function List({ classes = "", submit }) {
     setCategory("Bank Fees");
     setAmount("");
     setDate(getCurrentDate());
+    setError(false);
   };
 
   return (
@@ -115,6 +117,13 @@ export default function List({ classes = "", submit }) {
             onChange={(e) => setDate(e.target.value)}
           />
         </div>
+        {!error ? (
+          ""
+        ) : (
+          <div className="error-message row-right-element">
+            Invalid date, use YYYY-MM-DD Format
+          </div>
+        )}
       </div>
       <div className="page-row-container btn-form-wrapper">
         <Button

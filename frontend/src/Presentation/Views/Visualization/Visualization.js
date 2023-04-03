@@ -6,6 +6,7 @@ import SearchFilterSideBar from "../../Components/SearchFilterSideBar";
 import AccountSelect from "../../Components/AccountSelect";
 import VisualizationViewBox from "../../Components/VisualizationViewBox";
 import GraphSelect from "../../Components/GraphSelect";
+import FooterLink from "../../Components/FooterLink";
 import "../../Styles/Common.css";
 import "../../Styles/Main.css";
 import "../../Styles/Visualization.css";
@@ -88,7 +89,9 @@ export default function Visualization() {
           <GraphSelect setGraph={setGraph} />
         </div>
       </div>
-      <footer />
+      <footer>
+        <FooterLink />
+      </footer>
     </div>
   );
 }
