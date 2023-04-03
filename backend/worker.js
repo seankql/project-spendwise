@@ -1,5 +1,4 @@
 import Queue from "bee-queue";
-import redis from "redis";
 import {
   updatePlaidTransactions,
   createPlaidTransactions,
@@ -9,24 +8,10 @@ import {
   getTransactionsFromPlaid,
 } from "./services/plaid_services.js";
 import { UsersModel } from "./models/usersModel.js";
-import { Op } from "sequelize";
-import axios from "axios";
 import Sentry from "@sentry/node";
 import { config } from "./config/config.js";
 
-const sharedConfig = {
-  redis: redis.createClient({
-    url: `redis://${config.REDIS_HOST}:${config.REDIS_PORT}`,
-  }),
-};
-
 export const transactionQueue = new Queue("transactions", {
-  redis: {
-    host: config.REDIS_HOST,
-    port: config.REDIS_PORT,
-  },
-});
-export const syncQueue = new Queue("sync", {
   redis: {
     host: config.REDIS_HOST,
     port: config.REDIS_PORT,
@@ -64,33 +49,6 @@ transactionQueue.process(async (job) => {
     }
   } catch (err) {
     console.log(err);
-    Sentry.captureException(err + " in cron job transactionQueue");
+    Sentry.captureException(err + " transactionQueue");
   }
 });
-
-syncQueue.process(async () => {
-  try {
-    const users = await UsersModel.findAll({
-      where: { access_token: { [Op.ne]: null } },
-    });
-    for (let user of users) {
-      await callSyncTransactions(user.id);
-    }
-  } catch (err) {
-    console.log(err);
-    Sentry.captureException(err + " in cron job syncQueue");
-  }
-});
-
-async function callSyncTransactions(userId) {
-  try {
-    const response = await axios.get(
-      "https://api.swx.cscc09.rocks/api/plaid/transactions/sync?userId=" +
-        userId
-    );
-    console.log(response.data);
-  } catch (err) {
-    console.log(err);
-    Sentry.captureException(err + " in cron job callSyncTransactions");
-  }
-}
