@@ -34,7 +34,7 @@ plaidController.get(
         link_token: createTokenResponse.data.link_token,
       });
     } catch (err) {
-      Sentry.captureException(err);
+      Sentry.captureException("error creating link token " + err);
       return res.status(500).send("Internal Server error " + err);
     }
   }
@@ -78,7 +78,7 @@ plaidController.post(
       await user.save();
       return res.status(200).send("Success");
     } catch (err) {
-      Sentry.captureException(err);
+      Sentry.captureException("error exchanging public token " + err);
       return res.status(500).send("Internal Server error " + err);
     }
   }
@@ -151,7 +151,7 @@ plaidController.get(
         return res.status(400).send("No access token");
       }
     } catch (err) {
-      Sentry.captureException(err);
+      Sentry.captureException("error checking if user has linked plaid " + err);
       return res.status(500).send("Internal Server error " + err);
     }
   }

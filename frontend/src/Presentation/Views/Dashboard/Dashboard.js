@@ -43,7 +43,7 @@ export default function Dashboard() {
     if (user && isAuthenticated && !isLoading) {
       getAccessTokenSilently({
         authorizationParams: {
-          audience: "https://api.swx.cscc09.rocks",
+          audience: "https://api.spendw.cscc09.rocks",
         },
       }).then((token) => {
         fetchData(user, token);

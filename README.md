@@ -132,4 +132,9 @@ The video demo is available on youtube at: https://youtu.be/1c4MM_-Up1Q
 
 ## Deployed Website
 
-The website is available at https://swx.cscc09.rocks/
+The website is available at https://spendw.cscc09.rocks/
+
+Plaid Test Account:
+
+- username: user_good
+- password: pass_good

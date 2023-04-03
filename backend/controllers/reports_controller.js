@@ -93,7 +93,7 @@ reportsController.get(
         return res.status(400).send("Error getting report");
       }
     } catch (err) {
-      Sentry.captureException(err);
+      Sentry.captureException("error in reportsController.get" + err);
       return res.status(500).send("Internal Server error " + err);
     }
   }
@@ -166,7 +166,7 @@ reportsController.get("/accounts", validateAccessToken, async (req, res) => {
       return res.status(400).send("Error getting report");
     }
   } catch (err) {
-    Sentry.captureException(err);
+    Sentry.captureException("error in reportsController.get.accounts" + err);
     return res.status(500).send("Internal Server error " + err);
   }
 });
@@ -272,7 +272,9 @@ reportsController.get(
         return res.status(400).send("Error getting report");
       }
     } catch (err) {
-      Sentry.captureException(err);
+      Sentry.captureException(
+        "error in reportsController.get.categories" + err
+      );
       return res.status(500).send("Internal Server error " + err);
     }
   }
