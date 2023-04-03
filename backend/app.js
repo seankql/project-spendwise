@@ -13,7 +13,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 var corsOptions = {
-  origin: ["https://swx.cscc09.rocks", "https://api.swx.cscc09.rocks"],
+  origin: ["https://spendw.cscc09.rocks", "https://api.spendw.cscc09.rocks"],
   credentials: true,
 };
 app.use(cors(corsOptions));

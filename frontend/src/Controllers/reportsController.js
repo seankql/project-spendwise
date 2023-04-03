@@ -8,7 +8,7 @@ function handleResult(res) {
 
 export default function ReportsController() {
   async function getReportsUseCase(userId, token) {
-    return fetch("https://api.swx.cscc09.rocks/api/Reports/user/" + userId, {
+    return fetch("https://api.spendw.cscc09.rocks/api/Reports/user/" + userId, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -19,7 +19,7 @@ export default function ReportsController() {
 
   async function getReportsUseCase(userId, startDate, endDate, token) {
     return fetch(
-      "https://api.swx.cscc09.rocks/api/reports?" +
+      "https://api.spendw.cscc09.rocks/api/reports?" +
         new URLSearchParams({
           userId: userId,
           startDate: startDate,
@@ -42,7 +42,7 @@ export default function ReportsController() {
     token
   ) {
     return fetch(
-      "https://api.swx.cscc09.rocks/api/reports/accounts?" +
+      "https://api.spendw.cscc09.rocks/api/reports/accounts?" +
         new URLSearchParams({
           accountId: accountId,
           startDate: startDate,
@@ -60,7 +60,7 @@ export default function ReportsController() {
 
   async function getCategoryReportsUseCase(userId, startDate, endDate, token) {
     return fetch(
-      "https://api.swx.cscc09.rocks/api/reports/categories?" +
+      "https://api.spendw.cscc09.rocks/api/reports/categories?" +
         new URLSearchParams({
           userId: userId,
           startDate: startDate,
