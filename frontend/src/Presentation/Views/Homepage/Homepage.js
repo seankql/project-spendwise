@@ -29,7 +29,7 @@ export default function Homepage() {
   return (
     <div className="body-wrapper">
       <div className="banner">
-        <div className="banner-wrapper">
+        <div className="banner-wrapper homepage-padder">
           <img className="banner-img-container" src={logo} alt="logo" />
           <div className="auth-container">
             <SigninSignupButton />

@@ -193,3 +193,7 @@
 .display-linebreak {
   white-space: pre-line;
 }
+
+.homepage-padder {
+  padding: 24px;
+}
